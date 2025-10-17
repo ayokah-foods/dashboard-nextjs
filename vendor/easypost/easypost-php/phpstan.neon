@@ -1,6 +1,0 @@
-parameters:
-    level: 6
-    paths:
-        - lib
-        - test
-    checkGenericClassInNonGenericObjectType: false

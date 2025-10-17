@@ -1,9 +1,0 @@
-* text=auto
-
-# Cassettes
-test/cassettes/**/* -diff
-test/cassettes/**/* linguist-generated
-
-# Docs
-docs/**/* -diff
-docs/**/* linguist-generated
