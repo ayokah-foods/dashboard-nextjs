@@ -76,6 +76,6 @@ export async function getUserActivities(
 }
 
 export async function deleteUser(userId: string) {
-  const response = await axios.delete(`/users/${userId}`);
+  const response = await axios.delete(`/users/delete/${userId}`);
   return response.data;
 }
