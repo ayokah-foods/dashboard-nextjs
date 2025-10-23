@@ -78,12 +78,15 @@ export default function TicketDetailPage() {
 
     const handleDelete = async (id: string) => {
         try {
+            setLoading(true)
             await deleteTicket(id);
             toast.success("Ticket deleted successfully.");
             router.push("/tickets");
         } catch (error) {
             console.error("Delete failed:", error);
             toast.error("Failed to delete ticket.");
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -240,7 +243,7 @@ export default function TicketDetailPage() {
                         }}
                         className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
                     >
-                        Delete
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>

@@ -41,11 +41,14 @@ export default function Commission() {
 
     const handleDelete = async (id: number) => {
         try {
+            setLoading(true);
             await deleteCommission(id);
             toast.success("Commission deleted");
             fetchCommissions();
         } catch {
             toast.error("Failed to delete commission");
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -175,7 +178,7 @@ export default function Commission() {
                         }}
                         className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
                     >
-                        Delete
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>

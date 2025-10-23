@@ -48,6 +48,7 @@ function CategoryActionCell({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const handleStatusChange = async (selected: Option) => {
         const previous = status;
@@ -64,12 +65,15 @@ function CategoryActionCell({
 
     const handleDelete = async () => {
         try {
+            setLoading(true)
             await deleteCategory(category.id);
             toast.success("Category deleted.");
             setIsModalOpen(false);
             window.location.reload();
         } catch {
             toast.error("Failed to delete category.");
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -114,13 +118,13 @@ function CategoryActionCell({
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
-                        Proceed
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
-            </ConfirmationModal> 
+            </ConfirmationModal>
             <Drawer
                 isOpen={isDrawerOpen}
                 onClose={() => {

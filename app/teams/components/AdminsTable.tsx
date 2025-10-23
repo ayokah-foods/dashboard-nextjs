@@ -110,12 +110,15 @@ export default function AdminsTable() {
 
     const handleDelete = async (id: number) => {
         try {
+            setLoading(true)
             await deleteAdmin(id);
             toast.success("Admin deleted successfully");
             window.location.reload();
         } catch (err) {
             console.error(err);
             toast.error("Failed to delete admin");
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -173,11 +176,11 @@ export default function AdminsTable() {
                         }}
                         className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
                     >
-                        Delete
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>
-            
+
         </div>
     );
 }

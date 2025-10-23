@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import { ColorType } from "@/types/ColorType";
-import toast from "react-hot-toast"; 
+import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import ProductColorsTable from "../components/ProductColorsTable";
 import ProductColorsForm from "../components/ProductColorsForm";
@@ -15,6 +15,7 @@ export default function ProductColors() {
     const [editingColor, setEditingColor] = useState<ColorType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [colorToDelete, setcolorToDelete] = useState<ColorType | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const confirmDelete = (color: ColorType) => {
         setcolorToDelete(color);
@@ -24,6 +25,7 @@ export default function ProductColors() {
     const handleDelete = async () => {
         if (!colorToDelete) return;
         try {
+            setLoading(true)
             await deleteColour(colorToDelete.id);
             toast.success("Color deleted successfully.");
             setIsModalOpen(false);
@@ -32,6 +34,8 @@ export default function ProductColors() {
         } catch (error) {
             console.error(error);
             toast.error("Failed to delete subcolor.");
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -92,10 +96,10 @@ export default function ProductColors() {
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
-                        Proceed
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>

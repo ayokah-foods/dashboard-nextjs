@@ -92,7 +92,7 @@ export default function ProductSizes() {
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
                         {loading ? "Deleting..." : "Delete"}

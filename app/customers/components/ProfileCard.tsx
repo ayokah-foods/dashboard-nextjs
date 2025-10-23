@@ -215,11 +215,11 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                             }
                                         }}
                                         className={`px-4 py-2 rounded-md text-white transition ${confirmText === "DELETE"
-                                            ? "bg-red-600 hover:bg-red-700"
+                                            ? "bg-red-600 hover:bg-red-700 cursor-pointer"
                                             : "bg-red-300 cursor-not-allowed"
                                             }`}
                                     >
-                                        Delete
+                                        {loading ? "Deleting..." : "Delete"}
                                     </button>
                                 </div>
                             </ConfirmationModal>

@@ -16,6 +16,7 @@ export default function BannerTypes() {
     const [editingCategory, setEditingCategory] = useState<BannerType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [typeToDelete, settypeToDelete] = useState<BannerType | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const confirmDelete = (category: BannerType) => {
         settypeToDelete(category);
@@ -25,6 +26,7 @@ export default function BannerTypes() {
     const handleDelete = async () => {
         if (!typeToDelete) return;
         try {
+            setLoading(true)
             await deleteBannerType(typeToDelete.id);
             toast.success("Banner deleted successfully.");
             setIsModalOpen(false);
@@ -33,6 +35,8 @@ export default function BannerTypes() {
         } catch (error) {
             console.error(error);
             toast.error("Failed to delete subcategory.");
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -94,10 +98,10 @@ export default function BannerTypes() {
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
-                        Proceed
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>
