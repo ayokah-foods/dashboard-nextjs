@@ -30,6 +30,7 @@ import {
     CubeIcon,
     AdjustmentsHorizontalIcon,
     FlagIcon,
+    MapPinIcon,
 } from "@heroicons/react/24/outline";
 
 export const NAVIGATION = [
@@ -181,6 +182,16 @@ export const NAVIGATION = [
         icon: Cog6ToothIcon,
         children: [
             { name: "Privacy & Compliance", href: "/settings/policies" },
+        ],
+    },
+     {
+        name: "Location Management",
+        href: "/locations",
+        icon: MapPinIcon,
+        children: [
+            { name: "Country", href: "/locations/countries" },
+            { name: "States", href: "/locations/states" },
+            { name: "Cities", href: "/locations/cities" },
         ],
     },
     {

@@ -1,5 +1,5 @@
 import { CategoryType } from "./CategoryType";
-import { CityType } from "./CityType";
+import { CityType } from "./LocationType";
 import { StateType } from "./StateType";
 import { User } from "./UserType";
 
