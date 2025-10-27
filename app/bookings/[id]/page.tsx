@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { changeOrderPaymentStatus, changeOrderStatus, getOrderDetail } from "@/app/api_/orders";
+import { changeOrderPaymentStatus, changeOrderStatus } from "@/app/api_/orders";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import { OrderItem, OrderResponse } from "@/types/OrderType";

@@ -38,7 +38,7 @@ export async function deleteCategory(categoryId: number) {
 }
 
 export async function addCategory(formData: FormData) {
-    const response = await axios.post("/category/create", formData, {
+    const response = await axios.post("/categories/create", formData, {
         headers: {
             "Content-Type": "multipart/form-data",
             Accept: "application/json",
