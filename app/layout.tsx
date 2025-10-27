@@ -3,11 +3,7 @@ import "./globals.css";
 import { Metadata } from "next";
 import AuthLayout from "./AuthLayout";
 import { Toaster } from "react-hot-toast";
-import 'react-loading-skeleton/dist/skeleton.css'
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from "@vercel/analytics/next"
-
-
+import 'react-loading-skeleton/dist/skeleton.css' 
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +18,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${inter.className} antialiased`}>
-                <AuthLayout>{children}</AuthLayout>
-                <SpeedInsights />
-                <Analytics />
+                <AuthLayout>{children}</AuthLayout> 
                 <Toaster />
             </body>
         </html>
