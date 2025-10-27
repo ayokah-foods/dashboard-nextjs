@@ -4,7 +4,7 @@ import { setupCache } from 'axios-cache-interceptor';
 
 const base = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.africanmarkethub.ca/api/v1/admin',
-  withCredentials: false, // ❌ disable cookies
+  withCredentials: true, // ❌ disable cookies
 });
 
 const axiosInstance = setupCache(base, {
