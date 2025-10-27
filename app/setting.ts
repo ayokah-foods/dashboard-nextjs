@@ -126,8 +126,8 @@ export const NAVIGATION = [
         href: "/categories",
         icon: FlagIcon,
         children: [
-            { name: "Banners", href: "/banners" },
             { name: "Banner types", href: "/banners/types" },
+            { name: "Banners", href: "/banners" },
         ],
     },
     {
