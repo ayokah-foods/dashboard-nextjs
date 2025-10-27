@@ -4,17 +4,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listCountries } from "@/app/api_/locations";
-import Image from "next/image";
-import { CountryType } from "@/types/LocationType";
+import { listCities } from "@/app/api_/locations";
+import { CityType } from "@/types/LocationType";
 
-type CountryTableProps = {
+type CityTableProps = {
     limit: number;
-    onDelete: (country: CountryType) => void;
+    onDelete: (city: CityType) => void;
 };
 
-const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
-    const [countries, setCountries] = useState<CountryType[]>([]);
+const CityTable: React.FC<CityTableProps> = ({ limit, onDelete }) => {
+    const [cities, setCities] = useState<CityType[]>([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -23,39 +22,19 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
         pageSize: limit,
     });
 
-    // Define table columns
-    const columns: ColumnDef<CountryType>[] = useMemo(
+    const columns: ColumnDef<CityType>[] = useMemo(
         () => [
             {
-                header: "Flag",
-                accessorKey: "flag",
-                cell: ({ row }) => (
-                    <div className="flex items-center justify-center">
-                        <Image
-                            width={50}
-                            height={50}
-                            src={row.original.flag}
-                            alt={`${row.original.name} flag`}
-                            className="w-8 h-5 rounded border object-cover"
-                        />
-                    </div>
-                ),
-            },
-            {
-                header: "Name",
+                header: "City Name",
                 accessorKey: "name",
             },
             {
-                header: "Short Name",
-                accessorKey: "short_name",
+                header: "State",
+                accessorFn: (row) => row.state?.name || "—",
             },
             {
-                header: "Dial Code",
-                accessorKey: "dial_code",
-            },
-            {
-                header: "Currency",
-                accessorKey: "currency",
+                header: "Country",
+                accessorFn: (row) => row.country?.name || "—",
             },
             {
                 header: "Action",
@@ -75,16 +54,15 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
         [onDelete]
     );
 
-    // Fetch countries
-    const fetchCountries = async (offset: number, pageSize: number) => {
+    const fetchCities = async (offset: number, pageSize: number) => {
         try {
             setLoading(true);
-            const response = await listCountries(pageSize, offset);
-            setCountries(response.data);
-            setTotal(response.data?.length || 0);
+            const response = await listCities(pageSize, offset);
+            setCities(response.data || []);
+            setTotal(response.data.length);
         } catch (err) {
             console.error(err);
-            setError("Failed to load countries");
+            setError("Failed to load cities");
         } finally {
             setLoading(false);
         }
@@ -93,13 +71,13 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
     const { pageIndex, pageSize } = pagination;
 
     useEffect(() => {
-        fetchCountries(pageIndex * pageSize, pageSize);
+        fetchCities(pageIndex * pageSize, pageSize);
     }, [pageIndex, pageSize]);
 
     return (
         <div className="space-y-6">
             <TanStackTable
-                data={countries}
+                data={cities}
                 columns={columns}
                 loading={loading}
                 error={error}
@@ -114,4 +92,4 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
     );
 };
 
-export default CountryTable;
+export default CityTable;

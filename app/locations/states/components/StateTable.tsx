@@ -4,17 +4,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listCountries } from "@/app/api_/locations";
-import Image from "next/image";
-import { CountryType } from "@/types/LocationType";
+import { listStates } from "@/app/api_/locations";
+import { StateType } from "@/types/LocationType";
 
-type CountryTableProps = {
+type StateTableProps = {
     limit: number;
-    onDelete: (country: CountryType) => void;
+    onDelete: (state: StateType) => void;
 };
 
-const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
-    const [countries, setCountries] = useState<CountryType[]>([]);
+const StateTable: React.FC<StateTableProps> = ({ limit, onDelete }) => {
+    const [states, setStates] = useState<StateType[]>([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -23,39 +22,15 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
         pageSize: limit,
     });
 
-    // Define table columns
-    const columns: ColumnDef<CountryType>[] = useMemo(
+    const columns: ColumnDef<StateType>[] = useMemo(
         () => [
             {
-                header: "Flag",
-                accessorKey: "flag",
-                cell: ({ row }) => (
-                    <div className="flex items-center justify-center">
-                        <Image
-                            width={50}
-                            height={50}
-                            src={row.original.flag}
-                            alt={`${row.original.name} flag`}
-                            className="w-8 h-5 rounded border object-cover"
-                        />
-                    </div>
-                ),
-            },
-            {
-                header: "Name",
+                header: "State Name",
                 accessorKey: "name",
             },
             {
-                header: "Short Name",
-                accessorKey: "short_name",
-            },
-            {
-                header: "Dial Code",
-                accessorKey: "dial_code",
-            },
-            {
-                header: "Currency",
-                accessorKey: "currency",
+                header: "Country",
+                accessorFn: (row) => row.country?.name || "—",
             },
             {
                 header: "Action",
@@ -67,7 +42,7 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
                             className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
                         >
                             <TrashIcon className="w-4 h-4" />
-                        </button>
+                        </button> 
                     </div>
                 ),
             },
@@ -75,16 +50,15 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
         [onDelete]
     );
 
-    // Fetch countries
-    const fetchCountries = async (offset: number, pageSize: number) => {
+    const fetchStates = async (offset: number, pageSize: number) => {
         try {
             setLoading(true);
-            const response = await listCountries(pageSize, offset);
-            setCountries(response.data);
-            setTotal(response.data?.length || 0);
+            const response = await listStates(pageSize, offset);
+            setStates(response.data || []);
+            setTotal(response.data.length);
         } catch (err) {
             console.error(err);
-            setError("Failed to load countries");
+            setError("Failed to load states");
         } finally {
             setLoading(false);
         }
@@ -93,13 +67,13 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
     const { pageIndex, pageSize } = pagination;
 
     useEffect(() => {
-        fetchCountries(pageIndex * pageSize, pageSize);
+        fetchStates(pageIndex * pageSize, pageSize);
     }, [pageIndex, pageSize]);
 
     return (
         <div className="space-y-6">
             <TanStackTable
-                data={countries}
+                data={states}
                 columns={columns}
                 loading={loading}
                 error={error}
@@ -114,4 +88,4 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
     );
 };
 
-export default CountryTable;
+export default StateTable;

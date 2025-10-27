@@ -29,16 +29,46 @@ export async function listCountries(limit?: number, offset?: number) {
     return response.data;
 }
 
-export async function storeCountry(payload: CountryType) {
-    const response = await axios.post("/country/create", payload);
+export async function storeCountry(formData: FormData) {
+    const response = await axios.post("/country/create", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
     return response.data;
 }
+export async function storeState(formData: FormData) {
+    const response = await axios.post("/state/create", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+    return response.data;
+}
+export async function storeCity(formData: FormData) {
+    const response = await axios.post("/city/create", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+    return response.data;
+}
+
 export async function updateCountry(id: number, payload: CountryType) {
     const response = await axios.put(`/country/update/${id}`, payload);
     return response.data;
 }
 
 export async function deleteCountry(id: number) {
-    const response = await axios.delete(`/country/delete${id}`);
+    const response = await axios.delete(`/country/delete/${id}`);
+    return response.data;
+}
+export async function deleteState(id: number) {
+    const response = await axios.delete(`/state/delete/${id}`);
+    return response.data;
+}
+
+export async function deleteCity(id: number) {
+    const response = await axios.delete(`/city/delete/${id}`);
     return response.data;
 }
