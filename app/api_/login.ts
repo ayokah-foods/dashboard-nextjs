@@ -8,8 +8,14 @@ export async function login(formData: FormData) {
     },
   });
 
+  // store token locally
+  if (response.data.token) {
+    localStorage.setItem('token', response.data.token);
+  }
+
   return response.data;
 }
+
 
 export async function changePassword(formData: FormData) {
   const token = localStorage.getItem("token");
