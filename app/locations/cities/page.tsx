@@ -45,7 +45,7 @@ export default function CityPage() {
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800">Cities</h1>
                     <p className="text-sm text-gray-600">
-                        Manage the list of cities under each state and country.
+                        Manage the list of cities under each Province and Country.
                     </p>
                 </div>
 

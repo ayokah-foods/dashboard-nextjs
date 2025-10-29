@@ -45,10 +45,25 @@ export default function CategoryForm({ onClose, category }: Props) {
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) {
-            setImageFile(file);
-            setImagePreview(URL.createObjectURL(file));
+        if (!file) return;
+
+        const maxSize = 1 * 1024 * 1024; // 3MB
+        const validTypes = ["image/jpeg", "image/png", "image/webp"];
+
+        if (!validTypes.includes(file.type)) {
+            toast.error("Only JPG, PNG, or WebP images are allowed");
+            e.target.value = ""; // clear file input
+            return;
         }
+
+        if (file.size > maxSize) {
+            toast.error("Image must be smaller than 1MB");
+            e.target.value = "";
+            return;
+        }
+
+        setImageFile(file);
+        setImagePreview(URL.createObjectURL(file));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -113,17 +128,23 @@ export default function CategoryForm({ onClose, category }: Props) {
                 />
             </div>
 
-            {/* Description */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Description <span className="text-red-500">*</span>
+                </label>
                 <textarea
                     rows={4}
+                    maxLength={255} // ✅ use maxLength instead of limit
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                     placeholder="Category description"
                 />
+                <div className="text-sm text-gray-500 mt-1 text-right">
+                    {description.length}/255
+                </div>
             </div>
+
 
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Cat Image <span className='text-red-500'>*</span></label>
@@ -163,6 +184,11 @@ export default function CategoryForm({ onClose, category }: Props) {
                         onChange={handleImageChange}
                     />
                 </label>
+                {imageFile && (
+                    <p className="text-xs text-gray-500 mt-2 text-center">
+                        {(imageFile.size / 1024 / 1024).toFixed(2)} MB
+                    </p>
+                )}
             </div>
             <SubmitButton loading={loading} label="Save changes" />
         </form>

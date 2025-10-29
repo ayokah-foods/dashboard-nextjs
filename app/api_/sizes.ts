@@ -1,5 +1,5 @@
-import { SizeType } from "@/types/SizeType";
 import axios from "../lib/axios";
+import { SizeType } from "@/types/SizeType";
 
 
 export async function listSizes(limit?: number, offset?: number) {

@@ -29,7 +29,7 @@ const CityTable: React.FC<CityTableProps> = ({ limit, onDelete }) => {
                 accessorKey: "name",
             },
             {
-                header: "State",
+                header: "Province",
                 accessorFn: (row) => row.state?.name || "—",
             },
             {

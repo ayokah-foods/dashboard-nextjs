@@ -25,7 +25,7 @@ const StateTable: React.FC<StateTableProps> = ({ limit, onDelete }) => {
     const columns: ColumnDef<StateType>[] = useMemo(
         () => [
             {
-                header: "State Name",
+                header: "Province Name",
                 accessorKey: "name",
             },
             {

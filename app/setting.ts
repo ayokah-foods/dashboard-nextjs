@@ -31,6 +31,7 @@ import {
     AdjustmentsHorizontalIcon,
     FlagIcon,
     MapPinIcon,
+    BanknotesIcon,
 } from "@heroicons/react/24/outline";
 
 export const NAVIGATION = [
@@ -141,6 +142,15 @@ export const NAVIGATION = [
         ], 
     },
     {
+        name: "Subscription Management",
+        href: "/subscriptions",
+        icon: BanknotesIcon,
+        children: [
+            { name: "All subscriptions", href: "/subscriptions" },
+            { name: "Subscribe Vendors", href: "/subscriptions/vendors" },
+        ],
+    },
+    {
         name: "FAQs Management",
         href: "/faqs",
         icon: QuestionMarkCircleIcon,
@@ -189,8 +199,8 @@ export const NAVIGATION = [
         href: "/locations",
         icon: MapPinIcon,
         children: [
-            { name: "Country", href: "/locations/countries" },
-            { name: "States", href: "/locations/states" },
+            { name: "Countries", href: "/locations/countries" },
+            { name: "Provinces", href: "/locations/states" },
             { name: "Cities", href: "/locations/cities" },
         ],
     },

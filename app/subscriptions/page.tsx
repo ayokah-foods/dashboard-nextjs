@@ -5,36 +5,37 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-import { deleteState } from "@/app/api_/locations";
-import { StateType } from "@/types/LocationType";
-import StateTable from "./components/StateTable";
-import StateForm from "./components/StateForm";
+import { deleteSubscription } from "@/app/api_/subscriptions";
+import { SubscriptionType } from "@/types/SubscriptionType";
+import SubscriptionTable from "./components/SubscriptionTable";
+import SubscriptionForm from "./components/SubscriptionForm";
 
-
-export default function StatePage() {
+export default function SubscriptionPage() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingState, setEditingState] = useState<StateType | null>(null);
+    const [editingSubscription, setEditingSubscription] = useState<SubscriptionType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [stateToDelete, setStateToDelete] = useState<StateType | null>(null);
+    const [subscriptionToDelete, setSubscriptionToDelete] = useState<SubscriptionType | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const confirmDelete = (state: StateType) => {
-        setStateToDelete(state);
+    // Confirm deletion
+    const confirmDelete = (subscription: SubscriptionType) => {
+        setSubscriptionToDelete(subscription);
         setIsModalOpen(true);
     };
 
+    // Handle deletion
     const handleDelete = async () => {
-        if (!stateToDelete) return;
+        if (!subscriptionToDelete) return;
         try {
             setLoading(true);
-            await deleteState(stateToDelete.id || 0);
-            toast.success("State deleted successfully.");
+            await deleteSubscription(subscriptionToDelete.id || 0);
+            toast.success("Subscription deleted successfully.");
             setIsModalOpen(false);
-            setStateToDelete(null);
+            setSubscriptionToDelete(null);
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error("Failed to delete state.");
+            toast.error("Failed to delete subscription.");
         } finally {
             setLoading(false);
         }
@@ -45,28 +46,34 @@ export default function StatePage() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Province</h1>
-                    <p className="text-sm text-gray-600">Manage the list of province within countries.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">Subscriptions</h1>
+                    <p className="text-sm text-gray-600">
+                        Manage subscription plans with pricing, features, and payment links.
+                    </p>
                 </div>
 
                 <div className="flex gap-3 items-center">
                     <button
                         onClick={() => {
-                            setEditingState(null);
+                            setEditingSubscription(null);
                             setDrawerOpen(true);
                         }}
                         className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600 cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
-                        Create State
+                        Create Subscription
                     </button>
                 </div>
             </div>
 
             {/* Table */}
-            <StateTable
+            <SubscriptionTable
                 limit={10}
                 onDelete={confirmDelete}
+                onEdit={(subscription) => {
+                    setEditingSubscription(subscription);
+                    setDrawerOpen(true);
+                }}
             />
 
             {/* Drawer Form */}
@@ -74,24 +81,27 @@ export default function StatePage() {
                 isOpen={isDrawerOpen}
                 onClose={() => {
                     setDrawerOpen(false);
-                    setEditingState(null);
+                    setEditingSubscription(null);
                 }}
-                title={editingState ? "Edit Province" : "Create Province"}
+                title={editingSubscription ? "Edit Subscription" : "Create Subscription"}
             >
-                <StateForm
+                <SubscriptionForm
                     onClose={() => {
                         setDrawerOpen(false);
-                        setEditingState(null);
+                        setEditingSubscription(null);
                     }}
-                    state={editingState ?? undefined}
+                    subscription={editingSubscription ?? undefined}
                 />
-
             </Drawer>
 
             {/* Delete Modal */}
-            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Confirm Deletion"
+            >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this province? This action cannot be undone.
+                    Are you sure you want to delete this subscription plan? This action cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button
