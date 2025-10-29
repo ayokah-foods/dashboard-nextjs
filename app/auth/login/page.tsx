@@ -46,7 +46,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row h-screen bg-white text-gray-500">
       {/* Image */}
       <div
         className="h-40 md:h-full md:w-1/2 bg-cover bg-center"
@@ -63,7 +63,7 @@ export default function LoginScreen() {
           className="mb-10"
         />
 
-        <h1 className="text-2xl font-bold mb-6">Administration</h1>
+        <h1 className="text-2xl font-bold mb-6 text-gray-500">Administration</h1>
 
         <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
           {/* Email */}

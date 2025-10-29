@@ -48,7 +48,7 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-white text-gray-500">
       <div
         className="w-1/2 bg-cover bg-center"
         style={{ backgroundImage: "url('/login.png')" }}
