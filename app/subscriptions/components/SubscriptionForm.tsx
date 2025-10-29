@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { createSubscription } from "@/app/api_/subscriptions";
 import { SubscriptionType } from "@/types/SubscriptionType";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
+import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 
 interface Props {
     onClose: () => void;
@@ -49,7 +50,7 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
             const payload = {
                 name: form.name,
                 monthly_price: Number(form.monthly_price),
-                yearly_price: form.yearly_price,
+                yearly_price: Number(form.yearly_price),
                 features: form.features,
                 payment_link: form.payment_link,
             };
@@ -114,19 +115,29 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
             </div>
 
             {/* Features */}
+            {/* Features */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                     Features <span className="text-red-500">*</span>
                 </label>
-                <textarea
-                    name="features"
-                    rows={4}
+                <TinyMCEEditor
+                    apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
                     value={form.features}
-                    onChange={handleChange}
-                    placeholder="Enter plan features"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    init={{
+                        height: 300,
+                        menubar: false,
+                        plugins: "link lists code",
+                        toolbar:
+                            "undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | code",
+                        content_style:
+                            "body { font-family:Inter,Arial,sans-serif; font-size:14px; color:#374151 }",
+                    }}
+                    onEditorChange={(content) =>
+                        setForm({ ...form, features: content })
+                    }
                 />
             </div>
+
 
             {/* Payment Link */}
             <div>

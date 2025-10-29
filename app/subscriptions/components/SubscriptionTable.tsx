@@ -6,6 +6,7 @@ import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { listSubscriptions } from "@/app/api_/subscriptions";
 import { SubscriptionType } from "@/types/SubscriptionType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
+import { formatAmount } from "@/utils/formatCurrency";
 
 type SubscriptionTableProps = {
     limit: number;
@@ -35,34 +36,44 @@ export default function SubscriptionTable({
             },
             {
                 header: "Monthly Price",
-                accessorFn: (row) => `KES ${row.monthly_price?.toLocaleString() || 0}`,
+                accessorFn: (row) => formatAmount(row.monthly_price),
             },
             {
                 header: "Yearly Price",
-                accessorFn: (row) => `KES ${row.yearly_price || "—"}`,
+                accessorFn: (row) => formatAmount(row.yearly_price),
             },
             {
                 header: "Features",
-                accessorFn: (row) =>
-                    row.features?.length > 60
-                        ? `${row.features.substring(0, 60)}...`
-                        : row.features || "—",
+                // ✅ Use `cell` instead of `accessorFn`
+                cell: ({ row }) => {
+                    const html = row.original.features || "";
+                    const truncated =
+                        html.length > 100 ? html.substring(0, 100) + "..." : html;
+
+                    return (
+                        <div
+                            className="prose prose-sm max-w-none text-gray-700"
+                            dangerouslySetInnerHTML={{ __html: truncated }}
+                        />
+                    );
+                },
             },
             {
                 header: "Payment Link",
-                accessorFn: (row) =>
-                    row.payment_link ? (
+                cell: ({ row }) => {
+                    const link = row.original.payment_link;
+                    if (!link) return "—";
+                    return (
                         <a
-                            href={row.payment_link}
+                            href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-amber-600 underline hover:text-amber-700"
+                            className="text-amber-600 underline hover:text-amber-700 break-words"
                         >
-                            Open Link
+                            {link.length > 50 ? link.substring(0, 50) + "..." : link}
                         </a>
-                    ) : (
-                        "—"
-                    ),
+                    );
+                },
             },
             {
                 header: "Actions",
