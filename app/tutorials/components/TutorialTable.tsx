@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
 import axios from "axios";
-
+import Image from "next/image";
 import { Tutorial } from "@/types/TutorialType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -97,6 +97,26 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
     const columns: ColumnDef<Tutorial>[] = useMemo(
         () => [
             {
+                header: "Image",
+                accessorKey: "image_url",
+                cell: ({ getValue }) => {
+                    const imageUrl = getValue() as string;
+                    return imageUrl ? (
+                        <div className="relative w-14 h-14 rounded-lg overflow-hidden border border-gray-200">
+                            <Image
+                                src={imageUrl}
+                                alt="Tutorial Thumbnail"
+                                fill
+                                unoptimized
+                                className="object-cover"
+                            />
+                        </div>
+                    ) : (
+                        <span className="text-gray-400 italic">No image</span>
+                    );
+                },
+            },
+            {
                 header: "Title",
                 accessorKey: "title",
                 cell: ({ getValue }) => (
@@ -106,11 +126,21 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
             {
                 header: "Description",
                 accessorKey: "description",
-                cell: ({ getValue }) => (
-                    <span className="text-sm text-gray-700 truncate w-60 overflow-hidden whitespace-nowrap block">
-                        {getValue() as string}
-                    </span>
-                ),
+                cell: ({ getValue }) => {
+                    const html = getValue() as string;
+                    // Strip HTML tags for tooltip text
+                    const plainText = html.replace(/<[^>]+>/g, "");
+                    const truncated =
+                        plainText.length > 100 ? plainText.substring(0, 100) + "..." : plainText;
+
+                    return (
+                        <div
+                            className="text-sm text-gray-700 max-w-xs truncate"
+                            title={plainText}
+                            dangerouslySetInnerHTML={{ __html: truncated }}
+                        />
+                    );
+                },
             },
             {
                 header: "Type",

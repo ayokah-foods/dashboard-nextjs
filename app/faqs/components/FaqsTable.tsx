@@ -76,7 +76,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
         try {
             await deleteFaq(faqToDelete);
             toast.success("FAQ deleted successfully");
-            setFaqs((prev) => prev.filter((f) => f.id !== faqToDelete));  
+            setFaqs((prev) => prev.filter((f) => f.id !== faqToDelete));
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message =
@@ -105,11 +105,17 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
             {
                 header: "Answer",
                 accessorKey: "answer",
-                cell: ({ getValue }) => (
-                    <span className="text-sm text-gray-700 truncate w-60 overflow-hidden whitespace-nowrap block">
-                        {getValue() as string}
-                    </span>
-                ),
+                cell: ({ getValue }) => {
+                    const answer = getValue() as string;
+                    return (
+                        <span
+                            title={answer}
+                            className="text-sm text-gray-700 truncate w-60 overflow-hidden whitespace-nowrap block"
+                        >
+                            {answer}
+                        </span>
+                    );
+                },
             },
             {
                 header: "Type",
@@ -270,7 +276,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                         className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
-                       {loading ? "Deleting..." : "Delete"}
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>

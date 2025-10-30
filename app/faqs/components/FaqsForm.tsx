@@ -23,7 +23,7 @@ export default function FaqForm({ onClose, faq }: Props) {
     const typeOptions = [
         { label: 'Vendor', value: 'vendor' },
         { label: 'Customer', value: 'customer' },
-        { label: 'General', value: 'general' },
+        { label: 'General', value: 'system' },
     ];
 
     const handleSubmit = async (e: React.FormEvent) => {

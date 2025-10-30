@@ -14,9 +14,10 @@ export async function createTutorial(formData: FormData) {
     });
     return response.data;
 }
-
+ 
 export async function updateTutorial(id: number, formData: FormData) {
-    const response = await axios.put(`/tutorials/${id}`, formData, {
+    formData.append('_method', 'PUT'); 
+    const response = await axios.post(`/tutorials/${id}`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
             Accept: "application/json",
