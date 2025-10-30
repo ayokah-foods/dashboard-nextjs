@@ -139,7 +139,7 @@ export const NAVIGATION = [
         children: [
             { name: "Shop List", href: "/shops" },
             { name: "Shop Performance", href: "/shops/performance" },
-        ], 
+        ],
     },
     {
         name: "Subscription Management",
@@ -147,7 +147,7 @@ export const NAVIGATION = [
         icon: BanknotesIcon,
         children: [
             { name: "All subscriptions", href: "/subscriptions" },
-            { name: "Subscribe Vendors", href: "/subscriptions/vendors" },
+            { name: "Subscriber", href: "/subscriptions/subscribers" },
         ],
     },
     {
@@ -194,7 +194,7 @@ export const NAVIGATION = [
             { name: "Privacy & Compliance", href: "/settings/policies" },
         ],
     },
-     {
+    {
         name: "Location Management",
         href: "/locations",
         icon: MapPinIcon,
@@ -213,7 +213,7 @@ export const NAVIGATION = [
             { name: "Team members", href: "/teams" },
         ],
     },
-]; 
+];
 
 export const PrivacyPages = [
     { name: "Privacy Policy", type: "privacy" },

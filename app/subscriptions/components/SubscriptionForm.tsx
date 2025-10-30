@@ -2,26 +2,27 @@
 
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { createSubscription } from "@/app/api_/subscriptions";
+import { createSubscription, updateSubscription } from "@/app/api_/subscriptions";
 import { SubscriptionType } from "@/types/SubscriptionType";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 
 interface Props {
     onClose: () => void;
-    subscription?: SubscriptionType;
+    subscription?: SubscriptionType; // optional for edit mode
 }
 
 export default function SubscriptionForm({ onClose, subscription }: Props) {
     const [form, setForm] = useState({
         name: subscription?.name || "",
         monthly_price: subscription?.monthly_price || 0,
-        yearly_price: subscription?.yearly_price || "",
+        yearly_price: subscription?.yearly_price || 0,
         features: subscription?.features || "",
         payment_link: subscription?.payment_link || "",
     });
 
     const [loading, setLoading] = useState(false);
+    const isEditing = Boolean(subscription?.id); // ✅ determine edit mode
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,24 +45,30 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
             return;
         }
 
+        const payload = {
+            name: form.name,
+            monthly_price: Number(form.monthly_price),
+            yearly_price: Number(form.yearly_price),
+            features: form.features,
+            payment_link: form.payment_link,
+        };
+
         try {
             setLoading(true);
 
-            const payload = {
-                name: form.name,
-                monthly_price: Number(form.monthly_price),
-                yearly_price: Number(form.yearly_price),
-                features: form.features,
-                payment_link: form.payment_link,
-            };
+            if (isEditing && subscription?.id) {
+                await updateSubscription(subscription.id, payload);
+                toast.success("Subscription updated successfully");
+            } else {
+                await createSubscription(payload);
+                toast.success("Subscription created successfully");
+            }
 
-            await createSubscription(payload);
-            toast.success("Subscription saved successfully");
             onClose();
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error("Failed to save subscription");
+            toast.error(`Failed to ${isEditing ? "update" : "create"} subscription`);
         } finally {
             setLoading(false);
         }
@@ -115,7 +122,6 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
             </div>
 
             {/* Features */}
-            {/* Features */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                     Features <span className="text-red-500">*</span>
@@ -132,12 +138,9 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
                         content_style:
                             "body { font-family:Inter,Arial,sans-serif; font-size:14px; color:#374151 }",
                     }}
-                    onEditorChange={(content) =>
-                        setForm({ ...form, features: content })
-                    }
+                    onEditorChange={(content) => setForm({ ...form, features: content })}
                 />
             </div>
-
 
             {/* Payment Link */}
             <div>
@@ -154,7 +157,10 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
                 />
             </div>
 
-            <SubmitButton loading={loading} label="Save Subscription" />
+            <SubmitButton
+                loading={loading}
+                label={isEditing ? "Update Subscription" : "Save Subscription"}
+            />
         </form>
     );
 }
