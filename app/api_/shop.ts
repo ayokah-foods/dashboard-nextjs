@@ -34,3 +34,9 @@ export async function mostSellingShops(params: { limit: number; offset: number }
   });
   return response.data;
 }
+
+
+export async function deleteShop(id: number) {
+  const response = await axios.delete(`/shop/delete/${id}`);
+  return response.data;
+}

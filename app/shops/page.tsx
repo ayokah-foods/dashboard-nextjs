@@ -4,16 +4,18 @@ import { useEffect, useMemo, useState } from 'react';
 import { Shop } from '@/types/ShopType';
 import { ColumnDef } from '@tanstack/react-table';
 import TanStackTable from '@/app/components/commons/TanStackTable';
-import { getShops } from '../api_/shop';
+import { deleteShop, getShops } from '../api_/shop';
 import Image from 'next/image';
 import StatusBadge from '@/utils/StatusBadge';
 import { formatHumanReadableDate } from '@/utils/formatHumanReadableDate';
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import { ArrowTopRightOnSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { debounce } from 'lodash';
 import SelectDropdown from '../components/commons/Fields/SelectDropdown';
 import { MetricCard } from './components/MetricCard';
 import AnalysisAreaChart from './components/AnalysisAreaChart';
+import toast from 'react-hot-toast';
+import ConfirmationModal from '../components/commons/ConfirmationModal';
 
 const typeOptions = [
     { label: "All Types", value: "" },
@@ -33,6 +35,36 @@ export default function Shops() {
     });
 
     const [selectedType, setSelectedType] = useState(typeOptions[0]);
+
+    // Confirmation modal states
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [shopToDelete, setShopToDelete] = useState<number | null>(null);
+    const [deleting, setDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        if (!shopToDelete) return;
+
+        try {
+            setDeleting(true);
+            await deleteShop(shopToDelete);
+            toast.success('Shop deleted successfully');
+            setIsModalOpen(false);
+            setShopToDelete(null);
+            // Refresh data
+            fetchShops({
+                limit: pagination.pageSize,
+                offset: pagination.pageIndex * pagination.pageSize,
+                search,
+                type: selectedType.value || undefined,
+            });
+        } catch (error) {
+            console.error('Delete failed:', error);
+            toast.error('Failed to delete shop');
+        } finally {
+            setDeleting(false);
+        }
+    };
+
 
     const fetchShops = async ({
         limit,
@@ -140,17 +172,19 @@ export default function Shops() {
                 header: 'Action',
                 accessorKey: 'id',
                 cell: ({ row }) => (
-                    <Link
-                        href={`/shops/${row.original.slug}`}
-                        target="_blank"
-                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-blue-500 text-blue-600 rounded hover:bg-blue-50 transition"
+                    <button
+                        onClick={() => {
+                            setShopToDelete(row.original.id);
+                            setIsModalOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-red-500 text-red-600 rounded hover:bg-red-50 transition cursor-pointer"
                     >
-                        View
-                        {/* lead to frontend web app */}
-                        <ArrowTopRightOnSquareIcon className="w-4 h-4" />
-                    </Link>
+                        Delete
+                        <TrashIcon className="w-4 h-4" />
+                    </button>
                 ),
             },
+
         ],
         []
     );
@@ -204,11 +238,11 @@ export default function Shops() {
                     />
                 </div>
             </div>
-            
+
             <MetricCard />
-            
+
             <AnalysisAreaChart />
-            
+
             <TanStackTable
                 data={data}
                 columns={columns}
@@ -221,6 +255,37 @@ export default function Shops() {
                 }}
                 onPaginationChange={setPagination}
             />
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setShopToDelete(null);
+                }}
+                title="Confirm Deletion"
+            >
+                <p className="mt-2 text-sm text-gray-500">
+                    Are you sure you want to delete this shop? This action cannot be undone.
+                </p>
+                <div className="mt-4 flex justify-end gap-3">
+                    <button
+                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => {
+                            setIsModalOpen(false);
+                            setShopToDelete(null);
+                        }}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
+                        onClick={handleDelete}
+                        disabled={deleting}
+                    >
+                        {deleting ? "Deleting..." : "Delete"}
+                    </button>
+                </div>
+            </ConfirmationModal>
+
         </div>
     );
 }
