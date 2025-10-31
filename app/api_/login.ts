@@ -8,7 +8,6 @@ export async function login(formData: FormData) {
     },
   });
 
-  // store token locally
   if (response.data.token) {
     localStorage.setItem('token', response.data.token);
   }
