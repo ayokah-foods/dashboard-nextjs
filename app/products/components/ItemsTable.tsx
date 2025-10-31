@@ -47,7 +47,7 @@ function ProductActionCell({
         try {
             await updateItemStatus(productId, selected.value);
             toast.success("Status updated");
-            onStatusUpdate(selected.value); // 🔁 update parent state
+            onStatusUpdate(selected.value);  
         } catch {
             setStatus(previous);
             toast.error("Failed to update status");
@@ -298,7 +298,6 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
             <ItemSummary loading={loading} stats={itemStats} />
 
             <ProductAreaChart type={type} status={status} />
-
 
             <div className="mb-4">
                 <input
