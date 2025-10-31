@@ -127,7 +127,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                 accessorKey: "average_rating",
                 cell: ({ getValue }) => {
                     const rating = parseFloat(getValue() as string) || 0;
-                    const stars = Math.round(rating); // Round to nearest whole number
+                    const stars = Math.round(rating); 
 
                     return (
                         <div className="flex items-center gap-0.5">
