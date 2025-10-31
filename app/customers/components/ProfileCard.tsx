@@ -208,7 +208,8 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                                 await deleteUser(user?.id?.toString() ?? "");
                                                 toast.success("User deleted successfully");
                                                 setIsDeleteModalOpen(false);
-                                                window.location.href = "/users";
+                                                window.location.href =
+                                                    "/customers";
                                             } catch (error) {
                                                 console.error("Failed to delete user", error);
                                                 toast.error("Failed to delete user");
