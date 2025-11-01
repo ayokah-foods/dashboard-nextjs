@@ -156,22 +156,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({ lim
           const value = getValue() as string;
           return formatHumanReadableDate(value);
         },
-      },
-      {
-        header: "Action",
-        accessorKey: "id",
-        cell: ({ getValue }) => {
-          const productId = getValue();
-          return (
-            <button
-              className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 cursor-pointer"
-              onClick={() => window.location.href = `/products/${productId}`}
-            >
-              View product
-            </button>
-          );
-        },
-      },
+      }, 
     ],
     []
   );
