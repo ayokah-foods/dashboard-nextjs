@@ -1,4 +1,4 @@
-import axios from "@/app/lib/axios";
+import axios from "@/lib/axios";
 
 export async function listFaqs(
     limit: number,

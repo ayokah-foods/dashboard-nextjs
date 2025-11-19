@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
     BuildingStorefrontIcon,
     CheckBadgeIcon,
     CubeIcon,
     ExclamationTriangleIcon,
-    WrenchScrewdriverIcon
-} from '@heroicons/react/24/outline';
-import Skeleton from 'react-loading-skeleton';
-import { ShopMetrics } from '@/types/ShopType';
-import { shopMetrics } from '@/app/api_/shop';
+    WrenchScrewdriverIcon,
+} from "@heroicons/react/24/outline";
+import Skeleton from "react-loading-skeleton";
+import { ShopMetrics } from "@/types/ShopType";
+import { shopMetrics } from "@/lib/api_/shop";
 
 export function MetricCard() {
-    const [metrics, setMetrics] = useState<ShopMetrics['data'] | null>(null);
+    const [metrics, setMetrics] = useState<ShopMetrics["data"] | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -29,7 +29,6 @@ export function MetricCard() {
             });
     }, []);
 
-
     return (
         <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 text-gray-800">
             {/* Total Shops */}
@@ -40,7 +39,11 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Total Shops</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.total_shops ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.total_shops ?? 0
+                        )}
                     </p>
                 </div>
             </div>
@@ -53,7 +56,11 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Active Shops</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.active_shops ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.active_shops ?? 0
+                        )}
                     </p>
                 </div>
             </div>
@@ -66,7 +73,11 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Inactive Shops</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.inactive_shops ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.inactive_shops ?? 0
+                        )}
                     </p>
                 </div>
             </div>
@@ -78,7 +89,11 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Product Sellers</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.total_products ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.total_products ?? 0
+                        )}
                     </p>
                 </div>
             </div>
@@ -91,11 +106,14 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Service Providers</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.total_services ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.total_services ?? 0
+                        )}
                     </p>
                 </div>
             </div>
-
         </div>
     );
 }

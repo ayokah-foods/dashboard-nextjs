@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listStates } from "@/app/api_/locations";
+import { listStates } from "@/lib/api_/locations";
 import { StateType } from "@/types/LocationType";
 
 type StateTableProps = {
@@ -42,7 +42,7 @@ const StateTable: React.FC<StateTableProps> = ({ limit, onDelete }) => {
                             className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
                         >
                             <TrashIcon className="w-4 h-4" />
-                        </button> 
+                        </button>
                     </div>
                 ),
             },
@@ -82,7 +82,9 @@ const StateTable: React.FC<StateTableProps> = ({ limit, onDelete }) => {
                     pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

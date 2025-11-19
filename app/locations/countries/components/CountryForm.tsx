@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import { storeCountry } from '@/app/api_/locations';
-import { CountryType } from '@/types/LocationType';
-import Image from 'next/image';
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
+import { storeCountry } from "@/lib/api_/locations";
+import { CountryType } from "@/types/LocationType";
+import Image from "next/image";
 
 export default function CountryForm({
     onClose,
@@ -21,11 +21,11 @@ export default function CountryForm({
         currency: string;
         short_name: string;
     }>({
-        name: country?.name || '',
+        name: country?.name || "",
         flag: null,
-        dial_code: country?.dial_code || '',
-        currency: country?.currency || '',
-        short_name: country?.short_name || '',
+        dial_code: country?.dial_code || "",
+        currency: country?.currency || "",
+        short_name: country?.short_name || "",
     });
 
     const [previewUrl, setPreviewUrl] = useState<string | null>(
@@ -36,7 +36,7 @@ export default function CountryForm({
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, files } = e.target;
-        if (name === 'flag' && files && files.length > 0) {
+        if (name === "flag" && files && files.length > 0) {
             const file = files[0];
             setForm((prev) => ({ ...prev, flag: file }));
             setPreviewUrl(URL.createObjectURL(file)); // ✅ preview
@@ -51,26 +51,26 @@ export default function CountryForm({
         const { name, flag, dial_code, currency, short_name } = form;
 
         if (!name || !flag || !dial_code || !currency || !short_name) {
-            toast.error('All fields are required.');
+            toast.error("All fields are required.");
             return;
         }
 
         const formData = new FormData();
-        formData.append('name', name);
-        formData.append('flag', flag);  
-        formData.append('dial_code', dial_code);
-        formData.append('currency', currency);
-        formData.append('short_name', short_name);
+        formData.append("name", name);
+        formData.append("flag", flag);
+        formData.append("dial_code", dial_code);
+        formData.append("currency", currency);
+        formData.append("short_name", short_name);
 
         try {
             setLoading(true);
             await storeCountry(formData);
-            toast.success('Country saved successfully.');
+            toast.success("Country saved successfully.");
             onClose();
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error('Failed to save country.');
+            toast.error("Failed to save country.");
         } finally {
             setLoading(false);
         }
@@ -79,7 +79,9 @@ export default function CountryForm({
     return (
         <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Name
+                </label>
                 <input
                     name="name"
                     type="text"
@@ -92,7 +94,9 @@ export default function CountryForm({
 
             {/* ✅ File Upload for Flag */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Flag (Upload Image)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Flag (Upload Image)
+                </label>
                 <input
                     name="flag"
                     type="file"
@@ -116,7 +120,9 @@ export default function CountryForm({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Dial Code</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Dial Code
+                </label>
                 <input
                     name="dial_code"
                     type="text"
@@ -128,7 +134,9 @@ export default function CountryForm({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Currency
+                </label>
                 <input
                     name="currency"
                     type="text"
@@ -140,7 +148,9 @@ export default function CountryForm({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Short Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Short Name
+                </label>
                 <input
                     name="short_name"
                     type="text"

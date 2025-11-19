@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import { SubmitButton } from '@/app/components/commons/SubmitButton';
+import { useState } from "react";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { sendInvite } from '@/app/api_/team';
-import toast from 'react-hot-toast';
-import { AxiosError } from 'axios';
+import { sendInvite } from "@/lib/api_/team";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 interface Props {
     onClose: () => void;
@@ -22,12 +22,12 @@ export default function InviteForm({ onClose }: Props) {
     const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
-        name: '',
-        last_name: '',
-        email: '',
-        phone: '',
-        role: '',
-        password: '',
+        name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        role: "",
+        password: "",
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -35,30 +35,35 @@ export default function InviteForm({ onClose }: Props) {
     const validate = () => {
         const newErrors: { [key: string]: string } = {};
 
-        if (!formData.name) newErrors.name = 'First name is required';
-        if (!formData.last_name) newErrors.last_name = 'Last name is required';
+        if (!formData.name) newErrors.name = "First name is required";
+        if (!formData.last_name) newErrors.last_name = "Last name is required";
         if (!formData.email) {
-            newErrors.email = 'Email is required';
+            newErrors.email = "Email is required";
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            newErrors.email = 'Invalid email format';
+            newErrors.email = "Invalid email format";
         }
         if (formData.phone && formData.phone.length > 12) {
-            newErrors.phone = 'Phone number must be at most 12 characters';
+            newErrors.phone = "Phone number must be at most 12 characters";
         }
-        if (!formData.role || !['admin', 'staff'].includes(formData.role)) {
-            newErrors.role = 'Role must be admin or staff';
+        if (!formData.role || !["admin", "staff"].includes(formData.role)) {
+            newErrors.role = "Role must be admin or staff";
         }
         if (!formData.password) {
-            newErrors.password = 'Password is required';
-        } else if (formData.password.length < 8 || formData.password.length > 20) {
-            newErrors.password = 'Password must be between 8 and 20 characters';
+            newErrors.password = "Password is required";
+        } else if (
+            formData.password.length < 8 ||
+            formData.password.length > 20
+        ) {
+            newErrors.password = "Password must be between 8 and 20 characters";
         }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -76,9 +81,14 @@ export default function InviteForm({ onClose }: Props) {
             toast.success(response.message);
             window.location.reload();
         } catch (err) {
-            const error = err as AxiosError<{ errors?: Record<string, string[]>; message?: string }>;
+            const error = err as AxiosError<{
+                errors?: Record<string, string[]>;
+                message?: string;
+            }>;
             if (error.response?.data?.errors) {
-                const messages = Object.values(error.response.data.errors).flat();
+                const messages = Object.values(
+                    error.response.data.errors
+                ).flat();
                 messages.forEach((msg) => toast.error(msg));
             } else if (error.response?.data?.message) {
                 toast.error(error.response.data.message);
@@ -90,12 +100,13 @@ export default function InviteForm({ onClose }: Props) {
         }
     };
 
-
     return (
         <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
             {/* First Name */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    First Name
+                </label>
                 <input
                     type="text"
                     name="name"
@@ -103,12 +114,16 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
-                {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
+                {errors.name && (
+                    <p className="text-sm text-red-500">{errors.name}</p>
+                )}
             </div>
 
             {/* Last Name */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Last Name
+                </label>
                 <input
                     type="text"
                     name="last_name"
@@ -116,12 +131,16 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
-                {errors.last_name && <p className="text-sm text-red-500">{errors.last_name}</p>}
+                {errors.last_name && (
+                    <p className="text-sm text-red-500">{errors.last_name}</p>
+                )}
             </div>
 
             {/* Email */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                </label>
                 <input
                     type="email"
                     name="email"
@@ -129,12 +148,16 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
-                {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+                {errors.email && (
+                    <p className="text-sm text-red-500">{errors.email}</p>
+                )}
             </div>
 
             {/* Phone */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone
+                </label>
                 <input
                     type="text"
                     name="phone"
@@ -142,25 +165,38 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
-                {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
+                {errors.phone && (
+                    <p className="text-sm text-red-500">{errors.phone}</p>
+                )}
             </div>
 
             {/* Role */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Assign role</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Assign role
+                </label>
                 <SelectDropdown
                     options={typeOptions}
-                    value={typeOptions.find(opt => opt.value === formData.role) || typeOptions[0]}
-                    onChange={(option) => setFormData({ ...formData, role: option.value })}
+                    value={
+                        typeOptions.find(
+                            (opt) => opt.value === formData.role
+                        ) || typeOptions[0]
+                    }
+                    onChange={(option) =>
+                        setFormData({ ...formData, role: option.value })
+                    }
                     className="w-full"
                 />
-                {errors.role && <p className="text-sm text-red-500">{errors.role}</p>}
+                {errors.role && (
+                    <p className="text-sm text-red-500">{errors.role}</p>
+                )}
             </div>
-
 
             {/* Password */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Password
+                </label>
                 <div className="relative">
                     <input
                         type={showPassword ? "text" : "password"}
@@ -181,7 +217,9 @@ export default function InviteForm({ onClose }: Props) {
                         )}
                     </button>
                 </div>
-                {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
+                {errors.password && (
+                    <p className="text-sm text-red-500">{errors.password}</p>
+                )}
             </div>
             {/* Buttons */}
             <div className="flex justify-end space-x-2">
@@ -193,8 +231,6 @@ export default function InviteForm({ onClose }: Props) {
                     Cancel
                 </button>
                 <SubmitButton loading={loading} label="Send Invite" />
-
-
             </div>
         </form>
     );

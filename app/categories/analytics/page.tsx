@@ -1,8 +1,11 @@
-'use client';
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { categoryAnalytics } from "@/app/api_/categories";
-import { CategoryAnalyticsItem, CategoryAnalyticsType } from "@/types/CategoryType";
+import { categoryAnalytics } from "@/lib/api_/categories";
+import {
+    CategoryAnalyticsItem,
+    CategoryAnalyticsType,
+} from "@/types/CategoryType";
 import { CubeIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
 import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
@@ -23,10 +26,12 @@ export default function Analytics() {
         const fetchAnalytics = async () => {
             setLoading(true);
             try {
-                const response: CategoryAnalyticsType = await categoryAnalytics({
-                    limit: pagination.pageSize,
-                    offset: pagination.pageIndex * pagination.pageSize,
-                });
+                const response: CategoryAnalyticsType = await categoryAnalytics(
+                    {
+                        limit: pagination.pageSize,
+                        offset: pagination.pageIndex * pagination.pageSize,
+                    }
+                );
                 setData(response.data);
                 setTotal(response.total);
             } catch {
@@ -45,9 +50,11 @@ export default function Analytics() {
                 header: "Category Name",
                 accessorKey: "name",
                 cell: ({ row }) => (
-                    <span className="text-gray-800 font-medium">{row.original.name}</span>
+                    <span className="text-gray-800 font-medium">
+                        {row.original.name}
+                    </span>
                 ),
-            }, 
+            },
             {
                 header: "Type",
                 accessorKey: "type",
@@ -68,7 +75,9 @@ export default function Analytics() {
                 header: "Sales Count",
                 accessorKey: "total_sales_count",
                 cell: ({ row }) => (
-                    <span className="text-gray-900">{row.original.total_sales_count}</span>
+                    <span className="text-gray-900">
+                        {row.original.total_sales_count}
+                    </span>
                 ),
             },
             {
@@ -76,7 +85,9 @@ export default function Analytics() {
                 accessorKey: "total_sales_amount",
                 cell: ({ row }) => (
                     <span className="text-gray-900">
-                        {parseFloat(row.original.total_sales_amount).toLocaleString()}
+                        {parseFloat(
+                            row.original.total_sales_amount
+                        ).toLocaleString()}
                     </span>
                 ),
             },
@@ -84,7 +95,9 @@ export default function Analytics() {
                 header: "Total Orders",
                 accessorKey: "total_orders",
                 cell: ({ row }) => (
-                    <span className="text-gray-900">{row.original.total_orders}</span>
+                    <span className="text-gray-900">
+                        {row.original.total_orders}
+                    </span>
                 ),
             },
             {
@@ -108,8 +121,12 @@ export default function Analytics() {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold text-gray-950">Most selling categories</h1>
-            <p className="text-gray-700 text-sm mb-6">Manage your selling categories here.</p>
+            <h1 className="text-2xl font-bold text-gray-950">
+                Most selling categories
+            </h1>
+            <p className="text-gray-700 text-sm mb-6">
+                Manage your selling categories here.
+            </p>
 
             <div className="space-y-6">
                 <TanStackTable
@@ -120,7 +137,7 @@ export default function Analytics() {
                     pagination={{
                         pageIndex: pagination.pageIndex,
                         pageSize: pagination.pageSize,
-                        totalRows: total, 
+                        totalRows: total,
                     }}
                     onPaginationChange={setPagination}
                 />

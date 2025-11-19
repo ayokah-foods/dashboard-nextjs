@@ -1,9 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { UserGroupIcon, CheckBadgeIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import {
+    UserGroupIcon,
+    CheckBadgeIcon,
+    ExclamationTriangleIcon,
+} from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
-import { userStats } from "@/app/api_/users";
+import { userStats } from "@/lib/api_/users";
 import VendorAreaChart from "../components/VendorAreaChart";
 import UsersTable from "@/app/customers/components/UsersTable";
 
@@ -34,7 +38,9 @@ export default function Vendor() {
         <div className="space-y-6 text-gray-800">
             <div className="space-y-2">
                 <h1 className="text-2xl font-bold">Product sellers</h1>
-                <p className="text-sm text-gray-500">Manage your product sellers here.</p>
+                <p className="text-sm text-gray-500">
+                    Manage your product sellers here.
+                </p>
             </div>
 
             <div>
@@ -45,9 +51,15 @@ export default function Vendor() {
                             <UserGroupIcon className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500">Total Product Sellers</p>
+                            <p className="text-sm text-gray-500">
+                                Total Product Sellers
+                            </p>
                             <p className="text-3xl font-bold">
-                                {loading ? <Skeleton width={50} height={28} /> : stats?.total_users ?? 0}
+                                {loading ? (
+                                    <Skeleton width={50} height={28} />
+                                ) : (
+                                    stats?.total_users ?? 0
+                                )}
                             </p>
                         </div>
                     </div>
@@ -58,9 +70,15 @@ export default function Vendor() {
                             <CheckBadgeIcon className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500">Verified Product Sellers</p>
+                            <p className="text-sm text-gray-500">
+                                Verified Product Sellers
+                            </p>
                             <p className="text-3xl font-bold">
-                                {loading ? <Skeleton width={50} height={28} /> : stats?.verified_users ?? 0}
+                                {loading ? (
+                                    <Skeleton width={50} height={28} />
+                                ) : (
+                                    stats?.verified_users ?? 0
+                                )}
                             </p>
                         </div>
                     </div>
@@ -70,16 +88,22 @@ export default function Vendor() {
                             <ExclamationTriangleIcon className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500">Unverified Product Sellers</p>
+                            <p className="text-sm text-gray-500">
+                                Unverified Product Sellers
+                            </p>
                             <p className="text-3xl font-bold">
-                                {loading ? <Skeleton width={50} height={28} /> : stats?.unverified_users ?? 0}
+                                {loading ? (
+                                    <Skeleton width={50} height={28} />
+                                ) : (
+                                    stats?.unverified_users ?? 0
+                                )}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
             <VendorAreaChart />
-            <UsersTable limit={10}  />
+            <UsersTable limit={10} />
         </div>
     );
 }

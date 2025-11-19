@@ -12,23 +12,18 @@ import Image from "next/image";
 import GlobalSkeleton from "@/app/components/Skeletons/GlobalSkeleton";
 import TicketType from "@/types/TicketType";
 import MessageEntry from "@/types/MessageEntry";
-import {
-    deleteTicket,
-    getTicketDetail,
-    replyTicket,
-} from "@/app/api_/tickets";
+import { deleteTicket, getTicketDetail, replyTicket } from "@/lib/api_/tickets";
 import router from "next/router";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { updateTicketStatus } from "@/app/api_/tickets";
+import { updateTicketStatus } from "@/lib/api_/tickets";
 
 const statusOptions = [
     { label: "Open", value: "open" },
     { label: "Ongoing", value: "ongoing" },
     { label: "Closed", value: "close" },
 ];
-
 
 export default function TicketDetailPage() {
     const params = useParams();
@@ -55,7 +50,10 @@ export default function TicketDetailPage() {
     }, [ticketId, fetchDetail]);
     useEffect(() => {
         if (ticket?.response_status) {
-            setStatus({ label: ticket.response_status, value: ticket.response_status });
+            setStatus({
+                label: ticket.response_status,
+                value: ticket.response_status,
+            });
         }
     }, [ticket?.response_status]);
 
@@ -78,7 +76,7 @@ export default function TicketDetailPage() {
 
     const handleDelete = async (id: string) => {
         try {
-            setLoading(true)
+            setLoading(true);
             await deleteTicket(id);
             toast.success("Ticket deleted successfully.");
             router.push("/tickets");
@@ -86,7 +84,7 @@ export default function TicketDetailPage() {
             console.error("Delete failed:", error);
             toast.error("Failed to delete ticket.");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -96,13 +94,16 @@ export default function TicketDetailPage() {
 
     if (!ticket) {
         return (
-            <div className="text-center p-10 text-red-500">Ticket not found.</div>
+            <div className="text-center p-10 text-red-500">
+                Ticket not found.
+            </div>
         );
     }
 
-
-
-    const handleStatusChange = async (newStatus: { label: string; value: string }) => {
+    const handleStatusChange = async (newStatus: {
+        label: string;
+        value: string;
+    }) => {
         try {
             setStatus(newStatus);
             await updateTicketStatus(ticket.ticket_id, newStatus.value);
@@ -113,7 +114,6 @@ export default function TicketDetailPage() {
             console.error("Status update error:", error);
         }
     };
-
 
     return (
         <div className="p-6 bg-white h-screen rounded-xl w-full shadow">
@@ -180,8 +180,11 @@ export default function TicketDetailPage() {
                     return (
                         <div
                             key={`${entry.timestamp}-${index}`}
-                            className={`flex items-start gap-3 max-w-[80%] ${isAgent ? "ml-auto flex-row-reverse text-right" : "mr-auto"
-                                }`}
+                            className={`flex items-start gap-3 max-w-[80%] ${
+                                isAgent
+                                    ? "ml-auto flex-row-reverse text-right"
+                                    : "mr-auto"
+                            }`}
                         >
                             <Image
                                 src={sender?.profile_photo || "/default.jpg"}
@@ -191,14 +194,19 @@ export default function TicketDetailPage() {
                                 className="w-10 h-10 rounded-full object-cover border border-gray-300"
                             />
                             <div
-                                className={`p-4 rounded-b-2xl text-sm ${isAgent
-                                    ? "bg-gray-100 border border-orange-300 rounded-l-xl"
-                                    : "bg-orange-50 border border-orange-200 rounded-r-xl"
-                                    }`}
+                                className={`p-4 rounded-b-2xl text-sm ${
+                                    isAgent
+                                        ? "bg-gray-100 border border-orange-300 rounded-l-xl"
+                                        : "bg-orange-50 border border-orange-200 rounded-r-xl"
+                                }`}
                             >
-                                <div className="font-semibold mb-1">{sender?.name}</div>
+                                <div className="font-semibold mb-1">
+                                    {sender?.name}
+                                </div>
                                 <div
-                                    dangerouslySetInnerHTML={{ __html: entry.message }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: entry.message,
+                                    }}
                                     className="whitespace-pre-line"
                                 />
                                 <div className="text-[8px] text-gray-500">
@@ -215,7 +223,6 @@ export default function TicketDetailPage() {
                 onMessageSent={fetchDetail}
             />
 
-
             {/* MODAL INSIDE COMPONENT */}
             <ConfirmationModal
                 isOpen={confirmDeleteId !== null}
@@ -223,8 +230,8 @@ export default function TicketDetailPage() {
                 title="Confirm Deletion"
             >
                 <p className="text-gray-700 mb-4">
-                    Are you sure you want to delete this ticket? This action cannot be
-                    undone.
+                    Are you sure you want to delete this ticket? This action
+                    cannot be undone.
                 </p>
 
                 <div className="flex justify-end gap-3 text-gray-500">
@@ -283,7 +290,8 @@ function TicketReply({
 
         try {
             const res = await replyTicket(formData);
-            if (res.status !== "success") throw new Error("Failed to send message");
+            if (res.status !== "success")
+                throw new Error("Failed to send message");
             setMessage("");
             onMessageSent();
         } catch (error) {

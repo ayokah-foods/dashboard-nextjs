@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getUserDetail } from "@/app/api_/users";
+import { getUserDetail } from "@/lib/api_/users";
 import { UserDetailResponse } from "@/types/UserType";
 import UserOrders from "../components/UserOrders";
 import ProfileCard from "../components/ProfileCard";
@@ -43,7 +43,6 @@ export default function UserDetail() {
 
     return (
         <div className="space-y-6">
-
             <WalletSummary
                 loading={loading}
                 totalSpent={user?.wallet?.total_earning ?? 0}
@@ -54,7 +53,6 @@ export default function UserDetail() {
             <ProfileCard user={user} loading={loading} />
 
             {typeof id === "string" && <UserOrders userId={id} type={type} />}
-            
         </div>
     );
 }

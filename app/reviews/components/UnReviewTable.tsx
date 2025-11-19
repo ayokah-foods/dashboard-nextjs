@@ -6,12 +6,11 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listUnReviews } from "@/app/api_/reviews";
+import { listUnReviews } from "@/lib/api_/reviews";
 import { User } from "@/types/UserType";
 import ReviewType from "@/types/ReviewType";
 import UnReviewOrderType from "@/types/UnReviewOrderType";
 import Link from "next/link";
-
 
 interface ReviewTableProps {
     limit: number;
@@ -69,7 +68,10 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 cell: ({ getValue }) => {
                     const items = getValue() as UnReviewOrderType["items"];
                     return (
-                        <span className="truncate block max-w-xs" title={items.length + " items"}>
+                        <span
+                            className="truncate block max-w-xs"
+                            title={items.length + " items"}
+                        >
                             {items.length} product{items.length > 1 ? "s" : ""}
                         </span>
                     );
@@ -80,7 +82,11 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 accessorKey: "total",
                 cell: ({ getValue }) => {
                     const total = getValue() as string;
-                    return <span className="font-semibold">${Number(total).toLocaleString()}</span>;
+                    return (
+                        <span className="font-semibold">
+                            ${Number(total).toLocaleString()}
+                        </span>
+                    );
                 },
             },
             {
@@ -90,10 +96,11 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     const status = getValue() as string;
                     return (
                         <span
-                            className={`px-2 py-1 text-xs rounded ${status === "delivered"
-                                ? "bg-green-100 text-green-700"
-                                : "bg-yellow-100 text-yellow-700"
-                                }`}
+                            className={`px-2 py-1 text-xs rounded ${
+                                status === "delivered"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-yellow-100 text-yellow-700"
+                            }`}
                         >
                             {status}
                         </span>
@@ -119,7 +126,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 const offset = pageIndex * pagination.pageSize;
                 const response = await listUnReviews(
                     pagination.pageSize,
-                    offset,
+                    offset
                 );
                 setReviews(response.data || []);
                 setTotalReviews(response.total || 0);
@@ -156,7 +163,8 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
     return (
         <div>
             <div className="mb-4">
-                <input hidden
+                <input
+                    hidden
                     type="text"
                     placeholder="Search by customer name or comment..."
                     value={search}
@@ -165,7 +173,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 />
             </div>
             <TanStackTable
-                data={reviews as unknown as UnReviewOrderType[]}  
+                data={reviews as unknown as UnReviewOrderType[]}
                 columns={columns}
                 loading={loading}
                 error={error}

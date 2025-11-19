@@ -5,7 +5,7 @@ import Image from "next/image";
 import ReviewType from "@/types/ReviewType";
 import { formatHumanReadableDate } from "../../utils/formatHumanReadableDate";
 import RecentReviewsSkeleton from "./Skeletons/RecentReviewsSkeleton";
-import { listReviews } from "../api_/reviews";
+import { listReviews } from "../../lib/api_/reviews";
 import Link from "next/link";
 
 function StarRating({ rating }: { rating: number }) {
@@ -14,8 +14,9 @@ function StarRating({ rating }: { rating: number }) {
             {[...Array(5)].map((_, index) => (
                 <svg
                     key={index}
-                    className={`w-4 h-4 ${index < rating ? "text-yellow-400" : "text-gray-400"
-                        }`}
+                    className={`w-4 h-4 ${
+                        index < rating ? "text-yellow-400" : "text-gray-400"
+                    }`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                 >
@@ -66,7 +67,10 @@ export function RecentReviews() {
         async function fetchReviews() {
             try {
                 const response = await listReviews(3, 0);
-                if (response?.status === "success" && Array.isArray(response.data)) {
+                if (
+                    response?.status === "success" &&
+                    Array.isArray(response.data)
+                ) {
                     setReviews(response.data);
                 } else {
                     setError("Failed to fetch reviews");
@@ -94,7 +98,9 @@ export function RecentReviews() {
         <div className="mb-4">
             {/* Header row */}
             <div className="flex justify-between items-center mb-4">
-                <p className="text-lg font-bold text-gray-900">Recent Reviews</p>
+                <p className="text-lg font-bold text-gray-900">
+                    Recent Reviews
+                </p>
                 <Link
                     href="/reviews"
                     className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-amber-50 py-2 px-4 rounded"
@@ -116,5 +122,4 @@ export function RecentReviews() {
             </div>
         </div>
     );
-
 }

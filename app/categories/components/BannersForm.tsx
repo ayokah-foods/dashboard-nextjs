@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import toast from 'react-hot-toast';
-import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import { addBanner, listBannerTypes } from '@/app/api_/banners';
-import { BannerType } from '@/types/CategoryType';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import toast from "react-hot-toast";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import { addBanner, listBannerTypes } from "@/lib/api_/banners";
+import { BannerType } from "@/types/CategoryType";
 
 export default function BannerForm({
     onClose,
@@ -40,38 +40,42 @@ export default function BannerForm({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!type) {
-            toast.error('Please select a type');
+            toast.error("Please select a type");
             return;
         }
 
         setLoading(true);
         const formData = new FormData();
-        formData.append('type', type.value);
-        if (image) formData.append('banner', image);
+        formData.append("type", type.value);
+        if (image) formData.append("banner", image);
 
         try {
             await addBanner(formData);
-            toast.success('Banner updated successfully');
+            toast.success("Banner updated successfully");
             onClose();
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error(`Failed to ${category?.id ? 'update' : 'add'} banner`);
+            toast.error(`Failed to ${category?.id ? "update" : "add"} banner`);
         } finally {
             setLoading(false);
         }
     };
 
-    const [typeOptions, setTypeOptions] = useState<{ label: string; value: string }[]>([]);
+    const [typeOptions, setTypeOptions] = useState<
+        { label: string; value: string }[]
+    >([]);
 
     useEffect(() => {
         async function fetchTypes() {
             try {
                 const res = await listBannerTypes();
-                const formatted = res.data.map((type: { id: number; name: string }) => ({
-                    label: type.name,
-                    value: String(type.id),
-                }));
+                const formatted = res.data.map(
+                    (type: { id: number; name: string }) => ({
+                        label: type.name,
+                        value: String(type.id),
+                    })
+                );
                 setTypeOptions(formatted);
             } catch (error) {
                 console.error("Failed to fetch banner types", error);
@@ -81,14 +85,15 @@ export default function BannerForm({
         fetchTypes();
     }, []);
 
-
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Type
+                </label>
                 <SelectDropdown
                     options={typeOptions}
-                    value={type || { label: 'Select type', value: '' }}
+                    value={type || { label: "Select type", value: "" }}
                     onChange={(option) => setType(option)}
                     className="w-full"
                 />
@@ -119,9 +124,16 @@ export default function BannerForm({
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
                             >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={1.5}
+                                    d="M12 4v16m8-8H4"
+                                />
                             </svg>
-                            <span className="mt-2 text-sm">Click to upload or drag and drop</span>
+                            <span className="mt-2 text-sm">
+                                Click to upload or drag and drop
+                            </span>
                         </div>
                     )}
 

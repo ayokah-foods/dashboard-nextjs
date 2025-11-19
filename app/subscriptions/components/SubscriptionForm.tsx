@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { createSubscription, updateSubscription } from "@/app/api_/subscriptions";
+import {
+    createSubscription,
+    updateSubscription,
+} from "@/lib/api_/subscriptions";
 import { SubscriptionType } from "@/types/SubscriptionType";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
@@ -68,7 +71,9 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error(`Failed to ${isEditing ? "update" : "create"} subscription`);
+            toast.error(
+                `Failed to ${isEditing ? "update" : "create"} subscription`
+            );
         } finally {
             setLoading(false);
         }
@@ -138,7 +143,9 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
                         content_style:
                             "body { font-family:Inter,Arial,sans-serif; font-size:14px; color:#374151 }",
                     }}
-                    onEditorChange={(content) => setForm({ ...form, features: content })}
+                    onEditorChange={(content) =>
+                        setForm({ ...form, features: content })
+                    }
                 />
             </div>
 

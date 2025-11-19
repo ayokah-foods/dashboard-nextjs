@@ -1,4 +1,4 @@
-import axios from "@/app/lib/axios";
+import axios from "@/lib/axios";
 import { CountryType } from "@/types/LocationType";
 
 export async function listLocations(limit?: number, offset?: number) {

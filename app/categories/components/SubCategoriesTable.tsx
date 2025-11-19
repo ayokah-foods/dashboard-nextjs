@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listSubCategories } from "@/app/api_/categories";
+import { listSubCategories } from "@/lib/api_/categories";
 import { CategoryType, FlattenedSubCategory } from "@/types/CategoryType";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 
@@ -13,8 +13,6 @@ type SubcategoryProps = {
     type: string;
     onEdit: (category: FlattenedSubCategory) => void;
     onDelete: (category: FlattenedSubCategory) => void;
-
-
 };
 
 type FetchArgs = {
@@ -24,7 +22,12 @@ type FetchArgs = {
     type: string;
 };
 
-const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, onDelete }) => {
+const SubCategoriesTable: React.FC<SubcategoryProps> = ({
+    limit,
+    type,
+    onEdit,
+    onDelete,
+}) => {
     const [categories, setSubCategories] = useState<FlattenedSubCategory[]>([]);
 
     const [total, setTotal] = useState(0);
@@ -36,14 +39,15 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, o
         pageSize: limit,
     });
 
-
     const columns: ColumnDef<FlattenedSubCategory>[] = useMemo(
         () => [
             {
                 header: "Subcategory",
                 accessorKey: "name",
                 cell: ({ row }) => (
-                    <span className="text-gray-800 font-medium">{row.original.name}</span>
+                    <span className="text-gray-800 font-medium">
+                        {row.original.name}
+                    </span>
                 ),
             },
             {
@@ -74,24 +78,35 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, o
                         </button>
                     </div>
                 ),
-            }
+            },
         ],
         [onEdit, onDelete]
     );
 
     // ✅ Async fetch function
-    const fetchSubCategories = async ({ offset, pageSize, searchTerm, type }: FetchArgs) => {
+    const fetchSubCategories = async ({
+        offset,
+        pageSize,
+        searchTerm,
+        type,
+    }: FetchArgs) => {
         try {
             setLoading(true);
-            const response = await listSubCategories(pageSize, offset, searchTerm, type);
+            const response = await listSubCategories(
+                pageSize,
+                offset,
+                searchTerm,
+                type
+            );
 
-            const flattened: FlattenedSubCategory[] = response.data.flatMap((parent: CategoryType) =>
-                (parent.children || []).map((child: CategoryType) => ({
-                    ...child,
-                    parent_name: parent.name,
-                    parent_id: parent.id,
-                    parent_slug: parent.slug,
-                }))
+            const flattened: FlattenedSubCategory[] = response.data.flatMap(
+                (parent: CategoryType) =>
+                    (parent.children || []).map((child: CategoryType) => ({
+                        ...child,
+                        parent_name: parent.name,
+                        parent_id: parent.id,
+                        parent_slug: parent.slug,
+                    }))
             );
 
             setSubCategories(flattened);
@@ -146,7 +161,9 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, o
                     pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

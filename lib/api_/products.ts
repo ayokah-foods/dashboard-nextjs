@@ -1,4 +1,4 @@
-import axios from "../lib/axios"; // This is already configured
+import axios from "../axios"; // This is already configured
 
 export async function getRecentProducts(
     limit: number,
@@ -19,7 +19,11 @@ export async function getRecentProducts(
     return response.data;
 }
 
-export async function productGraph(selectedPeriod?: string, type?: string, status?: string) {
+export async function productGraph(
+    selectedPeriod?: string,
+    type?: string,
+    status?: string
+) {
     const response = await axios.get(
         `/product-graph?start_date=${selectedPeriod}&type=${type}&status=${status}`
     );
@@ -41,7 +45,8 @@ export async function mostSellingProductGraph(selectedPeriod?: string) {
 }
 
 export async function updateItemStatus(productId: number, status: string) {
-    const response = await axios.patch(`/product/${productId}/status/${status}`);
+    const response = await axios.patch(
+        `/product/${productId}/status/${status}`
+    );
     return response.data;
 }
-

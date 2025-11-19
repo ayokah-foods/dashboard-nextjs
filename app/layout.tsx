@@ -1,11 +1,15 @@
-import { Inter } from "next/font/google";
+import { Instrument_Sans } from "next/font/google"; 
 import "./globals.css";
 import { Metadata } from "next";
 import AuthLayout from "./AuthLayout";
 import { Toaster } from "react-hot-toast";
-import 'react-loading-skeleton/dist/skeleton.css' 
+import "react-loading-skeleton/dist/skeleton.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const instrumentalSans = Instrument_Sans({
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
+    variable: "--font-instrumental-sans",
+});
 
 export const metadata: Metadata = {
     title: process.env.NEXT_PUBLIC_APP_NAME || "My App",
@@ -17,11 +21,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <body className={`${inter.className} antialiased`}>
-                <AuthLayout>{children}</AuthLayout> 
+            <body className={`${instrumentalSans.className} antialiased`}>
+                <AuthLayout>{children}</AuthLayout>
                 <Toaster />
             </body>
         </html>
     );
 }
-

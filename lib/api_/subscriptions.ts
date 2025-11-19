@@ -1,5 +1,5 @@
 import { SubscriptionType } from "@/types/SubscriptionType";
-import axios from "../lib/axios";
+import axios from "../axios";
 
 export async function listSubscriptions() {
     const response = await axios.get("/subscriptions");
@@ -8,6 +8,11 @@ export async function listSubscriptions() {
 
 export async function createSubscription(data: SubscriptionType) {
     const response = await axios.post("/subscriptions", data);
+    return response.data;
+}
+
+export async function createStripeSubscription(data: SubscriptionType) {
+    const response = await axios.post("/stripe/subscriptions", data);
     return response.data;
 }
 

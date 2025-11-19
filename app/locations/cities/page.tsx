@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-import { deleteCity } from "@/app/api_/locations";
-import { CityType } from "@/types/LocationType"; 
+import { deleteCity } from "@/lib/api_/locations";
+import { CityType } from "@/types/LocationType";
 import CityTable from "./components/CityTable";
 import CityForm from "./components/CityForm";
 export default function CityPage() {
@@ -45,7 +45,8 @@ export default function CityPage() {
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800">Cities</h1>
                     <p className="text-sm text-gray-600">
-                        Manage the list of cities under each Province and Country.
+                        Manage the list of cities under each Province and
+                        Country.
                     </p>
                 </div>
 
@@ -64,10 +65,7 @@ export default function CityPage() {
             </div>
 
             {/* Table */}
-            <CityTable
-                limit={10}
-                onDelete={confirmDelete}
-            />
+            <CityTable limit={10} onDelete={confirmDelete} />
 
             {/* Drawer Form */}
             <Drawer
@@ -94,7 +92,8 @@ export default function CityPage() {
                 title="Confirm Deletion"
             >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this city? This action cannot be undone.
+                    Are you sure you want to delete this city? This action
+                    cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

@@ -1,19 +1,34 @@
-'use client';
+"use client";
 
-import { useState, useMemo, useEffect } from 'react';
-import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import { useCategoryStore } from '@/app/store/CategoryStore';
-import { addCategory, getCategories, updateCategory } from '@/app/api_/categories';
-import toast from 'react-hot-toast';
-import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import { CategoryType, FlattenedSubCategory } from '@/types/CategoryType';
+import { useState, useMemo, useEffect } from "react";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import { useCategoryStore } from "@/store/CategoryStore";
+import {
+    addCategory,
+    getCategories,
+    updateCategory,
+} from "@/lib/api_/categories";
+import toast from "react-hot-toast";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
+import { CategoryType, FlattenedSubCategory } from "@/types/CategoryType";
 
-
-export default function SubCategoryForm({ onClose, category }: { onClose: () => void, category?: FlattenedSubCategory }) {
-    const [name, setName] = useState(category?.name ?? '');
-    const [selectedParent, setSelectedParent] = useState<{ label: string, value: string } | null>(
+export default function SubCategoryForm({
+    onClose,
+    category,
+}: {
+    onClose: () => void;
+    category?: FlattenedSubCategory;
+}) {
+    const [name, setName] = useState(category?.name ?? "");
+    const [selectedParent, setSelectedParent] = useState<{
+        label: string;
+        value: string;
+    } | null>(
         category?.parent_id
-            ? { label: category.parent_name ?? '', value: String(category.parent_id) }
+            ? {
+                  label: category.parent_name ?? "",
+                  value: String(category.parent_id),
+              }
             : null
     );
     const { categories, setCategories: saveToStore } = useCategoryStore();
@@ -45,28 +60,30 @@ export default function SubCategoryForm({ onClose, category }: { onClose: () => 
         }));
     }, [localCategories]);
 
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
         const formData = new FormData();
-        formData.append('name', name);
-        if (selectedParent?.value) formData.append('parent_id', selectedParent.value);
+        formData.append("name", name);
+        if (selectedParent?.value)
+            formData.append("parent_id", selectedParent.value);
 
         try {
             if (category?.id) {
                 await updateCategory(category.id, formData);
-                toast.success('Sub category updated successfully');
+                toast.success("Sub category updated successfully");
             } else {
                 await addCategory(formData);
-                toast.success('Sub category added successfully');
+                toast.success("Sub category added successfully");
             }
             onClose();
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error(`Failed to ${category?.id ? 'update' : 'add'} category`);
+            toast.error(
+                `Failed to ${category?.id ? "update" : "add"} category`
+            );
         }
     };
 
@@ -74,7 +91,9 @@ export default function SubCategoryForm({ onClose, category }: { onClose: () => 
         <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Sub category Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Sub category Name
+                </label>
                 <input
                     type="text"
                     placeholder="Enter sub category name"
@@ -85,10 +104,17 @@ export default function SubCategoryForm({ onClose, category }: { onClose: () => 
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Parent Category <span className="text-red-500">*</span>
+                </label>
                 <SelectDropdown
                     options={categoryOptions}
-                    value={selectedParent || { label: 'Select category', value: '' }}
+                    value={
+                        selectedParent || {
+                            label: "Select category",
+                            value: "",
+                        }
+                    }
                     onChange={(opt) => setSelectedParent(opt)}
                     className="w-full"
                 />

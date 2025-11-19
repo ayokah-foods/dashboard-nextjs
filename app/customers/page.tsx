@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { userStats } from "../api_/users";
+import { userStats } from "../../lib/api_/users";
 import UsersTable from "./components/UsersTable";
-import { UserGroupIcon, CheckBadgeIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import {
+    UserGroupIcon,
+    CheckBadgeIcon,
+    ExclamationTriangleIcon,
+} from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import UserAreaChart from "./components/UserAreaChart";
@@ -37,7 +41,9 @@ export default function Customers() {
         <div className="space-y-6 text-gray-800">
             <div>
                 <h1 className="text-2xl font-bold">Customers</h1>
-                <p className="text-sm text-gray-500">Manage your customers here.</p>
+                <p className="text-sm text-gray-500">
+                    Manage your customers here.
+                </p>
             </div>
 
             {/* Stat Cards */}
@@ -50,7 +56,11 @@ export default function Customers() {
                     <div>
                         <p className="text-sm text-gray-500">Total Customers</p>
                         <p className="text-3xl font-bold">
-                            {loading ? <Skeleton width={50} height={28} /> : stats?.total_users ?? 0}
+                            {loading ? (
+                                <Skeleton width={50} height={28} />
+                            ) : (
+                                stats?.total_users ?? 0
+                            )}
                         </p>
                     </div>
                 </div>
@@ -61,9 +71,15 @@ export default function Customers() {
                         <CheckBadgeIcon className="w-6 h-6" />
                     </div>
                     <div>
-                        <p className="text-sm text-gray-500">Verified Customers</p>
+                        <p className="text-sm text-gray-500">
+                            Verified Customers
+                        </p>
                         <p className="text-3xl font-bold">
-                            {loading ? <Skeleton width={50} height={28} /> : stats?.verified_users ?? 0}
+                            {loading ? (
+                                <Skeleton width={50} height={28} />
+                            ) : (
+                                stats?.verified_users ?? 0
+                            )}
                         </p>
                     </div>
                 </div>
@@ -73,16 +89,21 @@ export default function Customers() {
                         <ExclamationTriangleIcon className="w-6 h-6" />
                     </div>
                     <div>
-                        <p className="text-sm text-gray-500">Unverified Customers</p>
+                        <p className="text-sm text-gray-500">
+                            Unverified Customers
+                        </p>
                         <p className="text-3xl font-bold">
-                            {loading ? <Skeleton width={50} height={28} /> : stats?.unverified_users ?? 0}
+                            {loading ? (
+                                <Skeleton width={50} height={28} />
+                            ) : (
+                                stats?.unverified_users ?? 0
+                            )}
                         </p>
                     </div>
                 </div>
             </div>
 
             <UserAreaChart />
-
 
             <UsersTable limit={10} />
         </div>

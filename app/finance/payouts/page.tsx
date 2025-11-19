@@ -1,56 +1,74 @@
-'use client';
+"use client";
 
-import { getPayoutRequests } from '@/app/api_/finance';
-import { MetricCardProps, PayoutItem, PayoutRequest } from '@/types/FinanceType';
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { ColumnDef } from '@tanstack/react-table';
-import { debounce } from 'lodash';
-import { formatAmount } from '@/utils/formatCurrency';
-import { EyeIcon, TrashIcon, BanknotesIcon } from '@heroicons/react/24/outline';
-import { formatHumanReadableDate } from '@/utils/formatHumanReadableDate';
-import TanStackTable from '@/app/components/commons/TanStackTable';
-import StatusBadge from '@/utils/StatusBadge';
-import ViewPayoutModal from '../components/ViewPayoutModal';
-import Skeleton from 'react-loading-skeleton';
+import { getPayoutRequests } from "@/lib/api_/finance";
+import {
+    MetricCardProps,
+    PayoutItem,
+    PayoutRequest,
+} from "@/types/FinanceType";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { ColumnDef } from "@tanstack/react-table";
+import { debounce } from "lodash";
+import { formatAmount } from "@/utils/formatCurrency";
+import { EyeIcon, TrashIcon, BanknotesIcon } from "@heroicons/react/24/outline";
+import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
+import TanStackTable from "@/app/components/commons/TanStackTable";
+import StatusBadge from "@/utils/StatusBadge";
+import ViewPayoutModal from "../components/ViewPayoutModal";
+import Skeleton from "react-loading-skeleton";
 
 export default function PayoutRequests() {
     const [payouts, setPayouts] = useState<PayoutItem[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
+    const [pagination, setPagination] = useState({
+        pageIndex: 0,
+        pageSize: 20,
+    });
     const [totalRows, setTotalRows] = useState(0);
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPayout, setSelectedPayout] = useState<PayoutItem | null>(null);
+    const [selectedPayout, setSelectedPayout] = useState<PayoutItem | null>(
+        null
+    );
 
-    const [summary, setSummary] = useState<{ total_payout: number; pending_payout: string }>({
+    const [summary, setSummary] = useState<{
+        total_payout: number;
+        pending_payout: string;
+    }>({
         total_payout: 0,
-        pending_payout: '0',
+        pending_payout: "0",
     });
 
-    const fetchPayouts = useCallback(async (pageIndex: number, searchTerm: string) => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response: PayoutRequest = await getPayoutRequests(
-                pagination.pageSize,
-                pageIndex * pagination.pageSize,
-                searchTerm
-            );
-            setPayouts(response.data);
-            setTotalRows(response.total);
+    const fetchPayouts = useCallback(
+        async (pageIndex: number, searchTerm: string) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response: PayoutRequest = await getPayoutRequests(
+                    pagination.pageSize,
+                    pageIndex * pagination.pageSize,
+                    searchTerm
+                );
+                setPayouts(response.data);
+                setTotalRows(response.total);
 
-            if (response.summary) {
-                setSummary(response.summary);
+                if (response.summary) {
+                    setSummary(response.summary);
+                }
+            } catch {
+                setError("Failed to fetch payout requests");
+            } finally {
+                setLoading(false);
             }
-        } catch {
-            setError('Failed to fetch payout requests');
-        } finally {
-            setLoading(false);
-        }
-    }, [pagination.pageSize]);
+        },
+        [pagination.pageSize]
+    );
 
-    const debouncedFetch = useMemo(() => debounce(fetchPayouts, 300), [fetchPayouts]);
+    const debouncedFetch = useMemo(
+        () => debounce(fetchPayouts, 300),
+        [fetchPayouts]
+    );
 
     useEffect(() => {
         debouncedFetch(pagination.pageIndex, search);
@@ -75,62 +93,72 @@ export default function PayoutRequests() {
         fetchPayouts(pagination.pageIndex, search);
     };
 
-
-    const columns: ColumnDef<PayoutItem>[] = useMemo(() => [
-        {
-            header: 'Vendor Name',
-            accessorFn: (row) => `${row.vendor.name} ${row.vendor.last_name}`,
-            cell: ({ getValue }) => <span>{getValue() as string}</span>,
-        },
-        {
-            header: 'Amount',
-            accessorKey: 'amount',
-            cell: ({ getValue }) => <span>{formatAmount(Number(getValue()))}</span>,
-        },
-        {
-            header: 'Status',
-            accessorKey: 'status',
-            cell: ({ getValue }) => {
-                const status = String(getValue() || "").toLowerCase();
-                return <StatusBadge status={status} />;
+    const columns: ColumnDef<PayoutItem>[] = useMemo(
+        () => [
+            {
+                header: "Vendor Name",
+                accessorFn: (row) =>
+                    `${row.vendor.name} ${row.vendor.last_name}`,
+                cell: ({ getValue }) => <span>{getValue() as string}</span>,
             },
-        },
-        {
-            header: 'Created At',
-            accessorKey: 'created_at',
-            cell: ({ getValue }) => formatHumanReadableDate(getValue() as string),
-        },
-        {
-            header: 'Actions',
-            accessorKey: 'id',
-            cell: ({ row }) => (
-                <div className="flex items-center gap-6">
-                    <button
-                        onClick={() => handleView(row.original)}
-                        className="text-blue-600 bg-blue-100 p-1 rounded-lg hover:text-blue-800"
-                        title="View"
-                    >
-                        <EyeIcon className="w-5 h-5" />
-                    </button>
+            {
+                header: "Amount",
+                accessorKey: "amount",
+                cell: ({ getValue }) => (
+                    <span>{formatAmount(Number(getValue()))}</span>
+                ),
+            },
+            {
+                header: "Status",
+                accessorKey: "status",
+                cell: ({ getValue }) => {
+                    const status = String(getValue() || "").toLowerCase();
+                    return <StatusBadge status={status} />;
+                },
+            },
+            {
+                header: "Created At",
+                accessorKey: "created_at",
+                cell: ({ getValue }) =>
+                    formatHumanReadableDate(getValue() as string),
+            },
+            {
+                header: "Actions",
+                accessorKey: "id",
+                cell: ({ row }) => (
+                    <div className="flex items-center gap-6">
+                        <button
+                            onClick={() => handleView(row.original)}
+                            className="text-blue-600 bg-blue-100 p-1 rounded-lg hover:text-blue-800"
+                            title="View"
+                        >
+                            <EyeIcon className="w-5 h-5" />
+                        </button>
 
-                    <button
-                        onClick={() => handleDelete(row.original.id)}
-                        className="text-red-600 bg-red-100 p-1 rounded-lg hover:text-red-800"
-                        title="Delete"
-                    >
-                        <TrashIcon className="w-5 h-5" />
-                    </button>
-                </div>
-            ),
-        },
-    ], []);
+                        <button
+                            onClick={() => handleDelete(row.original.id)}
+                            className="text-red-600 bg-red-100 p-1 rounded-lg hover:text-red-800"
+                            title="Delete"
+                        >
+                            <TrashIcon className="w-5 h-5" />
+                        </button>
+                    </div>
+                ),
+            },
+        ],
+        []
+    );
 
     return (
         <>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Payout Requests</h1>
-                    <p className="text-sm text-gray-500">Manage your vendor payout requests here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Payout Requests
+                    </h1>
+                    <p className="text-sm text-gray-500">
+                        Manage your vendor payout requests here.
+                    </p>
                 </div>
 
                 <div className="w-78">
@@ -180,7 +208,10 @@ export default function PayoutRequests() {
                     totalRows: totalRows,
                 }}
                 onPaginationChange={(updated) =>
-                    setPagination({ pageIndex: updated.pageIndex, pageSize: updated.pageSize })
+                    setPagination({
+                        pageIndex: updated.pageIndex,
+                        pageSize: updated.pageSize,
+                    })
                 }
             />
 
@@ -192,15 +223,12 @@ export default function PayoutRequests() {
                         setSelectedPayout(null);
                     }}
                     payout={selectedPayout}
-                    onStatusUpdated={refetchPayouts}  
+                    onStatusUpdated={refetchPayouts}
                 />
             )}
-
         </>
     );
 }
-
-
 
 function MetricCard({ title, value, icon, loading, color }: MetricCardProps) {
     const bg = `bg-${color}-100`;
@@ -208,9 +236,7 @@ function MetricCard({ title, value, icon, loading, color }: MetricCardProps) {
 
     return (
         <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex items-center gap-4">
-            <div className={`${bg} ${text} p-2 rounded-full`}>
-                {icon}
-            </div>
+            <div className={`${bg} ${text} p-2 rounded-full`}>{icon}</div>
             <div>
                 <p className="text-sm text-gray-500">{title}</p>
                 <p className="text-3xl font-bold text-gray-950">

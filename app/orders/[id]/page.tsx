@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { changeOrderPaymentStatus, changeOrderStatus, getOrderDetail } from "@/app/api_/orders";
+import {
+    changeOrderPaymentStatus,
+    changeOrderStatus,
+    getOrderDetail,
+} from "@/lib/api_/orders";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import { OrderItem, OrderResponse } from "@/types/OrderType";
@@ -29,7 +33,15 @@ const paymentStatusOptions = [
     { label: "Refund", value: "refunded" },
 ];
 
-function CustomerSummary({ customer, address, stats }: { customer: User; address: Address; stats?: OrderResponse["data"]["stats"] }) {
+function CustomerSummary({
+    customer,
+    address,
+    stats,
+}: {
+    customer: User;
+    address: Address;
+    stats?: OrderResponse["data"]["stats"];
+}) {
     return (
         <div className="bg-white rounded-xl p-6 flex items-center justify-between shadow-sm  border border-gray-200 text-sm text-gray-700">
             <div className="flex items-center gap-4 min-w-[200px]">
@@ -52,14 +64,21 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
             <div className="w-px h-16 bg-gray-200 mx-6" />
 
             <div className="space-y-1 min-w-[200px]">
-                <p className="text-xs text-gray-500 font-medium uppercase mb-1">Personal Information</p>
+                <p className="text-xs text-gray-500 font-medium uppercase mb-1">
+                    Personal Information
+                </p>
                 <div className="flex justify-between">
                     <span className="font-medium text-gray-700">Phone no</span>
                     <span className="text-gray-600">{customer.phone}</span>
                 </div>
                 <div className="flex justify-between">
-                    <span className="font-medium text-gray-700">Member Since</span>
-                    <span className="text-gray-600"> {dayjs(customer.created_at).format("DD MMM. YYYY")}</span>
+                    <span className="font-medium text-gray-700">
+                        Member Since
+                    </span>
+                    <span className="text-gray-600">
+                        {" "}
+                        {dayjs(customer.created_at).format("DD MMM. YYYY")}
+                    </span>
                 </div>
             </div>
 
@@ -67,10 +86,18 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
 
             <div className="flex flex-col gap-2 min-w-[300px]">
                 <div>
-                    <p className="text-xs text-gray-500 font-medium uppercase mb-1">Shipping Address</p>
+                    <p className="text-xs text-gray-500 font-medium uppercase mb-1">
+                        Shipping Address
+                    </p>
                     {address ? (
                         <p className="text-gray-700">
-                            {[address.street_address, address.zip_code, address.state, address.city, address.country]
+                            {[
+                                address.street_address,
+                                address.zip_code,
+                                address.state,
+                                address.city,
+                                address.country,
+                            ]
                                 .filter(Boolean)
                                 .join(", ")}
                         </p>
@@ -90,12 +117,20 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
                         <p className="text-xs text-gray-500">Overall orders</p>
                     </div>
                     <div>
-                        <p className="font-bold ">{stats?.total_completed || 0}</p>
-                        <p className="text-xs text-gray-500">Overall completed</p>
+                        <p className="font-bold ">
+                            {stats?.total_completed || 0}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                            Overall completed
+                        </p>
                     </div>
                     <div>
-                        <p className="font-bold ">{stats?.total_cancelled || 0}</p>
-                        <p className="text-xs text-gray-500">Overall canceled</p>
+                        <p className="font-bold ">
+                            {stats?.total_cancelled || 0}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                            Overall canceled
+                        </p>
                     </div>
                 </div>
             </div>
@@ -103,18 +138,20 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
     );
 }
 
-
-
 export default function OrderDetail() {
     const params = useParams();
     const orderId = params?.id as string | undefined;
     const [order, setOrder] = useState<OrderItem | null>(null);
     const [loading, setLoading] = useState(true);
-    const [stats, setStats] = useState<OrderResponse["data"]["stats"] | null>(null);
+    const [stats, setStats] = useState<OrderResponse["data"]["stats"] | null>(
+        null
+    );
 
     const [updating, setUpdating] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
-    const [selectedPaymentStatus, setSelectedPaymentStatus] = useState(statusOptions[0]);
+    const [selectedPaymentStatus, setSelectedPaymentStatus] = useState(
+        statusOptions[0]
+    );
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -141,28 +178,31 @@ export default function OrderDetail() {
     const customer = orderMeta.customer;
     const address = orderMeta.address;
 
-
-
-
-    const handleStatusChange = async (status: { label: string; value: string }) => {
+    const handleStatusChange = async (status: {
+        label: string;
+        value: string;
+    }) => {
         if (!order) return;
 
         setSelectedStatus(status);
         setUpdating(true);
 
         try {
-            const response = await changeOrderStatus(order?.order?.id, status.value);
+            const response = await changeOrderStatus(
+                order?.order?.id,
+                status.value
+            );
 
             if (response?.success || response?.status === "success") {
                 setOrder((prev) =>
                     prev
                         ? {
-                            ...prev,
-                            order: {
-                                ...prev.order,
-                                shipping_status: status.value,
-                            },
-                        }
+                              ...prev,
+                              order: {
+                                  ...prev.order,
+                                  shipping_status: status.value,
+                              },
+                          }
                         : prev
                 );
                 toast.success("Shipping status updated successfully");
@@ -175,25 +215,31 @@ export default function OrderDetail() {
             setUpdating(false);
         }
     };
-    const handlePaymentStatusChange = async (status: { label: string; value: string }) => {
+    const handlePaymentStatusChange = async (status: {
+        label: string;
+        value: string;
+    }) => {
         if (!order) return;
 
         setSelectedPaymentStatus(status);
         setUpdating(true);
 
         try {
-            const response = await changeOrderPaymentStatus(order?.order?.id, status.value);
+            const response = await changeOrderPaymentStatus(
+                order?.order?.id,
+                status.value
+            );
 
             if (response?.success || response?.status === "success") {
                 setOrder((prev) =>
                     prev
                         ? {
-                            ...prev,
-                            order: {
-                                ...prev.order,
-                                payment_status: status.value,
-                            },
-                        }
+                              ...prev,
+                              order: {
+                                  ...prev.order,
+                                  payment_status: status.value,
+                              },
+                          }
                         : prev
                 );
                 toast.success("Payment status updated successfully");
@@ -215,11 +261,12 @@ export default function OrderDetail() {
                     Order Details - #{orderMeta.id}
                 </h1>
                 <div className="flex items-center gap-2">
-                    {orderMeta.shipping_status === "pending" && orderMeta.payment_status === "pending" && (
-                        <button className="bg-red-100 text-red-600 px-4 py-1 rounded-md text-sm font-medium">
-                            Cancel Order
-                        </button>
-                    )}
+                    {orderMeta.shipping_status === "pending" &&
+                        orderMeta.payment_status === "pending" && (
+                            <button className="bg-red-100 text-red-600 px-4 py-1 rounded-md text-sm font-medium">
+                                Cancel Order
+                            </button>
+                        )}
 
                     <div className="flex items-center gap-2">
                         <p className="text-gray-500 text-sm">Shipping status</p>
@@ -242,7 +289,11 @@ export default function OrderDetail() {
                 </div>
             </div>
 
-            <CustomerSummary customer={customer} address={address} stats={stats} />
+            <CustomerSummary
+                customer={customer}
+                address={address}
+                stats={stats}
+            />
 
             <PrintableOrderTable
                 product={product}
@@ -252,7 +303,6 @@ export default function OrderDetail() {
                 orderMeta={orderMeta}
                 shop={shop}
             />
-
         </div>
     );
 }

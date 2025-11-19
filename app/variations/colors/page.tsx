@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import ProductColorsTable from "../components/ProductColorsTable";
 import ProductColorsForm from "../components/ProductColorsForm";
-import { deleteColour } from "@/app/api_/colours";
+import { deleteColour } from "@/lib/api_/colours";
 
 export default function ProductColors() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function ProductColors() {
     const handleDelete = async () => {
         if (!colorToDelete) return;
         try {
-            setLoading(true)
+            setLoading(true);
             await deleteColour(colorToDelete.id);
             toast.success("Color deleted successfully.");
             setIsModalOpen(false);
@@ -35,7 +35,7 @@ export default function ProductColors() {
             console.error(error);
             toast.error("Failed to delete subcolor.");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -43,13 +43,15 @@ export default function ProductColors() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Product Colors</h1>
-                    <p className="text-sm text-gray-600">Manage your product colors here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Product Colors
+                    </h1>
+                    <p className="text-sm text-gray-600">
+                        Manage your product colors here.
+                    </p>
                 </div>
 
                 <div className="flex gap-3 items-center">
-
-
                     <button
                         onClick={() => {
                             setEditingColor(null);
@@ -63,10 +65,7 @@ export default function ProductColors() {
                 </div>
             </div>
 
-            <ProductColorsTable
-                limit={10}
-                onDelete={confirmDelete}
-            />
+            <ProductColorsTable limit={10} onDelete={confirmDelete} />
 
             <Drawer
                 isOpen={isDrawerOpen}
@@ -84,9 +83,14 @@ export default function ProductColors() {
                 />
             </Drawer>
 
-            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Confirm Deletion"
+            >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this color? This action cannot be undone.
+                    Are you sure you want to delete this color? This action
+                    cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

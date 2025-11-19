@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listCities } from "@/app/api_/locations";
+import { listCities } from "@/lib/api_/locations";
 import { CityType } from "@/types/LocationType";
 
 type CityTableProps = {
@@ -86,7 +86,9 @@ const CityTable: React.FC<CityTableProps> = ({ limit, onDelete }) => {
                     pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

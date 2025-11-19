@@ -1,14 +1,20 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import Image from "next/image";
 
 import Input from "@/app/components/commons/Fields/Input";
 import Textarea from "@/app/components/commons/Fields/TextArea";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from "react-loading-skeleton";
 import toast from "react-hot-toast";
-import { getAppSettings, saveAppSettings } from "@/app/api_/settings";
+import { getAppSettings, saveAppSettings } from "@/lib/api_/settings";
 
 interface AppSettingsData {
     app_name: string;
@@ -65,17 +71,23 @@ const useAppSettingsForm = () => {
         return values.app_logo as string | null;
     }, [values.app_logo]);
 
-    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { id, value } = e.target;
-        setValues((prev) => ({ ...prev, [id]: value }));
-    }, []);
+    const handleChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            const { id, value } = e.target;
+            setValues((prev) => ({ ...prev, [id]: value }));
+        },
+        []
+    );
 
-    const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setValues((prev) => ({ ...prev, app_logo: file }));
-        }
-    }, []);
+    const handleFileChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (file) {
+                setValues((prev) => ({ ...prev, app_logo: file }));
+            }
+        },
+        []
+    );
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -111,7 +123,9 @@ const useAppSettingsForm = () => {
             setValues(updatedSettings);
             toast.success(response.message || "Settings saved successfully!");
         } catch (error: unknown) {
-            const err = error as { response?: { data?: { error_detail?: string } } };
+            const err = error as {
+                response?: { data?: { error_detail?: string } };
+            };
             console.error("Submission error:", err);
             toast.error(
                 err?.response?.data?.error_detail || "Failed to save settings."
@@ -176,8 +190,13 @@ export default function AppSettings() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6">
-            <h1 className="text-2xl text-black font-semibold mb-6">App Settings</h1>
+        <form
+            onSubmit={handleSubmit}
+            className="bg-white shadow-md rounded-lg p-6"
+        >
+            <h1 className="text-2xl text-black font-semibold mb-6">
+                App Settings
+            </h1>
 
             {/* Logo Section */}
             <div className="flex flex-col items-center justify-center mb-6">
@@ -214,7 +233,6 @@ export default function AppSettings() {
                 </div>
             </div>
 
-
             <fieldset disabled={isSubmitting} className="space-y-6">
                 <Input
                     label="Brand name"
@@ -249,7 +267,6 @@ export default function AppSettings() {
             <div className="mt-8 flex justify-end space-x-3 w-full">
                 <SubmitButton label="Save changes" loading={isSubmitting} />
             </div>
-
         </form>
     );
 }

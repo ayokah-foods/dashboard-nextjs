@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
-import { deleteFaq, listFaqs, updateStatus } from "@/app/api_/faqs";
+import { deleteFaq, listFaqs, updateStatus } from "@/lib/api_/faqs";
 import { Faq } from "@/types/FaqType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -26,7 +26,6 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState<string>("");
 
-
     // 🔹 State for deletion modal
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [faqToDelete, setFaqToDelete] = useState<string | null>(null);
@@ -40,7 +39,13 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingFaq, setEditingFaq] = useState<Faq | null>(null);
 
-    function StatusSwitch({ id, initialStatus }: { id: string; initialStatus: string }) {
+    function StatusSwitch({
+        id,
+        initialStatus,
+    }: {
+        id: string;
+        initialStatus: string;
+    }) {
         const [enabled, setEnabled] = useState(initialStatus === "active");
 
         const handleToggle = async () => {
@@ -63,8 +68,9 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
           relative inline-flex h-6 w-11 items-center rounded-full`}
             >
                 <span
-                    className={`${enabled ? "translate-x-6" : "translate-x-1"
-                        } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                    className={`${
+                        enabled ? "translate-x-6" : "translate-x-1"
+                    } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                 />
             </Switch>
         );
@@ -92,14 +98,15 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
         }
     };
 
-
     const columns: ColumnDef<Faq>[] = useMemo(
         () => [
             {
                 header: "Question",
                 accessorKey: "question",
                 cell: ({ getValue }) => (
-                    <span className="font-medium text-gray-800">{getValue() as string}</span>
+                    <span className="font-medium text-gray-800">
+                        {getValue() as string}
+                    </span>
                 ),
             },
             {
@@ -121,14 +128,19 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                 header: "Type",
                 accessorKey: "type",
                 cell: ({ getValue }) => (
-                    <span className="capitalize text-sm text-gray-800">{getValue() as string}</span>
+                    <span className="capitalize text-sm text-gray-800">
+                        {getValue() as string}
+                    </span>
                 ),
             },
             {
                 header: "Status",
                 accessorKey: "status",
                 cell: ({ row }) => (
-                    <StatusSwitch id={row.original.id} initialStatus={row.original.status} />
+                    <StatusSwitch
+                        id={row.original.id}
+                        initialStatus={row.original.status}
+                    />
                 ),
             },
 
@@ -166,7 +178,11 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                 accessorKey: "created_at",
                 cell: ({ getValue }) => {
                     const value = getValue() as string;
-                    return <span className="text-sm">{formatHumanReadableDate(value)}</span>;
+                    return (
+                        <span className="text-sm">
+                            {formatHumanReadableDate(value)}
+                        </span>
+                    );
                 },
             },
         ],
@@ -178,7 +194,12 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
             try {
                 setLoading(true);
                 const offset = pageIndex * pagination.pageSize;
-                const response = await listFaqs(pagination.pageSize, offset, type, search);
+                const response = await listFaqs(
+                    pagination.pageSize,
+                    offset,
+                    type,
+                    search
+                );
                 setFaqs(response.data || []);
                 setTotalFaqs(response.total || 0);
             } catch (err) {
@@ -263,7 +284,8 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                 title="Confirm Deletion"
             >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this FAQ? This action cannot be undone.
+                    Are you sure you want to delete this FAQ? This action cannot
+                    be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

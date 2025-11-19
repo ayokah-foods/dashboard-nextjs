@@ -7,12 +7,12 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentBookings } from "@/app/api_/bookings";
+import { getRecentBookings } from "@/lib/api_/bookings";
 import StatusBadge from "@/utils/StatusBadge";
 import Link from "next/link";
 
 interface RecentOrdersTableProps {
-    limit: number;   
+    limit: number;
     status?: string;
 }
 
@@ -27,10 +27,16 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
                 header: "Customer",
                 accessorKey: "user",
                 cell: ({ getValue }) => {
-                    const value = getValue() as { name: string; photo: string } | null;
+                    const value = getValue() as {
+                        name: string;
+                        photo: string;
+                    } | null;
                     return (
                         <div className="flex items-center space-x-2">
-                            <Avatar src={value?.photo} alt={value?.name || "User"} />
+                            <Avatar
+                                src={value?.photo}
+                                alt={value?.name || "User"}
+                            />
                             <span>{value?.name ?? "N/A"}</span>
                         </div>
                     );
@@ -40,7 +46,10 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
                 header: "Item",
                 accessorKey: "product",
                 cell: ({ getValue }) => {
-                    const value = getValue() as { title: string; image: string } | null;
+                    const value = getValue() as {
+                        title: string;
+                        image: string;
+                    } | null;
                     return (
                         <div className="flex items-center space-x-2">
                             <Image
@@ -118,7 +127,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
     const fetchOrders = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await getRecentBookings(limit, 0);  
+            const response = await getRecentBookings(limit, 0);
             setOrders(response.orders);
         } catch (err) {
             console.error(err);
@@ -135,8 +144,13 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
     return (
         <div>
             <div className="flex justify-between items-center mb-4">
-                <p className="text-lg font-bold text-gray-900">Recent bookings</p>
-                <Link href="/orders" className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-amber-50 py-2 px-4 rounded">
+                <p className="text-lg font-bold text-gray-900">
+                    Recent bookings
+                </p>
+                <Link
+                    href="/orders"
+                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-amber-50 py-2 px-4 rounded"
+                >
                     See all
                 </Link>
             </div>

@@ -1,35 +1,34 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import axios from 'axios';
-import { addSizes } from '@/app/api_/sizes';
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
+import axios from "axios";
+import { addSizes } from "@/lib/api_/sizes";
 
 export default function ProductSizeForm({ onClose }: { onClose: () => void }) {
-    const [name, setName] = useState('');
+    const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
-
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!name) {
-            toast.error('Please provide size name');
+            toast.error("Please provide size name");
             return;
         }
 
         setLoading(true);
         try {
             await addSizes({ name });
-            toast.success('Size added successfully');
+            toast.success("Size added successfully");
             onClose();
             window.location.reload();
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data?.name || 'Failed to add size');
+                toast.error(error.response?.data?.name || "Failed to add size");
             } else {
-                toast.error('An unexpected error occurred');
+                toast.error("An unexpected error occurred");
             }
         } finally {
             setLoading(false);

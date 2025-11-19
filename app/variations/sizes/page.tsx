@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-import { deleteSizes } from "@/app/api_/sizes";
+import { deleteSizes } from "@/lib/api_/sizes";
 import ProductSizesTable from "../components/ProductSizesTable";
 import ProductSizeForm from "../components/ProductSizeForm";
 import { Sizes } from "@/types/SizeType";
@@ -43,13 +43,15 @@ export default function ProductSizes() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Product sizes</h1>
-                    <p className="text-sm text-gray-600">Manage your product sizes here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Product sizes
+                    </h1>
+                    <p className="text-sm text-gray-600">
+                        Manage your product sizes here.
+                    </p>
                 </div>
 
                 <div className="flex gap-3 items-center">
-
-
                     <button
                         onClick={() => {
                             setDrawerOpen(true);
@@ -62,10 +64,7 @@ export default function ProductSizes() {
                 </div>
             </div>
 
-            <ProductSizesTable
-                limit={10}
-                onDelete={confirmDelete}
-            />
+            <ProductSizesTable limit={10} onDelete={confirmDelete} />
 
             <Drawer
                 isOpen={isDrawerOpen}
@@ -80,9 +79,14 @@ export default function ProductSizes() {
                 />
             </Drawer>
 
-            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Confirm Deletion"
+            >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this size? This action cannot be undone.
+                    Are you sure you want to delete this size? This action
+                    cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

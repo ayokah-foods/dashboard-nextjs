@@ -4,8 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { Sizes} from "@/types/SizeType";
-import { listSizes } from "@/app/api_/sizes";
+import { Sizes } from "@/types/SizeType";
+import { listSizes } from "@/lib/api_/sizes";
 
 type SizeProps = {
     limit: number;
@@ -34,7 +34,6 @@ const ProductSizesTable: React.FC<SizeProps> = ({ limit, onDelete }) => {
                 accessorKey: "id",
                 cell: ({ row }) => (
                     <div className="flex items-center gap-2">
-
                         <button
                             onClick={() => onDelete(row.original)}
                             className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
@@ -79,7 +78,9 @@ const ProductSizesTable: React.FC<SizeProps> = ({ limit, onDelete }) => {
                     pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

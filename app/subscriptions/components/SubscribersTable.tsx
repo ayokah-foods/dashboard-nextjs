@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { listSubscribers } from "@/app/api_/subscriptions";
+import { listSubscribers } from "@/lib/api_/subscriptions";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatAmount } from "@/utils/formatCurrency";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -27,7 +27,7 @@ interface SubscriberType {
         id: number;
         name: string;
         logo: string;
-    }
+    };
     status: string;
 }
 
@@ -79,8 +79,12 @@ export default function SubscribersTable({ limit }: Props) {
                 header: "Vendor",
                 cell: ({ row }) => (
                     <div>
-                        <p className="font-medium text-gray-800">{row.original.vendor?.name || "—"}</p>
-                        <p className="text-xs text-gray-500">{row.original.vendor?.email || "—"}</p>
+                        <p className="font-medium text-gray-800">
+                            {row.original.vendor?.name || "—"}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                            {row.original.vendor?.email || "—"}
+                        </p>
                     </div>
                 ),
             },
@@ -88,9 +92,14 @@ export default function SubscribersTable({ limit }: Props) {
                 header: "Subscription Plan",
                 cell: ({ row }) => (
                     <div>
-                        <p className="font-semibold text-gray-700">{row.original.subscription?.name || "—"}</p>
+                        <p className="font-semibold text-gray-700">
+                            {row.original.subscription?.name || "—"}
+                        </p>
                         <p className="text-xs text-gray-500">
-                            Monthly: {formatAmount(row.original.subscription?.monthly_price || 0)}
+                            Monthly:{" "}
+                            {formatAmount(
+                                row.original.subscription?.monthly_price || 0
+                            )}
                         </p>
                     </div>
                 ),
@@ -103,17 +112,21 @@ export default function SubscribersTable({ limit }: Props) {
 
                     const remainingDays = Math.max(
                         0,
-                        Math.ceil((endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+                        Math.ceil(
+                            (endDate.getTime() - now.getTime()) /
+                                (1000 * 60 * 60 * 24)
+                        )
                     );
 
                     const isActive = now <= endDate;
 
                     return (
                         <span
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${isActive
-                                ? "bg-green-100 text-green-700"
-                                : "bg-gray-100 text-gray-600"
-                                }`}
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                isActive
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-gray-100 text-gray-600"
+                            }`}
                         >
                             {isActive
                                 ? `Active (${remainingDays} days left)`
@@ -161,7 +174,9 @@ export default function SubscribersTable({ limit }: Props) {
                     pageSize: pagination.pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

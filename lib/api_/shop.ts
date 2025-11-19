@@ -1,5 +1,10 @@
-import { ShopAnalyticsType, ShopMetrics, ShopPerformanceType, ShopType } from "@/types/ShopType";
-import axios from "@/app/lib/axios";
+import {
+    ShopAnalyticsType,
+    ShopMetrics,
+    ShopPerformanceType,
+    ShopType,
+} from "@/types/ShopType";
+import axios from "@/lib/axios";
 
 export async function getShops(params: {
     limit: number;
@@ -27,16 +32,20 @@ export async function shopAnalytics(params?: {
     return response.data;
 }
 
-
-export async function mostSellingShops(params: { limit: number; offset: number }): Promise<ShopPerformanceType> {
-  const response = await axios.get<ShopPerformanceType>(`/shops/most-selling`, {
-    params,
-  });
-  return response.data;
+export async function mostSellingShops(params: {
+    limit: number;
+    offset: number;
+}): Promise<ShopPerformanceType> {
+    const response = await axios.get<ShopPerformanceType>(
+        `/shops/most-selling`,
+        {
+            params,
+        }
+    );
+    return response.data;
 }
 
-
 export async function deleteShop(id: number) {
-  const response = await axios.delete(`/shop/delete/${id}`);
-  return response.data;
+    const response = await axios.delete(`/shop/delete/${id}`);
+    return response.data;
 }

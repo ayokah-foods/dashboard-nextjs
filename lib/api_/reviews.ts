@@ -1,11 +1,15 @@
-import axios from "../lib/axios";
+import axios from "../axios";
 
 export async function listReviews(limit?: number, offset?: number) {
-    const response = await axios.get(`/reviews?limit=${limit}&offset=${offset}`);
+    const response = await axios.get(
+        `/reviews?limit=${limit}&offset=${offset}`
+    );
     return response.data;
 }
 export async function listUnReviews(limit?: number, offset?: number) {
-    const response = await axios.get(`/unreviews?limit=${limit}&offset=${offset}`);
+    const response = await axios.get(
+        `/unreviews?limit=${limit}&offset=${offset}`
+    );
     return response.data;
 }
 

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Fragment, useState } from "react";
 import SubCategoriesTable from "../components/SubCategoriesTable";
@@ -7,9 +7,15 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import SubCategoryForm from "../components/SubCategoryForm";
 import { FlattenedSubCategory } from "@/types/CategoryType";
-import { deleteCategory } from "@/app/api_/categories";
+import { deleteCategory } from "@/lib/api_/categories";
 import toast from "react-hot-toast";
-import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
+import {
+    Transition,
+    Dialog,
+    TransitionChild,
+    DialogPanel,
+    DialogTitle,
+} from "@headlessui/react";
 
 const typeOptions = [
     { label: "Product Items", value: "products" },
@@ -19,9 +25,11 @@ const typeOptions = [
 export default function Sub() {
     const [selectedType, setSelectedType] = useState(typeOptions[0]);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<FlattenedSubCategory | null>(null);
+    const [editingCategory, setEditingCategory] =
+        useState<FlattenedSubCategory | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [categoryToDelete, setCategoryToDelete] = useState<FlattenedSubCategory | null>(null);
+    const [categoryToDelete, setCategoryToDelete] =
+        useState<FlattenedSubCategory | null>(null);
 
     const handleEdit = (category: FlattenedSubCategory) => {
         setEditingCategory(category);
@@ -46,13 +54,17 @@ export default function Sub() {
             toast.error("Failed to delete subcategory.");
         }
     };
- 
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Sub categories</h1>
-                    <p className="text-sm text-gray-600">Manage your sub-categories here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Sub categories
+                    </h1>
+                    <p className="text-sm text-gray-600">
+                        Manage your sub-categories here.
+                    </p>
                 </div>
 
                 <div className="flex gap-3 items-center">
@@ -90,7 +102,11 @@ export default function Sub() {
                     setDrawerOpen(false);
                     setEditingCategory(null);
                 }}
-                title={editingCategory ? "Edit Sub-category" : "Create Sub-category"}
+                title={
+                    editingCategory
+                        ? "Edit Sub-category"
+                        : "Create Sub-category"
+                }
             >
                 <SubCategoryForm
                     onClose={() => {
@@ -103,7 +119,11 @@ export default function Sub() {
 
             {/* Delete Confirmation Modal */}
             <Transition appear show={isModalOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-50" onClose={() => setIsModalOpen(false)}>
+                <Dialog
+                    as="div"
+                    className="relative z-50"
+                    onClose={() => setIsModalOpen(false)}
+                >
                     <TransitionChild
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -132,12 +152,16 @@ export default function Sub() {
                                         Confirm Deletion
                                     </DialogTitle>
                                     <p className="mt-2 text-sm text-gray-500">
-                                        Are you sure you want to delete this subcategory? This action cannot be undone.
+                                        Are you sure you want to delete this
+                                        subcategory? This action cannot be
+                                        undone.
                                     </p>
                                     <div className="mt-4 flex justify-end gap-3">
                                         <button
                                             className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            onClick={() => setIsModalOpen(false)}
+                                            onClick={() =>
+                                                setIsModalOpen(false)
+                                            }
                                         >
                                             Cancel
                                         </button>

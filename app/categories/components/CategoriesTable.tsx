@@ -1,19 +1,25 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useCallback, Fragment } from "react";
+import React, {
+    useEffect,
+    useState,
+    useMemo,
+    useCallback,
+    Fragment,
+} from "react";
 import Image from "next/image";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
-import { updateItemStatus } from "@/app/api_/products";
+import { updateItemStatus } from "@/lib/api_/products";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import StatusBadge from "@/utils/StatusBadge";
 import toast from "react-hot-toast";
-import { deleteCategory, getCategories } from "@/app/api_/categories";
+import { deleteCategory, getCategories } from "@/lib/api_/categories";
 import CategorySummary from "./CategorySummary";
 import { CategoryType } from "@/types/CategoryType";
-import { useCategoryStore } from "@/app/store/CategoryStore";
+import { useCategoryStore } from "@/store/CategoryStore";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import CategoryForm from "./CategoryForm";
@@ -42,12 +48,15 @@ function CategoryActionCell({
     onEdit: (cat: CategoryType) => void;
 }) {
     const [status, setStatus] = useState<Option>(
-        statusOptions.find((opt) => opt.value === category.status) || statusOptions[0]
+        statusOptions.find((opt) => opt.value === category.status) ||
+            statusOptions[0]
     );
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null);
+    const [editingCategory, setEditingCategory] = useState<CategoryType | null>(
+        null
+    );
     const [loading, setLoading] = useState(false);
 
     const handleStatusChange = async (selected: Option) => {
@@ -65,7 +74,7 @@ function CategoryActionCell({
 
     const handleDelete = async () => {
         try {
-            setLoading(true)
+            setLoading(true);
             await deleteCategory(category.id);
             toast.success("Category deleted.");
             setIsModalOpen(false);
@@ -73,7 +82,7 @@ function CategoryActionCell({
         } catch {
             toast.error("Failed to delete category.");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -106,9 +115,14 @@ function CategoryActionCell({
                 </button>
             </div>
 
-            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Confirm Deletion"
+            >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this category? This action cannot be undone.
+                    Are you sure you want to delete this category? This action
+                    cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button
@@ -131,7 +145,7 @@ function CategoryActionCell({
                     setDrawerOpen(false);
                     setEditingCategory(null);
                 }}
-                title={editingCategory ? 'Edit Category' : 'Create Category'}
+                title={editingCategory ? "Edit Category" : "Create Category"}
             >
                 <CategoryForm
                     category={editingCategory ?? undefined}
@@ -163,9 +177,14 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
     });
     const { setCategories: saveToStore } = useCategoryStore();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null);
+    const [editingCategory, setEditingCategory] = useState<CategoryType | null>(
+        null
+    );
 
-    const updateCategoryStatusInState = (id: number, newStatus: "active" | "inactive") => {
+    const updateCategoryStatusInState = (
+        id: number,
+        newStatus: "active" | "inactive"
+    ) => {
         setCategories((prev) =>
             prev.map((c) => (c.id === id ? { ...c, status: newStatus } : c))
         );
@@ -188,8 +207,12 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                                 className="w-10 h-10 object-cover rounded"
                             />
                             <div className="flex flex-col">
-                                <span className="font-medium text-gray-800">{name}</span>
-                                <span className="text-xs text-gray-500">{slug}</span>
+                                <span className="font-medium text-gray-800">
+                                    {name}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                    {slug}
+                                </span>
                             </div>
                         </div>
                     );
@@ -208,7 +231,9 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                 header: "Type",
                 accessorKey: "type",
                 cell: ({ getValue }) => (
-                    <span className="capitalize text-sm text-gray-800">{getValue() as string}</span>
+                    <span className="capitalize text-sm text-gray-800">
+                        {getValue() as string}
+                    </span>
                 ),
             },
             {
@@ -224,7 +249,11 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                 accessorKey: "created_at",
                 cell: ({ getValue }) => {
                     const value = getValue() as string;
-                    return <span className="text-sm">{formatHumanReadableDate(value)}</span>;
+                    return (
+                        <span className="text-sm">
+                            {formatHumanReadableDate(value)}
+                        </span>
+                    );
                 },
             },
             {
@@ -236,7 +265,10 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                         <CategoryActionCell
                             category={category}
                             onStatusUpdate={(newStatus) =>
-                                updateCategoryStatusInState(category.id, newStatus)
+                                updateCategoryStatusInState(
+                                    category.id,
+                                    newStatus
+                                )
                             }
                             onEdit={(cat) => {
                                 setEditingCategory(cat);
@@ -255,7 +287,12 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
             try {
                 setLoading(true);
                 const offset = pageIndex * pagination.pageSize;
-                const response = await getCategories(pagination.pageSize, offset, search, type);
+                const response = await getCategories(
+                    pagination.pageSize,
+                    offset,
+                    search,
+                    type
+                );
                 saveToStore(response.data);
                 setCategories(response.data);
                 setTotalCategories(response.total || 0);
@@ -287,8 +324,6 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
         setSearch(e.target.value);
         setPagination((prev) => ({ ...prev, pageIndex: 0 }));
     };
-
-
 
     return (
         <div className="space-y-6">
@@ -327,7 +362,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     setDrawerOpen(false);
                     setEditingCategory(null);
                 }}
-                title={editingCategory ? 'Edit Category' : 'Create Category'}
+                title={editingCategory ? "Edit Category" : "Create Category"}
             >
                 <CategoryForm
                     category={editingCategory ?? undefined}
@@ -337,15 +372,8 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     }}
                 />
             </Drawer>
-
-
         </div>
-
     );
-
-
 };
-
-
 
 export default CategoriesTable;

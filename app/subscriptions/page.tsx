@@ -1,20 +1,22 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-import { deleteSubscription } from "@/app/api_/subscriptions";
+import { deleteSubscription } from "@/lib/api_/subscriptions";
 import { SubscriptionType } from "@/types/SubscriptionType";
 import SubscriptionTable from "./components/SubscriptionTable";
 import SubscriptionForm from "./components/SubscriptionForm";
 
 export default function SubscriptionPage() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingSubscription, setEditingSubscription] = useState<SubscriptionType | null>(null);
+    const [editingSubscription, setEditingSubscription] =
+        useState<SubscriptionType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [subscriptionToDelete, setSubscriptionToDelete] = useState<SubscriptionType | null>(null);
+    const [subscriptionToDelete, setSubscriptionToDelete] =
+        useState<SubscriptionType | null>(null);
     const [loading, setLoading] = useState(false);
 
     // Confirm deletion
@@ -46,9 +48,12 @@ export default function SubscriptionPage() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Subscriptions</h1>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Subscriptions
+                    </h1>
                     <p className="text-sm text-gray-600">
-                        Manage subscription plans with pricing, features, and payment links.
+                        Manage subscription plans with pricing, features, and
+                        payment links.
                     </p>
                 </div>
 
@@ -83,7 +88,11 @@ export default function SubscriptionPage() {
                     setDrawerOpen(false);
                     setEditingSubscription(null);
                 }}
-                title={editingSubscription ? "Edit Subscription" : "Create Subscription"}
+                title={
+                    editingSubscription
+                        ? "Edit Subscription"
+                        : "Create Subscription"
+                }
             >
                 <SubscriptionForm
                     onClose={() => {
@@ -101,7 +110,8 @@ export default function SubscriptionPage() {
                 title="Confirm Deletion"
             >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this subscription plan? This action cannot be undone.
+                    Are you sure you want to delete this subscription plan? This
+                    action cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

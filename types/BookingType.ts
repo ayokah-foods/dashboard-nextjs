@@ -1,23 +1,39 @@
+import { User } from "./UserType";
+
+// src/types/BookingType.ts
 export interface BookingResponse {
-  id: number;
+    status: string;
+    data: {
+        booking: BookingItem;
+        stats: BookingStats;
+    };
+}
 
-  customer: {
-    name: string | null;
-    photo: string | null;
-  } | null;
+export interface BookingItem {
+    id: number;
+    amount: string;
+    delivery_status: string;
+    payment_status: string;
+    delivery_method: string;
+    start_date: string;
+    end_date: string;
+    created_at: string;
+    address: string;
+    service: {
+        title: string;
+        image: string;
+    };
+    customer: User;
+    vendor: User;
+    shop: {
+        name: string;
+        logo: string | null;
+    };
+}
 
-  vendor: {
-    name: string | null;
-    photo: string | null;
-  } | null;
-
-  service: {
-    title: string | null;
-    image: string | null;
-  } | null;
-
-  total: string | number;
-  delivery_status: string;
-  payment_status: string;
-  created_at: string;
+export interface BookingStats {
+    total_bookings: number;
+    total_completed: number;
+    total_cancelled: number;
+    total_revenue: string;
 }

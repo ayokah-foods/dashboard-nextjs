@@ -6,7 +6,7 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listReviews } from "@/app/api_/reviews";
+import { listReviews } from "@/lib/api_/reviews";
 import ReviewType from "@/types/ReviewType";
 import Image from "next/image";
 import Link from "next/link";
@@ -61,7 +61,9 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                                     className="w-10 h-10 object-cover rounded"
                                 />
                             )}
-                            <span className="truncate max-w-xs">{product?.title ?? "N/A"}</span>
+                            <span className="truncate max-w-xs">
+                                {product?.title ?? "N/A"}
+                            </span>
                         </div>
                     );
                 },
@@ -72,9 +74,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 cell: ({ getValue }) => {
                     const comment = getValue() as string;
                     return (
-                        <div
-                            className="w-64 h-20 overflow-auto text-gray-800 whitespace-normal p-2   rounded bg-gray-50"
-                        >
+                        <div className="w-64 h-20 overflow-auto text-gray-800 whitespace-normal p-2   rounded bg-gray-50">
                             {comment}
                         </div>
                     );
@@ -102,7 +102,9 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 cell: ({ getValue }) => {
                     const rating = Number(getValue());
                     return (
-                        <span className="text-yellow-600 font-semibold">{rating} / 5</span>
+                        <span className="text-yellow-600 font-semibold">
+                            {rating} / 5
+                        </span>
                     );
                 },
             },
@@ -118,16 +120,12 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
         []
     );
 
-
     const fetchReviews = useCallback(
         async (pageIndex: number) => {
             try {
                 setLoading(true);
                 const offset = pageIndex * pagination.pageSize;
-                const response = await listReviews(
-                    pagination.pageSize,
-                    offset,
-                );
+                const response = await listReviews(pagination.pageSize, offset);
                 setReviews(response.data || []);
                 setTotalReviews(response.total || 0);
             } catch (err) {
@@ -163,7 +161,8 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
     return (
         <div>
             <div className="mb-4">
-                <input hidden
+                <input
+                    hidden
                     type="text"
                     placeholder="Search by customer name or comment..."
                     value={search}

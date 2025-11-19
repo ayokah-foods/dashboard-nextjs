@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import { create, updateFaq } from '@/app/api_/faqs';
-import toast from 'react-hot-toast';
-import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import { Faq } from '@/types/FaqType';
+import { useState } from "react";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import { create, updateFaq } from "@/lib/api_/faqs";
+import toast from "react-hot-toast";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
+import { Faq } from "@/types/FaqType";
 
 interface Props {
     onClose: () => void;
@@ -13,24 +13,24 @@ interface Props {
 }
 
 export default function FaqForm({ onClose, faq }: Props) {
-    const [question, setQuestion] = useState(faq?.question || '');
-    const [answer, setAnswer] = useState(faq?.answer || '');
+    const [question, setQuestion] = useState(faq?.question || "");
+    const [answer, setAnswer] = useState(faq?.answer || "");
     const [type, setType] = useState<{ label: string; value: string } | null>(
         faq?.type ? { label: faq.type, value: faq.type } : null
     );
     const [loading, setLoading] = useState(false);
 
     const typeOptions = [
-        { label: 'Vendor', value: 'vendor' },
-        { label: 'Customer', value: 'customer' },
-        { label: 'General', value: 'system' },
+        { label: "Vendor", value: "vendor" },
+        { label: "Customer", value: "customer" },
+        { label: "General", value: "system" },
     ];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!type?.value) {
             toast.error("Type is required");
-            return;  
+            return;
         }
         if (!String(question).trim()) {
             toast.error("Question is required");
@@ -50,16 +50,16 @@ export default function FaqForm({ onClose, faq }: Props) {
         try {
             if (faq?.id) {
                 await updateFaq(String(faq.id), formData);
-                toast.success('FAQ updated successfully');
+                toast.success("FAQ updated successfully");
             } else {
                 await create(formData);
-                toast.success('FAQ added successfully');
+                toast.success("FAQ added successfully");
             }
             onClose();
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error(`Failed to ${faq?.id ? 'update' : 'add'} FAQ`);
+            toast.error(`Failed to ${faq?.id ? "update" : "add"} FAQ`);
         } finally {
             setLoading(false);
         }
@@ -102,7 +102,7 @@ export default function FaqForm({ onClose, faq }: Props) {
                 </label>
                 <SelectDropdown
                     options={typeOptions}
-                    value={type || { label: 'Select type', value: '' }}
+                    value={type || { label: "Select type", value: "" }}
                     onChange={(opt) => setType(opt)}
                     className="w-full"
                 />

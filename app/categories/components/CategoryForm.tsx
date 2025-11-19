@@ -1,29 +1,36 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import Image from 'next/image';
-import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import { useCategoryStore } from '@/app/store/CategoryStore';
-import { addCategory, updateCategory } from '@/app/api_/categories';
-import toast from 'react-hot-toast';
-import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import { CategoryType } from '@/types/CategoryType';
+import { useState, useMemo } from "react";
+import Image from "next/image";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import { useCategoryStore } from "@/store/CategoryStore";
+import { addCategory, updateCategory } from "@/lib/api_/categories";
+import toast from "react-hot-toast";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
+import { CategoryType } from "@/types/CategoryType";
 
 interface Props {
     onClose: () => void;
     category?: CategoryType;
-
 }
 
 export default function CategoryForm({ onClose, category }: Props) {
-    const [name, setName] = useState(category?.name || '');
-    const [selectedParent, setSelectedParent] = useState<{ label: string; value: string } | null>(
+    const [name, setName] = useState(category?.name || "");
+    const [selectedParent, setSelectedParent] = useState<{
+        label: string;
+        value: string;
+    } | null>(
         category?.parent_id
-            ? { label: category.parent_name || '', value: String(category.parent_id) }
+            ? {
+                  label: category.parent_name || "",
+                  value: String(category.parent_id),
+              }
             : null
     );
-    const [description, setDescription] = useState(category?.description || '');
-    const [imagePreview, setImagePreview] = useState<string | null>(category?.image || null);
+    const [description, setDescription] = useState(category?.description || "");
+    const [imagePreview, setImagePreview] = useState<string | null>(
+        category?.image || null
+    );
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [type, setType] = useState<{ label: string; value: string } | null>(
         category?.type ? { label: category.type, value: category.type } : null
@@ -38,8 +45,8 @@ export default function CategoryForm({ onClose, category }: Props) {
     }, [categories]);
 
     const typeOptions = [
-        { label: 'Product', value: 'products' },
-        { label: 'Service', value: 'services' },
+        { label: "Product", value: "products" },
+        { label: "Service", value: "services" },
     ];
     const [loading, setLoading] = useState(false);
 
@@ -71,25 +78,28 @@ export default function CategoryForm({ onClose, category }: Props) {
         setLoading(true);
 
         const formData = new FormData();
-        formData.append('name', name);
-        formData.append('description', description);
-        if (type?.value) formData.append('type', type.value);
-        if (selectedParent?.value) formData.append('parent_id', selectedParent.value);
-        if (imageFile) formData.append('image', imageFile);
+        formData.append("name", name);
+        formData.append("description", description);
+        if (type?.value) formData.append("type", type.value);
+        if (selectedParent?.value)
+            formData.append("parent_id", selectedParent.value);
+        if (imageFile) formData.append("image", imageFile);
 
         try {
             if (category?.id) {
                 await updateCategory(category.id, formData);
-                toast.success('Category updated successfully');
+                toast.success("Category updated successfully");
             } else {
                 await addCategory(formData);
-                toast.success('Category added successfully');
+                toast.success("Category added successfully");
             }
             onClose();
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error(`Failed to ${category?.id ? 'update' : 'add'} category`);
+            toast.error(
+                `Failed to ${category?.id ? "update" : "add"} category`
+            );
         }
     };
 
@@ -97,7 +107,9 @@ export default function CategoryForm({ onClose, category }: Props) {
         <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category Name <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Category Name <span className="text-red-500">*</span>
+                </label>
                 <input
                     type="text"
                     placeholder="Enter category name"
@@ -109,20 +121,30 @@ export default function CategoryForm({ onClose, category }: Props) {
 
             {/* Type */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Type <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Type <span className="text-red-500">*</span>
+                </label>
                 <SelectDropdown
                     options={typeOptions}
-                    value={type || { label: 'Select type', value: '' }}
+                    value={type || { label: "Select type", value: "" }}
                     onChange={(opt) => setType(opt)}
                     className="w-full"
                 />
             </div>
             {/* Parent Category */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-yellow-500'>(optional)</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Parent Category{" "}
+                    <span className="text-yellow-500">(optional)</span>
+                </label>
                 <SelectDropdown
                     options={categoryOptions}
-                    value={selectedParent || { label: 'Select category', value: '' }}
+                    value={
+                        selectedParent || {
+                            label: "Select category",
+                            value: "",
+                        }
+                    }
                     onChange={(opt) => setSelectedParent(opt)}
                     className="w-full"
                 />
@@ -145,9 +167,10 @@ export default function CategoryForm({ onClose, category }: Props) {
                 </div>
             </div>
 
-
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Cat Image <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Cat Image <span className="text-red-500">*</span>
+                </label>
 
                 <label
                     htmlFor="categoryImage"
@@ -170,9 +193,16 @@ export default function CategoryForm({ onClose, category }: Props) {
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
                             >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={1.5}
+                                    d="M12 4v16m8-8H4"
+                                />
                             </svg>
-                            <span className="mt-2 text-sm">Click to upload or drag and drop</span>
+                            <span className="mt-2 text-sm">
+                                Click to upload or drag and drop
+                            </span>
                         </div>
                     )}
 

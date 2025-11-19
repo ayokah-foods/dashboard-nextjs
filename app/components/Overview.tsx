@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { getStats } from "../api_/orders";
+import { getStats } from "../../lib/api_/orders";
 
 interface StatCardProps {
     title: string;
@@ -16,7 +16,16 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, loading }) => (
         <div className="text-sm font-medium text-gray-500">{title}</div>
         <div className="mt-2 flex items-baseline gap-2">
             <div className="text-4xl font-bold text-black">
-                {loading ? <Skeleton width={80} height={28} baseColor="#444" highlightColor="#666" /> : value}
+                {loading ? (
+                    <Skeleton
+                        width={80}
+                        height={28}
+                        baseColor="#444"
+                        highlightColor="#666"
+                    />
+                ) : (
+                    value
+                )}
             </div>
         </div>
     </div>
@@ -67,7 +76,9 @@ const Overview: React.FC<OverviewProps> = ({ period }) => {
     const statCards = [
         {
             title: "Total Revenue",
-            value: stats ? `$${Number(stats.total_revenue).toLocaleString()}` : undefined,
+            value: stats
+                ? `$${Number(stats.total_revenue).toLocaleString()}`
+                : undefined,
         },
         { title: "Total Orders", value: stats?.total_orders },
         { title: "Total Customers", value: stats?.total_customers },

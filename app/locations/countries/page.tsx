@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -7,14 +7,18 @@ import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import CountryForm from "./components/CountryForm";
 import CountryTable from "./components/CountryTable";
-import { deleteCountry } from "@/app/api_/locations";
+import { deleteCountry } from "@/lib/api_/locations";
 import { CountryType } from "@/types/LocationType";
 
 export default function CountryPage() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingCountry, setEditingCountry] = useState<CountryType | null>(null);
+    const [editingCountry, setEditingCountry] = useState<CountryType | null>(
+        null
+    );
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [countryToDelete, setCountryToDelete] = useState<CountryType | null>(null);
+    const [countryToDelete, setCountryToDelete] = useState<CountryType | null>(
+        null
+    );
     const [loading, setLoading] = useState(false);
 
     const confirmDelete = (country: CountryType) => {
@@ -40,14 +44,17 @@ export default function CountryPage() {
         }
     };
 
-
     return (
         <div className="space-y-6">
             {/* Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Countries</h1>
-                    <p className="text-sm text-gray-600">Manage your countries and related information here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Countries
+                    </h1>
+                    <p className="text-sm text-gray-600">
+                        Manage your countries and related information here.
+                    </p>
                 </div>
 
                 <div className="flex gap-3 items-center">
@@ -65,10 +72,7 @@ export default function CountryPage() {
             </div>
 
             {/* Country Table */}
-            <CountryTable
-                limit={10}
-                onDelete={confirmDelete}
-            />
+            <CountryTable limit={10} onDelete={confirmDelete} />
 
             {/* Drawer Form */}
             <Drawer
@@ -95,7 +99,8 @@ export default function CountryPage() {
                 title="Confirm Deletion"
             >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this country? This action cannot be undone.
+                    Are you sure you want to delete this country? This action
+                    cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

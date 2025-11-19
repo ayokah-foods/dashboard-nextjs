@@ -7,13 +7,18 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { getOrderGraph } from "@/app/api_/orders";
+import { getOrderGraph } from "@/lib/api_/orders";
 import { GraphPoint } from "@/types/OrderType";
 
-const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+    ssr: false,
+});
 
 const AreaChart = () => {
-    const [chartData, setChartData] = useState<{ categories: string[]; series: number[] }>({
+    const [chartData, setChartData] = useState<{
+        categories: string[];
+        series: number[];
+    }>({
         categories: [],
         series: [],
     });
@@ -22,7 +27,8 @@ const AreaChart = () => {
     const [hasData, setHasData] = useState<boolean>(false);
 
     const monthOptions = MONTHS.map((m) => ({ label: m, value: m }));
-    const [selected, setSelected] = useState<{ label: string; value: string }>(monthOptions[0]
+    const [selected, setSelected] = useState<{ label: string; value: string }>(
+        monthOptions[0]
     );
 
     const fetchChartData = useCallback(async (start_date: string) => {
@@ -31,7 +37,9 @@ const AreaChart = () => {
             const raw = await getOrderGraph(start_date);
 
             if (Array.isArray(raw) && raw.length > 0) {
-                const categories = raw.map((item: GraphPoint) => formatDate(new Date(item.day)));
+                const categories = raw.map((item: GraphPoint) =>
+                    formatDate(new Date(item.day))
+                );
                 const series = raw.map((item: GraphPoint) => item.total);
                 setChartData({ categories, series });
                 setHasData(true);
@@ -46,8 +54,6 @@ const AreaChart = () => {
             setLoading(false);
         }
     }, []);
-
-
 
     useEffect(() => {
         fetchChartData(selected.value);
@@ -103,7 +109,6 @@ const AreaChart = () => {
                     ],
                 },
                 colors: ["#F97316"],
-
             },
             series: [{ name: "Total orders", data: chartData.series }],
             xaxis: {
@@ -140,13 +145,22 @@ const AreaChart = () => {
         <div className="p-6 card text-gray-950">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-medium">Order Graph</h2>
-                <SelectDropdown options={monthOptions} value={selected} onChange={setSelected} />
+                <SelectDropdown
+                    options={monthOptions}
+                    value={selected}
+                    onChange={setSelected}
+                />
             </div>
 
             {loading ? (
                 <AreaChartSkeleton />
             ) : hasData ? (
-                <ReactApexChart options={options} series={options.series} type="area" height={300} />
+                <ReactApexChart
+                    options={options}
+                    series={options.series}
+                    type="area"
+                    height={300}
+                />
             ) : (
                 <div className="text-center text-black py-10">
                     No data available for {selected.label}.

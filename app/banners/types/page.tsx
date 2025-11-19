@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -7,13 +7,14 @@ import { BannerType } from "@/types/CategoryType";
 import toast from "react-hot-toast";
 import BannerTypesTable from "../components/BannerTypesTable";
 import BannerTypesForm from "../components/BannerTypesForm";
-import { deleteBannerType } from "@/app/api_/banners";
+import { deleteBannerType } from "@/lib/api_/banners";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-
 
 export default function BannerTypes() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<BannerType | null>(null);
+    const [editingCategory, setEditingCategory] = useState<BannerType | null>(
+        null
+    );
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [typeToDelete, settypeToDelete] = useState<BannerType | null>(null);
     const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ export default function BannerTypes() {
     const handleDelete = async () => {
         if (!typeToDelete) return;
         try {
-            setLoading(true)
+            setLoading(true);
             await deleteBannerType(typeToDelete.id);
             toast.success("Banner deleted successfully.");
             setIsModalOpen(false);
@@ -36,7 +37,7 @@ export default function BannerTypes() {
             console.error(error);
             toast.error("Failed to delete subcategory.");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -44,13 +45,15 @@ export default function BannerTypes() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Banner types</h1>
-                    <p className="text-sm text-gray-600">Manage your banner types here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Banner types
+                    </h1>
+                    <p className="text-sm text-gray-600">
+                        Manage your banner types here.
+                    </p>
                 </div>
 
                 <div className="flex gap-3 items-center">
-
-
                     <button
                         onClick={() => {
                             setEditingCategory(null);
@@ -64,10 +67,7 @@ export default function BannerTypes() {
                 </div>
             </div>
 
-            <BannerTypesTable
-                limit={10}
-                onDelete={confirmDelete}
-            />
+            <BannerTypesTable limit={10} onDelete={confirmDelete} />
 
             <Drawer
                 isOpen={isDrawerOpen}
@@ -86,9 +86,14 @@ export default function BannerTypes() {
                 />
             </Drawer>
 
-            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Confirm Deletion"
+            >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this banner type? This action cannot be undone.
+                    Are you sure you want to delete this banner type? This
+                    action cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { CubeIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
@@ -6,7 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { mostSellingShops } from "@/app/api_/shop";
+import { mostSellingShops } from "@/lib/api_/shop";
 import { ShopPerformanceItem, ShopPerformanceType } from "@/types/ShopType";
 import Image from "next/image";
 import { formatAmount } from "@/utils/formatCurrency";
@@ -60,14 +60,18 @@ export default function ShopPerformance() {
                 header: "Shop Name",
                 accessorKey: "name",
                 cell: ({ row }) => (
-                    <span className="text-gray-800 font-medium">{row.original.name}</span>
+                    <span className="text-gray-800 font-medium">
+                        {row.original.name}
+                    </span>
                 ),
             },
             {
                 header: "Vendor",
                 accessorKey: "vendor_name",
                 cell: ({ row }) => (
-                    <span className="text-gray-700">{row.original.vendor_name}</span>
+                    <span className="text-gray-700">
+                        {row.original.vendor_name}
+                    </span>
                 ),
             },
             {
@@ -90,7 +94,9 @@ export default function ShopPerformance() {
                 header: "Sales Count",
                 accessorKey: "total_sales_count",
                 cell: ({ row }) => (
-                    <span className="text-gray-900">{row.original.total_sales_count}</span>
+                    <span className="text-gray-900">
+                        {row.original.total_sales_count}
+                    </span>
                 ),
             },
             {
@@ -106,19 +112,23 @@ export default function ShopPerformance() {
                 header: "Orders",
                 accessorKey: "total_orders",
                 cell: ({ row }) => (
-                    <span className="text-gray-900">{row.original.total_orders}</span>
+                    <span className="text-gray-900">
+                        {row.original.total_orders}
+                    </span>
                 ),
             },
             {
                 header: "Sales %",
                 accessorKey: "sales_percentage",
                 cell: ({ row }) => (
-                    <span className="text-gray-700">{row.original.sales_percentage.toFixed(2)}%</span>
+                    <span className="text-gray-700">
+                        {row.original.sales_percentage.toFixed(2)}%
+                    </span>
                 ),
             },
             {
-                header: 'Action',
-                accessorKey: 'id',
+                header: "Action",
+                accessorKey: "id",
                 cell: ({ row }) => (
                     <Link
                         href={`/shops/${row.original.slug}`}
@@ -137,8 +147,12 @@ export default function ShopPerformance() {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold text-gray-950">Top Performing Shops</h1>
-            <p className="text-gray-700 text-sm mb-6">Review the top shops by sales performance.</p>
+            <h1 className="text-2xl font-bold text-gray-950">
+                Top Performing Shops
+            </h1>
+            <p className="text-gray-700 text-sm mb-6">
+                Review the top shops by sales performance.
+            </p>
 
             <div className="space-y-6">
                 <TanStackTable

@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listColours } from "@/app/api_/colours";
+import { listColours } from "@/lib/api_/colours";
 import { ColorType } from "@/types/ColorType";
 
 type ColorProps = {
@@ -46,13 +46,11 @@ const ProductColorsTable: React.FC<ColorProps> = ({ limit, onDelete }) => {
                 },
             },
 
-
             {
                 header: "Action",
                 accessorKey: "id",
                 cell: ({ row }) => (
                     <div className="flex items-center gap-2">
-
                         <button
                             onClick={() => onDelete(row.original)}
                             className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
@@ -98,7 +96,9 @@ const ProductColorsTable: React.FC<ColorProps> = ({ limit, onDelete }) => {
                     pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

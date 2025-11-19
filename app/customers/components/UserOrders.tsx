@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getUserOrder } from "@/app/api_/users";
+import { getUserOrder } from "@/lib/api_/users";
 import { Order } from "@/types/OrderType";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -23,16 +23,22 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState<string>("");
     const [searchInput, setSearchInput] = useState("");
-    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20, });
+    const [pagination, setPagination] = useState({
+        pageIndex: 0,
+        pageSize: 20,
+    });
     const [totalOrders, setTotalOrders] = useState(0);
 
     const router = useRouter();
 
-    const debouncedSearch = useMemo(() => debounce((value: string) => {
-        setSearch(value);
-        setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-    }, 500), [setSearch]);
-
+    const debouncedSearch = useMemo(
+        () =>
+            debounce((value: string) => {
+                setSearch(value);
+                setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+            }, 500),
+        [setSearch]
+    );
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
@@ -143,7 +149,9 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                 const val = getValue();
                 return (
                     <span className="text-sm text-gray-500">
-                        {typeof val === "string" ? formatHumanReadableDate(val) : "N/A"}
+                        {typeof val === "string"
+                            ? formatHumanReadableDate(val)
+                            : "N/A"}
                     </span>
                 );
             },
@@ -154,7 +162,12 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             cell: ({ row }) => {
                 return (
                     <div className="flex items-center gap-2 text-indigo-600 cursor-pointer">
-                        <button onClick={() => router.push(`/orders/${row.original.id}`)} className="px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 cursor-pointer">
+                        <button
+                            onClick={() =>
+                                router.push(`/orders/${row.original.id}`)
+                            }
+                            className="px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 cursor-pointer"
+                        >
                             View
                         </button>
                     </div>
@@ -165,7 +178,9 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
 
     return (
         <div className="mt-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Recent Orders</h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                Recent Orders
+            </h2>
 
             {loading && <TableSkeleton columns={columns.length} rows={5} />}
 
@@ -211,8 +226,5 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                 </>
             )}
         </div>
-
     );
-
-
 }

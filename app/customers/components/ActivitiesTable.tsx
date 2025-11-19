@@ -6,14 +6,17 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { Activities } from "@/types/UserType";
-import { getUserActivities } from "@/app/api_/users";
+import { getUserActivities } from "@/lib/api_/users";
 
 interface ActivitiesTableProps {
     limit: number;
     role: string;
 }
 
-const ActivitiesTable: React.FC<ActivitiesTableProps> = ({ limit = 10, role }) => {
+const ActivitiesTable: React.FC<ActivitiesTableProps> = ({
+    limit = 10,
+    role,
+}) => {
     const [activities, setActivities] = useState<Activities[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -51,32 +54,44 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({ limit = 10, role }) =
                 accessorKey: "device",
                 cell: ({ getValue }) => {
                     const value = getValue() as string;
-                    return <span className="text-gray-700">{value.replace(/"/g, "")}</span>;
+                    return (
+                        <span className="text-gray-700">
+                            {value.replace(/"/g, "")}
+                        </span>
+                    );
                 },
             },
             {
                 header: "Last Seen",
                 accessorKey: "login_time",
-                cell: ({ getValue }) => formatHumanReadableDate(getValue() as string),
+                cell: ({ getValue }) =>
+                    formatHumanReadableDate(getValue() as string),
             },
         ],
         []
     );
 
-    const fetchUserActivities = useCallback(async (pageIndex: number, role: string) => {
-        try {
-            setLoading(true);
-            const offset = pageIndex * pagination.pageSize;
-            const response = await getUserActivities(pagination.pageSize, offset, role);
-            setActivities(response.data || []);
-            setTotalActivities(response.total || 0);
-        } catch (err) {
-            console.error(err);
-            setError("An error occurred while fetching activities.");
-        } finally {
-            setLoading(false);
-        }
-    }, [pagination.pageSize]);
+    const fetchUserActivities = useCallback(
+        async (pageIndex: number, role: string) => {
+            try {
+                setLoading(true);
+                const offset = pageIndex * pagination.pageSize;
+                const response = await getUserActivities(
+                    pagination.pageSize,
+                    offset,
+                    role
+                );
+                setActivities(response.data || []);
+                setTotalActivities(response.total || 0);
+            } catch (err) {
+                console.error(err);
+                setError("An error occurred while fetching activities.");
+            } finally {
+                setLoading(false);
+            }
+        },
+        [pagination.pageSize]
+    );
 
     useEffect(() => {
         fetchUserActivities(pagination.pageIndex, role);

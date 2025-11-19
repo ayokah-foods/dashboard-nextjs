@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
-import { listSubscriptions } from "@/app/api_/subscriptions";
+import { listSubscriptions } from "@/lib/api_/subscriptions";
 import { SubscriptionType } from "@/types/SubscriptionType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatAmount } from "@/utils/formatCurrency";
@@ -48,7 +48,9 @@ export default function SubscriptionTable({
                 cell: ({ row }) => {
                     const html = row.original.features || "";
                     const truncated =
-                        html.length > 100 ? html.substring(0, 100) + "..." : html;
+                        html.length > 100
+                            ? html.substring(0, 100) + "..."
+                            : html;
 
                     return (
                         <div
@@ -70,7 +72,9 @@ export default function SubscriptionTable({
                             rel="noopener noreferrer"
                             className="text-amber-600 underline hover:text-amber-700 break-words"
                         >
-                            {link.length > 50 ? link.substring(0, 50) + "..." : link}
+                            {link.length > 50
+                                ? link.substring(0, 50) + "..."
+                                : link}
                         </a>
                     );
                 },
@@ -130,7 +134,9 @@ export default function SubscriptionTable({
                     pageSize: pagination.pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

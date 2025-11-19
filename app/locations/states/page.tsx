@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-import { deleteState } from "@/app/api_/locations";
+import { deleteState } from "@/lib/api_/locations";
 import { StateType } from "@/types/LocationType";
 import StateTable from "./components/StateTable";
 import StateForm from "./components/StateForm";
-
 
 export default function StatePage() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -45,8 +44,12 @@ export default function StatePage() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Province</h1>
-                    <p className="text-sm text-gray-600">Manage the list of province within countries.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Province
+                    </h1>
+                    <p className="text-sm text-gray-600">
+                        Manage the list of province within countries.
+                    </p>
                 </div>
 
                 <div className="flex gap-3 items-center">
@@ -64,10 +67,7 @@ export default function StatePage() {
             </div>
 
             {/* Table */}
-            <StateTable
-                limit={10}
-                onDelete={confirmDelete}
-            />
+            <StateTable limit={10} onDelete={confirmDelete} />
 
             {/* Drawer Form */}
             <Drawer
@@ -85,13 +85,17 @@ export default function StatePage() {
                     }}
                     state={editingState ?? undefined}
                 />
-
             </Drawer>
 
             {/* Delete Modal */}
-            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Confirm Deletion"
+            >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this province? This action cannot be undone.
+                    Are you sure you want to delete this province? This action
+                    cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

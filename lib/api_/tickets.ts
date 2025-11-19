@@ -1,5 +1,5 @@
 import { TicketResponse } from "@/types/Ticket";
-import axios from "../lib/axios";
+import axios from "../axios";
 
 export async function getTickets(
     status: string,

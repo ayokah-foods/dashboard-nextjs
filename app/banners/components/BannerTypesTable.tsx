@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { BannerType } from "@/types/CategoryType";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listBannerTypes } from "@/app/api_/banners";
+import { listBannerTypes } from "@/lib/api_/banners";
 
 type BannerProps = {
     limit: number;
@@ -28,13 +28,12 @@ const BannerTypesTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
                 header: "Banner Type",
                 accessorKey: "name",
             },
-            
+
             {
                 header: "Action",
                 accessorKey: "id",
                 cell: ({ row }) => (
                     <div className="flex items-center gap-2">
-
                         <button
                             onClick={() => onDelete(row.original)}
                             className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
@@ -80,7 +79,9 @@ const BannerTypesTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
                     pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

@@ -1,4 +1,4 @@
-import axios from "../lib/axios";
+import axios from "../axios";
 
 export async function addBanner(formData: FormData) {
     const response = await axios.post("/banners/create", formData, {

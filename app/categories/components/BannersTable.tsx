@@ -3,9 +3,13 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listBanners } from "@/app/api_/categories";
+import { listBanners } from "@/lib/api_/categories";
 import { BannerType } from "@/types/CategoryType";
-import { CubeIcon, TrashIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
+import {
+    CubeIcon,
+    TrashIcon,
+    WrenchScrewdriverIcon,
+} from "@heroicons/react/24/outline";
 import Image from "next/image";
 
 type BannerProps = {
@@ -44,7 +48,7 @@ const BannersTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
             {
                 header: "Banner Image",
                 accessorKey: "banner",
-                cell: ({ row }) => (
+                cell: ({ row }) =>
                     row.original.banner ? (
                         <div className="w-20 h-12 relative rounded overflow-hidden border border-gray-200 shadow-sm">
                             <Image
@@ -55,16 +59,16 @@ const BannersTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
                             />
                         </div>
                     ) : (
-                        <span className="text-sm text-gray-500 italic">No image</span>
-                    )
-                ),
+                        <span className="text-sm text-gray-500 italic">
+                            No image
+                        </span>
+                    ),
             },
             {
                 header: "Action",
                 accessorKey: "id",
                 cell: ({ row }) => (
                     <div className="flex items-center gap-2">
-
                         <button
                             onClick={() => onDelete(row.original)}
                             className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
@@ -110,7 +114,9 @@ const BannersTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
                     pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) => setPagination(newPagination)}
+                onPaginationChange={(newPagination) =>
+                    setPagination(newPagination)
+                }
             />
         </div>
     );

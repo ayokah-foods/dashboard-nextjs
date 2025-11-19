@@ -13,7 +13,11 @@ import { Switch } from "@headlessui/react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-import { deleteTutorial, listTutorials, updateTutorialStatus } from "@/app/api_/tutorial";
+import {
+    deleteTutorial,
+    listTutorials,
+    updateTutorialStatus,
+} from "@/lib/api_/tutorial";
 import TutorialForm from "./TutorialForm";
 
 interface TutorialTableProps {
@@ -29,7 +33,9 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
 
     // 🔹 State for deletion modal
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [tutorialToDelete, setTutorialToDelete] = useState<string | null>(null);
+    const [tutorialToDelete, setTutorialToDelete] = useState<string | null>(
+        null
+    );
 
     const [pagination, setPagination] = useState({
         pageIndex: 0,
@@ -38,10 +44,18 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
     const [totalTutorials, setTotalTutorials] = useState(0);
 
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingTutorial, setEditingTutorial] = useState<Tutorial | null>(null);
+    const [editingTutorial, setEditingTutorial] = useState<Tutorial | null>(
+        null
+    );
 
     /** 🔹 Status Switch */
-    function StatusSwitch({ id, initialStatus }: { id: string; initialStatus: string }) {
+    function StatusSwitch({
+        id,
+        initialStatus,
+    }: {
+        id: string;
+        initialStatus: string;
+    }) {
         const [enabled, setEnabled] = useState(initialStatus === "active");
 
         const handleToggle = async () => {
@@ -63,8 +77,9 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
           relative inline-flex h-6 w-11 items-center rounded-full`}
             >
                 <span
-                    className={`${enabled ? "translate-x-6" : "translate-x-1"
-                        } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                    className={`${
+                        enabled ? "translate-x-6" : "translate-x-1"
+                    } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                 />
             </Switch>
         );
@@ -77,11 +92,14 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
         try {
             await deleteTutorial(tutorialToDelete);
             toast.success("Tutorial deleted successfully");
-            setTutorials((prev) => prev.filter((t) => t.id !== tutorialToDelete));
+            setTutorials((prev) =>
+                prev.filter((t) => t.id !== tutorialToDelete)
+            );
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message =
-                    error.response?.data?.message || "Failed to delete tutorial";
+                    error.response?.data?.message ||
+                    "Failed to delete tutorial";
                 toast.error(message);
             } else {
                 toast.error("An unexpected error occurred");
@@ -120,7 +138,9 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                 header: "Title",
                 accessorKey: "title",
                 cell: ({ getValue }) => (
-                    <span className="font-medium text-gray-800">{getValue() as string}</span>
+                    <span className="font-medium text-gray-800">
+                        {getValue() as string}
+                    </span>
                 ),
             },
             {
@@ -131,7 +151,9 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                     // Strip HTML tags for tooltip text
                     const plainText = html.replace(/<[^>]+>/g, "");
                     const truncated =
-                        plainText.length > 100 ? plainText.substring(0, 100) + "..." : plainText;
+                        plainText.length > 100
+                            ? plainText.substring(0, 100) + "..."
+                            : plainText;
 
                     return (
                         <div
@@ -146,14 +168,19 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                 header: "Type",
                 accessorKey: "type",
                 cell: ({ getValue }) => (
-                    <span className="capitalize text-sm text-gray-800">{getValue() as string}</span>
+                    <span className="capitalize text-sm text-gray-800">
+                        {getValue() as string}
+                    </span>
                 ),
             },
             {
                 header: "Status",
                 accessorKey: "status",
                 cell: ({ row }) => (
-                    <StatusSwitch id={row.original.id} initialStatus={row.original.status} />
+                    <StatusSwitch
+                        id={row.original.id}
+                        initialStatus={row.original.status}
+                    />
                 ),
             },
             {
@@ -190,7 +217,11 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                 accessorKey: "created_at",
                 cell: ({ getValue }) => {
                     const value = getValue() as string;
-                    return <span className="text-sm">{formatHumanReadableDate(value)}</span>;
+                    return (
+                        <span className="text-sm">
+                            {formatHumanReadableDate(value)}
+                        </span>
+                    );
                 },
             },
         ],
@@ -203,7 +234,12 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
             try {
                 setLoading(true);
                 const offset = pageIndex * pagination.pageSize;
-                const response = await listTutorials(pagination.pageSize, offset, search, type);
+                const response = await listTutorials(
+                    pagination.pageSize,
+                    offset,
+                    search,
+                    type
+                );
                 setTutorials(response.data || []);
                 setTotalTutorials(response.total || 0);
             } catch (err) {
@@ -290,7 +326,8 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                 title="Confirm Deletion"
             >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this Tutorial? This action cannot be undone.
+                    Are you sure you want to delete this Tutorial? This action
+                    cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

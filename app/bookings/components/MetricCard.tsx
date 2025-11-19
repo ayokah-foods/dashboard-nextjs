@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
-   ArrowPathIcon,
-     CheckCircleIcon,
+    ArrowPathIcon,
+    CheckCircleIcon,
     XCircleIcon,
     TruckIcon,
-} from '@heroicons/react/24/outline';
-import Skeleton from 'react-loading-skeleton';
-import { bookingStats } from '@/app/api_/orders';
-import { OrderStatsType } from '@/types/OrderType';
+} from "@heroicons/react/24/outline";
+import Skeleton from "react-loading-skeleton";
+import { bookingStats } from "@/lib/api_/orders";
+import { OrderStatsType } from "@/types/OrderType";
 
 export function MetricCard() {
     const [loading, setLoading] = useState(true);
@@ -28,7 +28,6 @@ export function MetricCard() {
             });
     }, []);
 
-
     return (
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-gray-800">
             {/* Processing Orders */}
@@ -39,7 +38,11 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Processing</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.total_processing ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.total_processing ?? 0
+                        )}
                     </p>
                 </div>
             </div>
@@ -52,7 +55,11 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Ongoing</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.total_ongoing ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.total_ongoing ?? 0
+                        )}
                     </p>
                 </div>
             </div>
@@ -65,7 +72,11 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Completed</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.total_completed ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.total_completed ?? 0
+                        )}
                     </p>
                 </div>
             </div>
@@ -78,11 +89,14 @@ export function MetricCard() {
                 <div>
                     <p className="text-sm text-gray-500">Cancelled</p>
                     <p className="text-3xl font-bold">
-                        {loading ? <Skeleton width={50} height={28} /> : metrics?.total_cancelled ?? 0}
+                        {loading ? (
+                            <Skeleton width={50} height={28} />
+                        ) : (
+                            metrics?.total_cancelled ?? 0
+                        )}
                     </p>
                 </div>
             </div>
         </div>
-
     );
 }

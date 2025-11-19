@@ -8,7 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentOrders } from "@/app/api_/orders";
+import { getRecentOrders } from "@/lib/api_/orders";
 import StatusBadge from "@/utils/StatusBadge";
 
 interface OrderTableProps {
@@ -33,10 +33,16 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 header: "Customer",
                 accessorKey: "user",
                 cell: ({ getValue }) => {
-                    const value = getValue() as { name: string; photo: string } | null;
+                    const value = getValue() as {
+                        name: string;
+                        photo: string;
+                    } | null;
                     return (
                         <div className="flex items-center space-x-2">
-                            <Avatar src={value?.photo} alt={value?.name || "User"} />
+                            <Avatar
+                                src={value?.photo}
+                                alt={value?.name || "User"}
+                            />
                             <span>{value?.name ?? "N/A"}</span>
                         </div>
                     );
@@ -46,7 +52,10 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 header: "Item",
                 accessorKey: "product",
                 cell: ({ getValue }) => {
-                    const value = getValue() as { title: string; image: string } | null;
+                    const value = getValue() as {
+                        title: string;
+                        image: string;
+                    } | null;
                     return (
                         <div className="flex items-center space-x-2">
                             <Image
@@ -118,30 +127,32 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     return formatHumanReadableDate(value);
                 },
             },
-
         ],
         []
     );
 
-    const fetchOrders = useCallback(async (pageIndex: number, search: string) => {
-        try {
-            setLoading(true);
-            const offset = pageIndex * pagination.pageSize;
-            const response = await getRecentOrders(
-                pagination.pageSize,
-                offset,
-                search,
-                status
-            );
-            setOrders(response.orders);
-            setTotalOrders(response.total || 0);
-        } catch (err) {
-            console.error(err);
-            setError("An error occurred while fetching orders.");
-        } finally {
-            setLoading(false);
-        }
-    }, [pagination.pageSize, status]);
+    const fetchOrders = useCallback(
+        async (pageIndex: number, search: string) => {
+            try {
+                setLoading(true);
+                const offset = pageIndex * pagination.pageSize;
+                const response = await getRecentOrders(
+                    pagination.pageSize,
+                    offset,
+                    search,
+                    status
+                );
+                setOrders(response.orders);
+                setTotalOrders(response.total || 0);
+            } catch (err) {
+                console.error(err);
+                setError("An error occurred while fetching orders.");
+            } finally {
+                setLoading(false);
+            }
+        },
+        [pagination.pageSize, status]
+    );
 
     const debouncedFetchOrders = useMemo(
         () =>

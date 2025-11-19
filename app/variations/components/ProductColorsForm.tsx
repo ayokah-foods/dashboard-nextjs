@@ -1,21 +1,25 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import toast from 'react-hot-toast';
-import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import { addColours } from '@/app/api_/colours';
-import axios from 'axios';
-import { colornames } from 'color-name-list';
+import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
+import { addColours } from "@/lib/api_/colours";
+import axios from "axios";
+import { colornames } from "color-name-list";
 
-export default function ProductColorsForm({ onClose }: { onClose: () => void }) {
-    const [name, setName] = useState('');
-    const [hexcode, setHexcode] = useState('');
+export default function ProductColorsForm({
+    onClose,
+}: {
+    onClose: () => void;
+}) {
+    const [name, setName] = useState("");
+    const [hexcode, setHexcode] = useState("");
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (name.trim()) {
             const match = colornames.find(
-                c => c.name.toLowerCase() === name.trim().toLowerCase()
+                (c) => c.name.toLowerCase() === name.trim().toLowerCase()
             );
             if (match) {
                 setHexcode(match.hex);
@@ -27,21 +31,23 @@ export default function ProductColorsForm({ onClose }: { onClose: () => void }) 
         e.preventDefault();
 
         if (!name || !hexcode) {
-            toast.error('Please provide both color name and hexcode');
+            toast.error("Please provide both color name and hexcode");
             return;
         }
 
         setLoading(true);
         try {
             await addColours({ name, hexcode });
-            toast.success('Color added successfully');
+            toast.success("Color added successfully");
             onClose();
             window.location.reload();
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data?.name || 'Failed to add color');
+                toast.error(
+                    error.response?.data?.name || "Failed to add color"
+                );
             } else {
-                toast.error('An unexpected error occurred');
+                toast.error("An unexpected error occurred");
             }
         } finally {
             setLoading(false);

@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { PayoutItem } from '@/types/FinanceType';
-import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import ConfirmationModal from '@/app/components/commons/ConfirmationModal';
-import { formatAmount } from '@/utils/formatCurrency';
-import toast from 'react-hot-toast';
-import { updatePayoutStatus } from '@/app/api_/finance';
+import React, { useState } from "react";
+import { PayoutItem } from "@/types/FinanceType";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
+import { formatAmount } from "@/utils/formatCurrency";
+import toast from "react-hot-toast";
+import { updatePayoutStatus } from "@/lib/api_/finance";
 
 interface ViewPayoutModalProps {
     isOpen: boolean;
@@ -16,9 +16,9 @@ interface ViewPayoutModalProps {
 }
 
 const options = [
-    { label: 'Pending', value: 'pending' },
-    { label: 'Approve', value: 'approved' },
-    { label: 'Decline', value: 'declined' },
+    { label: "Pending", value: "pending" },
+    { label: "Approve", value: "approved" },
+    { label: "Decline", value: "declined" },
 ];
 
 export default function ViewPayoutModal({
@@ -32,7 +32,11 @@ export default function ViewPayoutModal({
     const account = payout.settlement_account;
 
     return (
-        <ConfirmationModal isOpen={isOpen} onClose={onClose} title="Vendor Settlement Info">
+        <ConfirmationModal
+            isOpen={isOpen}
+            onClose={onClose}
+            title="Vendor Settlement Info"
+        >
             <div className="bg-gradient-to-tr from-gray-700 to-gray-900 text-white rounded-xl p-5 space-y-2">
                 <div className="flex justify-between text-sm">
                     <span>Account Name</span>
@@ -40,7 +44,9 @@ export default function ViewPayoutModal({
                 </div>
                 <div className="flex justify-between text-sm">
                     <span>Account Number</span>
-                    <span className="font-medium">{account.account_number}</span>
+                    <span className="font-medium">
+                        {account.account_number}
+                    </span>
                 </div>
                 <div className="flex justify-between text-sm">
                     <span>Transit Number</span>
@@ -58,7 +64,7 @@ export default function ViewPayoutModal({
 
             <div className="mt-5 space-y-4">
                 <div className="text-right text-sm text-gray-700">
-                    <span className="font-semibold">Amount:</span>{' '}
+                    <span className="font-semibold">Amount:</span>{" "}
                     <span className="text-amber-600 font-bold">
                         {formatAmount(payout.amount)}
                     </span>
@@ -75,8 +81,8 @@ export default function ViewPayoutModal({
                         className="rounded-md bg-amber-600 hover:bg-amber-700 px-4 py-2 text-sm text-white"
                         onClick={async () => {
                             const status = decision.value;
-                            if (status === 'pending') {
-                                toast.error('Please select Approve or Decline');
+                            if (status === "pending") {
+                                toast.error("Please select Approve or Decline");
                                 return;
                             }
 
@@ -87,7 +93,7 @@ export default function ViewPayoutModal({
                                 onStatusUpdated();
                             } catch (err: unknown) {
                                 console.error(err);
-                                toast.error('Failed to update payout status');
+                                toast.error("Failed to update payout status");
                             }
                         }}
                     >

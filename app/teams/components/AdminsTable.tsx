@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { deleteAdmin, listInvites } from "@/app/api_/team";
+import { deleteAdmin, listInvites } from "@/lib/api_/team";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { Stats, Team } from "@/types/TeamType";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -31,9 +31,25 @@ export default function AdminsTable() {
 
     const columns: ColumnDef<Team>[] = useMemo(
         () => [
-            { header: "Name", accessorKey: "name", cell: ({ row }) => <span>{row.original.name} {row.original.last_name}</span> },
-            { header: "Email", accessorKey: "email", cell: ({ row }) => <span>{row.original.email}</span> },
-            { header: "Phone", accessorKey: "phone", cell: ({ row }) => <span>{row.original.phone}</span> },
+            {
+                header: "Name",
+                accessorKey: "name",
+                cell: ({ row }) => (
+                    <span>
+                        {row.original.name} {row.original.last_name}
+                    </span>
+                ),
+            },
+            {
+                header: "Email",
+                accessorKey: "email",
+                cell: ({ row }) => <span>{row.original.email}</span>,
+            },
+            {
+                header: "Phone",
+                accessorKey: "phone",
+                cell: ({ row }) => <span>{row.original.phone}</span>,
+            },
             {
                 header: "Role",
                 accessorKey: "role",
@@ -49,10 +65,29 @@ export default function AdminsTable() {
                             {row.original.role}
                         </span>
                     );
-                }
-            }, { header: "Status", accessorKey: "status", cell: ({ getValue }) => <StatusBadge status={getValue() as "active" | "inactive"} /> },
-            { header: "Last login", accessorKey: "last_login", cell: ({ getValue }) => <span>{formatHumanReadableDate(getValue() as string)}</span> },
-            { header: "Acceptance", accessorKey: "password_changed_at", cell: ({ getValue }) => <StatusBadge status={getValue() ? "Yes" : "No"} /> },
+                },
+            },
+            {
+                header: "Status",
+                accessorKey: "status",
+                cell: ({ getValue }) => (
+                    <StatusBadge status={getValue() as "active" | "inactive"} />
+                ),
+            },
+            {
+                header: "Last login",
+                accessorKey: "last_login",
+                cell: ({ getValue }) => (
+                    <span>{formatHumanReadableDate(getValue() as string)}</span>
+                ),
+            },
+            {
+                header: "Acceptance",
+                accessorKey: "password_changed_at",
+                cell: ({ getValue }) => (
+                    <StatusBadge status={getValue() ? "Yes" : "No"} />
+                ),
+            },
             {
                 header: "Action",
                 accessorKey: "id",
@@ -75,7 +110,7 @@ export default function AdminsTable() {
                 setLoading(true);
                 const response = await listInvites({
                     limit: pagination.pageSize,
-                    offset: (pageIndex ?? pagination.pageIndex),
+                    offset: pageIndex ?? pagination.pageIndex,
                     search: searchTerm ?? search,
                 });
                 setAdmins(response.data);
@@ -110,7 +145,7 @@ export default function AdminsTable() {
 
     const handleDelete = async (id: number) => {
         try {
-            setLoading(true)
+            setLoading(true);
             await deleteAdmin(id);
             toast.success("Admin deleted successfully");
             window.location.reload();
@@ -118,7 +153,7 @@ export default function AdminsTable() {
             console.error(err);
             toast.error("Failed to delete admin");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -157,7 +192,8 @@ export default function AdminsTable() {
                 title="Confirm Deletion"
             >
                 <p className="text-gray-700 mb-4">
-                    Are you sure you want to delete this admin? This action cannot be undone.
+                    Are you sure you want to delete this admin? This action
+                    cannot be undone.
                 </p>
 
                 <div className="flex justify-end gap-3 text-gray-500">
@@ -180,7 +216,6 @@ export default function AdminsTable() {
                     </button>
                 </div>
             </ConfirmationModal>
-
         </div>
     );
 }

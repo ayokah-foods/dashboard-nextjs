@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { User } from "@/types/UserType";
-import { getRecentUsers } from "@/app/api_/users";
+import { getRecentUsers } from "@/lib/api_/users";
 import StatusBadge from "@/utils/StatusBadge";
 
 interface VendorsTableProps {
@@ -52,7 +52,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                 header: "Status",
                 accessorKey: "is_active",
                 cell: ({ getValue }) => {
-                    const raw = getValue();  
+                    const raw = getValue();
                     const status = raw === 1 ? "active" : "inactive";
 
                     return <StatusBadge status={status} />;
@@ -65,7 +65,8 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
             {
                 header: "Date Joined",
                 accessorKey: "created_at",
-                cell: ({ getValue }) => formatHumanReadableDate(getValue() as string),
+                cell: ({ getValue }) =>
+                    formatHumanReadableDate(getValue() as string),
             },
             {
                 header: "Action",
@@ -88,20 +89,28 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
         []
     );
 
-    const fetchUsers = useCallback(async (pageIndex: number, search: string, type = "vendor") => {
-        try {
-            setLoading(true);
-            const offset = pageIndex * pagination.pageSize;
-            const response = await getRecentUsers(pagination.pageSize, offset, search, type);
-            setUsers(response.data);
-            setTotalUsers(response.total || 0);
-        } catch (err) {
-            console.error(err);
-            setError("An error occurred while fetching users.");
-        } finally {
-            setLoading(false);
-        }
-    }, [pagination.pageSize]);
+    const fetchUsers = useCallback(
+        async (pageIndex: number, search: string, type = "vendor") => {
+            try {
+                setLoading(true);
+                const offset = pageIndex * pagination.pageSize;
+                const response = await getRecentUsers(
+                    pagination.pageSize,
+                    offset,
+                    search,
+                    type
+                );
+                setUsers(response.data);
+                setTotalUsers(response.total || 0);
+            } catch (err) {
+                console.error(err);
+                setError("An error occurred while fetching users.");
+            } finally {
+                setLoading(false);
+            }
+        },
+        [pagination.pageSize]
+    );
 
     const debouncedFetchUsers = useMemo(
         () =>

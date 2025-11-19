@@ -1,9 +1,8 @@
-// lib/axios.ts
 import axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
 
 const base = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.africanmarkethub.ca/api/v1/admin',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.ayokah.co.uk/api/v1/admin',
 //   withCredentials: true, 
 });
 

@@ -1,22 +1,30 @@
-'use client';
+"use client";
 
 import { Fragment, useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import { BannerType } from "@/types/CategoryType";
 import toast from "react-hot-toast";
-import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
+import {
+    Transition,
+    Dialog,
+    TransitionChild,
+    DialogPanel,
+    DialogTitle,
+} from "@headlessui/react";
 import BannersForm from "../categories/components/BannersForm";
 import BannersTable from "../categories/components/BannersTable";
-import { deleteBanner } from "../api_/banners";
+import { deleteBanner } from "../../lib/api_/banners";
 
 export default function Banners() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<BannerType | null>(null);
+    const [editingCategory, setEditingCategory] = useState<BannerType | null>(
+        null
+    );
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [categoryToDelete, setCategoryToDelete] = useState<BannerType | null>(null);
-
-     
+    const [categoryToDelete, setCategoryToDelete] = useState<BannerType | null>(
+        null
+    );
 
     const confirmDelete = (category: BannerType) => {
         setCategoryToDelete(category);
@@ -36,18 +44,20 @@ export default function Banners() {
             toast.error("Failed to delete subcategory.");
         }
     };
- 
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">App Banners</h1>
-                    <p className="text-sm text-gray-600">Manage your app banners here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        App Banners
+                    </h1>
+                    <p className="text-sm text-gray-600">
+                        Manage your app banners here.
+                    </p>
                 </div>
 
                 <div className="flex gap-3 items-center">
-                    
-
                     <button
                         onClick={() => {
                             setEditingCategory(null);
@@ -61,10 +71,7 @@ export default function Banners() {
                 </div>
             </div>
 
-            <BannersTable
-                limit={10}
-                 onDelete={confirmDelete}
-            />
+            <BannersTable limit={10} onDelete={confirmDelete} />
 
             <Drawer
                 isOpen={isDrawerOpen}
@@ -85,7 +92,11 @@ export default function Banners() {
 
             {/* Delete Confirmation Modal */}
             <Transition appear show={isModalOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-50" onClose={() => setIsModalOpen(false)}>
+                <Dialog
+                    as="div"
+                    className="relative z-50"
+                    onClose={() => setIsModalOpen(false)}
+                >
                     <TransitionChild
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -114,12 +125,15 @@ export default function Banners() {
                                         Confirm Deletion
                                     </DialogTitle>
                                     <p className="mt-2 text-sm text-gray-500">
-                                        Are you sure you want to delete this banner? This action cannot be undone.
+                                        Are you sure you want to delete this
+                                        banner? This action cannot be undone.
                                     </p>
                                     <div className="mt-4 flex justify-end gap-3">
                                         <button
                                             className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            onClick={() => setIsModalOpen(false)}
+                                            onClick={() =>
+                                                setIsModalOpen(false)
+                                            }
                                         >
                                             Cancel
                                         </button>
