@@ -44,7 +44,7 @@ const API_BASE_URL =
 
 export async function getBannerByType(
     type: string
-): Promise<{ status: string; data: { banner: string } }> {
+): Promise<{ status: string; data: { banner: string } | null; message?: string }> {
     const fullUrl = `${API_BASE_URL}/banner/${type}`;
     const response = await axios.get(fullUrl);
     return response.data;

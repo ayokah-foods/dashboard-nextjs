@@ -194,16 +194,16 @@ export const NAVIGATION = [
             { name: "Privacy & Compliance", href: "/settings/policies" },
         ],
     },
-    {
-        name: "Location Management",
-        href: "/locations",
-        icon: MapPinIcon,
-        children: [
-            { name: "Countries", href: "/locations/countries" },
-            { name: "Provinces", href: "/locations/states" },
-            { name: "Cities", href: "/locations/cities" },
-        ],
-    },
+    // {
+    //     name: "Location Management",
+    //     href: "/locations",
+    //     icon: MapPinIcon,
+    //     children: [
+    //         { name: "Countries", href: "/locations/countries" },
+    //         { name: "Provinces", href: "/locations/states" },
+    //         { name: "Cities", href: "/locations/cities" },
+    //     ],
+    // },
     {
         name: "Platform Settings",
         href: "/settings/app",

@@ -5,8 +5,12 @@ export function proxy(request: NextRequest) {
     const userCookie = request.cookies.get("user")?.value;
     const pathname = request.nextUrl.pathname;
 
-    const isLogin = pathname === "/auth/login";
-    const isChangePassword = pathname === "/auth/change-password";
+    const isAuthRoute = pathname.startsWith("/auth");
+
+    // 🚀 Make all /auth routes public
+    if (isAuthRoute) {
+        return NextResponse.next();
+    }
 
     let mustChangePassword = false;
 
@@ -19,21 +23,16 @@ export function proxy(request: NextRequest) {
         }
     }
 
-    if (!token && !isLogin) {
+    // User is not authenticated → redirect to login
+    if (!token) {
         return NextResponse.redirect(new URL("/auth/login", request.url));
     }
 
+    // Force user to change password if required
     if (token && mustChangePassword) {
-        if (!isChangePassword) {
-            return NextResponse.redirect(
-                new URL("/auth/change-password", request.url)
-            );
-        }
-        return NextResponse.next();
-    }
-
-    if (token && isLogin) {
-        return NextResponse.redirect(new URL("/", request.url));
+        return NextResponse.redirect(
+            new URL("/auth/change-password", request.url)
+        );
     }
 
     return NextResponse.next();

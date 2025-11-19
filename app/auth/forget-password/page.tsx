@@ -6,6 +6,7 @@ import { forgetPassword } from "../../../lib/api_/login";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { SubmitButton } from "../../components/commons/SubmitButton";
+import { CancelButton } from "@/app/components/commons/CancelButton";
 
 type ErrorResponse = {
     message?: string;
@@ -38,7 +39,7 @@ export default function ForgetPassword() {
             const errorDetail =
                 error.response?.data?.error_detail ||
                 error.response?.data?.message ||
-                "Request failed";
+                "Invalide email address. Please try again.";
             toast.error(errorDetail);
         } finally {
             setLoading(false);
@@ -46,45 +47,37 @@ export default function ForgetPassword() {
     };
 
     return (
-        <div className="flex h-screen bg-white text-gray-500">
-            <div
-                className="w-1/2 bg-cover bg-center"
-                style={{ backgroundImage: "url('/login.png')" }}
-            ></div>
+        <>
+            <h1 className="text-2xl font-bold mb-6 text-gray-800">
+                Forgot Password
+            </h1>
+            <form
+                onSubmit={handleSubmit}
+                className="w-full max-w-sm space-y-8 text-gray-800"
+            >
+                <div>
+                    <label className="block text-sm font-medium mb-1">
+                        Email Address
+                    </label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your email address"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
+                        required
+                    />
+                </div>
 
-            {/* Form */}
-            <div className="w-1/2 flex flex-col justify-center items-center px-8">
-                <Image
-                    width={200}
-                    height={200}
-                    src="/logo.svg"
-                    alt="Logo"
-                    className="mb-10"
-                />
-
-                <h1 className="text-2xl font-bold mb-6">Forgot Password</h1>
-
-                <form
-                    onSubmit={handleSubmit}
-                    className="w-full max-w-sm space-y-8"
-                >
-                    <div>
-                        <label className="block text-sm font-medium mb-1">
-                            Email Address
-                        </label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter your email address"
-                            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
-                            required
-                        />
-                    </div>
-
+                <div className="flex items-center justify-between gap-4">
                     <SubmitButton label="Send Reset Link" loading={loading} />
-                </form>
-            </div>
-        </div>
+
+                    <CancelButton
+                        label="Back to Login"
+                        onClick={() => router.push("/auth/login")}
+                    />
+                </div>
+            </form>
+        </>
     );
 }
