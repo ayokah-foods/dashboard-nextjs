@@ -12,7 +12,7 @@ import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 
 interface Props {
     onClose: () => void;
-    subscription?: SubscriptionType; // optional for edit mode
+    subscription?: SubscriptionType;
 }
 
 export default function SubscriptionForm({ onClose, subscription }: Props) {
@@ -21,11 +21,11 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
         monthly_price: subscription?.monthly_price || 0,
         yearly_price: subscription?.yearly_price || 0,
         features: subscription?.features || "",
-        payment_link: subscription?.payment_link || "",
+        payment_link: subscription?.payment_link_url || "",
     });
 
     const [loading, setLoading] = useState(false);
-    const isEditing = Boolean(subscription?.id); // ✅ determine edit mode
+    const isEditing = Boolean(subscription?.id);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -53,7 +53,7 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
             monthly_price: Number(form.monthly_price),
             yearly_price: Number(form.yearly_price),
             features: form.features,
-            payment_link: form.payment_link,
+            payment_link_url: form.payment_link,
         };
 
         try {
@@ -111,20 +111,7 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
                 />
             </div>
 
-            {/* Yearly Price */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Yearly Price <span className="text-red-500">*</span>
-                </label>
-                <input
-                    type="number"
-                    name="yearly_price"
-                    value={form.yearly_price}
-                    onChange={handleChange}
-                    placeholder="Enter yearly price"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                />
-            </div>
+           
 
             {/* Features */}
             <div>
@@ -147,23 +134,8 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
                         setForm({ ...form, features: content })
                     }
                 />
-            </div>
-
-            {/* Payment Link */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Payment Link <span className="text-red-500">*</span>
-                </label>
-                <input
-                    type="url"
-                    name="payment_link"
-                    value={form.payment_link}
-                    onChange={handleChange}
-                    placeholder="https://payment.example.com"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                />
-            </div>
-
+            </div> 
+            
             <SubmitButton
                 loading={loading}
                 label={isEditing ? "Update Subscription" : "Save Subscription"}

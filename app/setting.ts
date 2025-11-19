@@ -1,4 +1,4 @@
-export const APP_NAME = "African Hub Marketplace";
+export const APP_NAME = "Ayokah Foods and Services";
 export const APP_DESCRIPTION = "Your go to marketplace for African products ";
 
 export const MONTHS = [

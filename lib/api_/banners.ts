@@ -29,7 +29,7 @@ export async function addBannerType(formData: FormData) {
 }
 
 export async function listBannerTypes(limit?: number, offset?: number) {
-    const response = await axios.get(`/banner/type`, {
+    const response = await axios.get(`/banner-types`, {
         params: { limit, offset },
     });
     return response.data;
@@ -39,10 +39,13 @@ export async function deleteBannerType(bannerTypeId: number) {
     const response = await axios.delete(`/banner/type/${bannerTypeId}/delete`);
     return response.data;
 }
+const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_URL_ || "http://localhost:8000/api";
 
 export async function getBannerByType(
     type: string
-): Promise<{ status: string; data: { banner: string  } }> {
-    const response = await axios.get(`/banner/${type}`);
+): Promise<{ status: string; data: { banner: string } }> {
+    const fullUrl = `${API_BASE_URL}/banner/${type}`;
+    const response = await axios.get(fullUrl);
     return response.data;
 }

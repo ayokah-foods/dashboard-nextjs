@@ -53,7 +53,7 @@ export default function SubscriptionPage() {
                     </h1>
                     <p className="text-sm text-gray-600">
                         Manage subscription plans with pricing, features, and
-                        payment links.
+                        payment links sync with <b className="text-orange-800">Stripe</b>.
                     </p>
                 </div>
 

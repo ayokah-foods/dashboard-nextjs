@@ -1,7 +1,7 @@
 export const formatAmount = (
   value: string | number = 0,
-  currency: string = "CAD",
-  locale: string = "en-CA"
+  currency: string = "gbp",
+  locale: string = "en-GB"
 ) => {
   const numericValue = Number(value);
 

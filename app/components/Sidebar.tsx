@@ -131,13 +131,13 @@ const SidebarContent = ({
     onLogout: () => void;
 }) => (
     <div
-        className="flex grow flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-50 hover:scrollbar-thumb-gray-100 scrollbar-track-transparent pt-2"
+        className="flex grow flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-50 hover:scrollbar-thumb-gray-100 scrollbar-track-transparent pt-2 mb-12"
         style={{ height: "calc(100vh - 60px)" }}
     >
         <div className="flex items-center justify-center mb-2">
             <Image
                 src="/logo.svg"
-                alt="African Market Hub"
+                alt="Ayokah Foods and Services"
                 width={150}
                 height={40}
                 className="h-10 w-30"

@@ -37,21 +37,25 @@ export default function SubscriptionTable({
             {
                 header: "Monthly Price",
                 accessorFn: (row) => formatAmount(row.monthly_price),
-            },
-            {
-                header: "Yearly Price",
-                accessorFn: (row) => formatAmount(row.yearly_price),
-            },
+            }, 
             {
                 header: "Features",
-                // ✅ Use `cell` instead of `accessorFn`
                 cell: ({ row }) => {
-                    const html = row.original.features || "";
-                    const truncated =
-                        html.length > 100
-                            ? html.substring(0, 100) + "..."
-                            : html;
+                    const featuresData = row.original.features;
+                    let contentString = "";
 
+                    if (Array.isArray(featuresData)) { 
+                        contentString = featuresData.join(", ");
+                    } else if (typeof featuresData === "string") {
+                        contentString = featuresData;
+                    } else {
+                        contentString = "";
+                    } 
+                    const truncated =
+                        contentString.length > 50
+                            ? contentString.substring(0, 50) + "..."
+                            : contentString;
+ 
                     return (
                         <div
                             className="prose prose-sm max-w-none text-gray-700"
@@ -63,7 +67,7 @@ export default function SubscriptionTable({
             {
                 header: "Payment Link",
                 cell: ({ row }) => {
-                    const link = row.original.payment_link;
+                    const link = row.original.payment_link_url;
                     if (!link) return "—";
                     return (
                         <a
@@ -72,9 +76,7 @@ export default function SubscriptionTable({
                             rel="noopener noreferrer"
                             className="text-amber-600 underline hover:text-amber-700 break-words"
                         >
-                            {link.length > 50
-                                ? link.substring(0, 50) + "..."
-                                : link}
+                            Payment link
                         </a>
                     );
                 },

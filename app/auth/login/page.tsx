@@ -51,7 +51,7 @@ export default function LoginScreen() {
     useEffect(() => {
         async function fetchAssets() {
             try {
-                const backgroundResponse = await getBannerByType("login");
+                const backgroundResponse = await getBannerByType("auth");
                 if (
                     backgroundResponse.status === "success" &&
                     backgroundResponse.data?.banner
@@ -80,13 +80,10 @@ export default function LoginScreen() {
             {/* Image */}
             <div
                 className="h-40 md:h-full md:w-1/2 bg-cover bg-center"
-                // style={{ backgroundImage: "url('/login.png')" }}
-                style={{
-                    // Dynamically set background image from state
+                style={{ 
                     backgroundImage: backgroundUrl
                         ? `url(${backgroundUrl})`
                         : "none",
-                    // Add default fallback styling if you like
                     backgroundColor: "#f0f0f0",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -95,23 +92,16 @@ export default function LoginScreen() {
             ></div>
 
             {/* Form */}
-            <div className="flex-1 flex flex-col justify-center items-center px-6 py-8">
-                {/* <Image
-                    width={200}
-                    height={200}
-                    src="/logo.svg"
-                    alt="Logo"
-                    className="mb-10"
-                /> */}
+            <div className="flex-1 flex flex-col justify-center items-center px-6 py-8"> 
                 {logoUrl && (
                     <div className="mb-8">
                         <Image
                             src={logoUrl}
                             alt="Application Logo"
                             width={200}
-                            height={50}
+                            height={100}
                             priority
-                            className="object-contain"
+                            className="object-contain height-80 w-48"
                         />
                     </div>
                 )}
