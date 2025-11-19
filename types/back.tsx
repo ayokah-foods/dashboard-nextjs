@@ -103,7 +103,7 @@ function CustomerSummary({
     return (
         <div className="bg-white rounded-xl p-6 flex items-center justify-between shadow-sm border border-gray-200 text-sm text-gray-700">
             <div className="flex items-center gap-4 min-w-[200px]">
-                <div className="relative w-14 h-14 rounded-full border-4 border-orange-500 overflow-hidden bg-gray-100">
+                <div className="relative w-14 h-14 rounded-full border-4 border-orange-800 overflow-hidden bg-gray-100">
                     <Image
                         src={
                             customer.profile_photo ||

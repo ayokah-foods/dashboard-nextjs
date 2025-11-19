@@ -40,7 +40,9 @@ export async function deleteBannerType(bannerTypeId: number) {
     return response.data;
 }
 
-export async function getBanner(type: string) { 
+export async function getBannerByType(
+    type: string
+): Promise<{ status: string; data: { banner: string  } }> {
     const response = await axios.get(`/banner/${type}`);
     return response.data;
 }

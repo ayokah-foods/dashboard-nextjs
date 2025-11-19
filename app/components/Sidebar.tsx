@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
     Dialog,
@@ -8,18 +8,18 @@ import {
     PopoverButton,
     PopoverPanel,
     TransitionChild,
-} from '@headlessui/react';
+} from "@headlessui/react";
 import {
     Bars3Icon,
     ChevronUpIcon,
     XMarkIcon,
-} from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import NavMenu from '@/app/components/NavMenu';
-import { useEffect, useState } from 'react';
-import { bottomNavigation } from '@/app/setting';
-import { useRouter } from 'next/navigation';
-import { User } from '@/types/UserType';
+} from "@heroicons/react/24/outline";
+import Image from "next/image";
+import NavMenu from "@/app/components/NavMenu";
+import { useEffect, useState } from "react";
+import { bottomNavigation } from "@/app/setting";
+import { useRouter } from "next/navigation";
+import { User } from "@/types/UserType";
 
 type SidebarProps = {
     sidebarOpen: boolean;
@@ -35,14 +35,14 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
 
     useEffect(() => {
         const cookies = document.cookie
-            .split('; ')
+            .split("; ")
             .reduce((acc: Record<string, string>, cookie) => {
-                const [key, val] = cookie.split('=');
+                const [key, val] = cookie.split("=");
                 acc[key] = decodeURIComponent(val);
                 return acc;
             }, {});
 
-        const userCookie = cookies['user'];
+        const userCookie = cookies["user"];
         if (userCookie) {
             try {
                 setUser(JSON.parse(userCookie));
@@ -50,18 +50,23 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                 setUser(null);
             }
         }
-
     }, []);
 
     const handleLogout = () => {
-        document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-        document.cookie = 'user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-        router.push('/auth/login');
+        document.cookie =
+            "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        document.cookie =
+            "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        router.push("/auth/login");
     };
 
     return (
         <>
-            <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
+            <Dialog
+                open={sidebarOpen}
+                onClose={setSidebarOpen}
+                className="relative z-50 lg:hidden"
+            >
                 <DialogBackdrop className="fixed inset-0 bg-black/50 transition-opacity duration-300" />
                 <div className="fixed inset-0 flex">
                     <DialogPanel className="relative mr-16 rounded-r-4xl border-orange-200 flex w-full max-w-xs flex-1 transform transition duration-700 ease-in data-closed:translate-x-full sm:duration-700 bg-white">
@@ -72,12 +77,22 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                                     onClick={() => setSidebarOpen(false)}
                                     className="-m-2.5 p-2.5"
                                 >
-                                    <span className="sr-only">Close sidebar</span>
-                                    <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                                    <span className="sr-only">
+                                        Close sidebar
+                                    </span>
+                                    <XMarkIcon
+                                        className="h-6 w-6 text-white"
+                                        aria-hidden="true"
+                                    />
                                 </button>
                             </div>
                         </TransitionChild>
-                        <SidebarContent collapsed={collapsed} setCollapsed={setCollapsed} user={user} onLogout={handleLogout} />
+                        <SidebarContent
+                            collapsed={collapsed}
+                            setCollapsed={setCollapsed}
+                            user={user}
+                            onLogout={handleLogout}
+                        />
                     </DialogPanel>
                 </div>
             </Dialog>
@@ -87,14 +102,19 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                 <button
                     type="button"
                     onClick={() => setSidebarOpen(true)}
-                    className="-m-2.5 p-2.5 text-orange-500 hover:text-orange-900"
+                    className="-m-2.5 p-2.5 text-orange-800 hover:text-orange-900"
                 >
                     <Bars3Icon className="size-6 mr-2" />
                 </button>
             </div>
 
             <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-white px-6 pb-4 border-r rounded-r-4xl border-orange-200">
-                <SidebarContent collapsed={collapsed} setCollapsed={setCollapsed} user={user} onLogout={handleLogout} />
+                <SidebarContent
+                    collapsed={collapsed}
+                    setCollapsed={setCollapsed}
+                    user={user}
+                    onLogout={handleLogout}
+                />
             </div>
         </>
     );
@@ -112,7 +132,7 @@ const SidebarContent = ({
 }) => (
     <div
         className="flex grow flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-50 hover:scrollbar-thumb-gray-100 scrollbar-track-transparent pt-2"
-        style={{ height: 'calc(100vh - 60px)' }}
+        style={{ height: "calc(100vh - 60px)" }}
     >
         <div className="flex items-center justify-center mb-2">
             <Image
@@ -129,7 +149,6 @@ const SidebarContent = ({
             <BottomMenu collapsed={collapsed} user={user} onLogout={onLogout} />
         </nav>
     </div>
-
 );
 
 function BottomMenu({
@@ -141,7 +160,6 @@ function BottomMenu({
     user: User | null;
     onLogout: () => void;
 }) {
-
     return (
         <Popover className="relative w-1/2">
             <div className="fixed bottom-0 z-50 bg-hub-primary-400 text-white rounded-xl shadow-inner px-1.5 py-1.5 flex items-center justify-between">
@@ -163,9 +181,16 @@ function BottomMenu({
                     </div>
                 </div>
 
-                <PopoverButton className="text-white hover:text-white transition" aria-label="Toggle menu">
+                <PopoverButton
+                    className="text-white hover:text-white transition"
+                    aria-label="Toggle menu"
+                >
                     {({ open }) => (
-                        <ChevronUpIcon className={`h-4 w-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+                        <ChevronUpIcon
+                            className={`h-4 w-4 transition-transform duration-200 ${
+                                open ? "rotate-180" : ""
+                            }`}
+                        />
                     )}
                 </PopoverButton>
             </div>
@@ -177,12 +202,18 @@ function BottomMenu({
                         <button
                             key={item.name}
                             onClick={item.isLogout ? onLogout : undefined}
-                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium hover:bg-white/10 ${item.isLogout ? 'text-orange-500 font-bold bg-white border hover:bg-white hover:text-white' : ''
-                                } ${collapsed ? 'justify-center' : ''}`}
+                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium hover:bg-white/10 ${
+                                item.isLogout
+                                    ? "text-orange-800 font-bold bg-white border hover:bg-white hover:text-white"
+                                    : ""
+                            } ${collapsed ? "justify-center" : ""}`}
                         >
                             <item.icon
-                                className={`size-4 ${item.isLogout ? 'text-red-500 hover:text-white font-bold' : 'text-white'
-                                    }`}
+                                className={`size-4 ${
+                                    item.isLogout
+                                        ? "text-red-500 hover:text-white font-bold"
+                                        : "text-white"
+                                }`}
                             />
                             {!collapsed && <span>{item.name}</span>}
                         </button>

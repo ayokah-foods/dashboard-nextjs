@@ -316,7 +316,7 @@ function TicketReply({
                 <button
                     onClick={handleSend}
                     disabled={sending}
-                    className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm hover:bg-orange-600 disabled:opacity-50"
+                    className="bg-orange-800 text-white px-4 py-2 rounded-full text-sm hover:bg-orange-600 disabled:opacity-50"
                 >
                     {sending ? "Sending..." : "Send"}
                 </button>
