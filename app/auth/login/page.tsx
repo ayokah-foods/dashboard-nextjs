@@ -47,6 +47,11 @@ export default function LoginScreen() {
         }
     };
 
+    // function to bring the login image from the backend api call
+    // UseEffect(() => {
+    //     // fetch login image from backend if exists
+    // }, []);
+
     return (
         <div className="flex flex-col md:flex-row h-screen bg-white text-gray-500">
             {/* Image */}
@@ -129,4 +134,4 @@ export default function LoginScreen() {
             </div>
         </div>
     );
-}
+} 
