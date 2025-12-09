@@ -10,6 +10,7 @@ import { mostSellingShops } from "@/lib/api_/shop";
 import { ShopPerformanceItem, ShopPerformanceType } from "@/types/ShopType";
 import Image from "next/image";
 import { formatAmount } from "@/utils/formatCurrency";
+import Avatar from "@/utils/Avatar";
 
 export default function ShopPerformance() {
     const [data, setData] = useState<ShopPerformanceItem[]>([]);
@@ -46,21 +47,17 @@ export default function ShopPerformance() {
             {
                 header: "Logo",
                 accessorKey: "logo",
-                cell: ({ row }) => (
-                    <Image
-                        width={50}
-                        height={50}
-                        src={row.original.logo ?? "/placeholder.png"}
-                        alt="Logo"
-                        className="h-8 w-8 object-cover rounded-full"
-                    />
-                ),
+                cell: ({ row }) => {
+                    const { logo, name } = row.original;
+                    return <Avatar src={logo || ""} alt={name} size={10} />;
+                },
             },
+
             {
                 header: "Shop Name",
                 accessorKey: "name",
                 cell: ({ row }) => (
-                    <span className="text-gray-800 font-medium">
+                    <span className="text-gray-800 font-medium truncate">
                         {row.original.name}
                     </span>
                 ),
@@ -69,7 +66,7 @@ export default function ShopPerformance() {
                 header: "Vendor",
                 accessorKey: "vendor_name",
                 cell: ({ row }) => (
-                    <span className="text-gray-700">
+                    <span className="text-gray-700 truncate">
                         {row.original.vendor_name}
                     </span>
                 ),
@@ -131,12 +128,11 @@ export default function ShopPerformance() {
                 accessorKey: "id",
                 cell: ({ row }) => (
                     <Link
-                        href={`/shops/${row.original.slug}`}
+                        href={`https://ayokah.vercel.app/shops/${row.original.slug}`}
                         target="_blank"
-                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-blue-500 text-blue-600 rounded hover:bg-blue-50 transition"
+                        className="inline-flex items-center gap-1 btn btn-primary"
                     >
                         View
-                        {/* lead to frontend web app */}
                         <ArrowTopRightOnSquareIcon className="w-4 h-4" />
                     </Link>
                 ),

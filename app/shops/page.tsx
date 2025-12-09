@@ -15,6 +15,7 @@ import { MetricCard } from "./components/MetricCard";
 import AnalysisAreaChart from "./components/AnalysisAreaChart";
 import toast from "react-hot-toast";
 import ConfirmationModal from "../components/commons/ConfirmationModal";
+import Avatar from "@/utils/Avatar";
 
 const typeOptions = [
     { label: "All Types", value: "" },
@@ -118,32 +119,25 @@ export default function Shops() {
                 header: "Shop",
                 accessorKey: "name",
                 cell: ({ row }) => {
-                    const { name, logo, type, category } = row.original;
+                    const { name, logo, type, category, products_count } =
+                        row.original;
                     return (
                         <div className="flex items-center gap-3">
-                            {logo && (
-                                <div className="w-10 h-10 relative rounded-full overflow-hidden border">
-                                    <Image
-                                        src={logo}
-                                        alt={name}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </div>
-                            )}
+                            <Avatar src={logo || ""} alt={name} size={10} />
                             <div className="flex flex-col">
-                                <span className="text-gray-900 font-medium leading-tight">
+                                <span className="text-gray-900 font-medium leading-tight truncate">
                                     {name}
                                 </span>
-                                <span className="text-xs text-gray-500 capitalize">
-                                    {category?.name} |{" "}
-                                    <b>{row.original.products_count}</b> {type}
+                                <span className="text-xs text-gray-500 capitalize truncate">
+                                    {category?.name} | <b>{products_count}</b>{" "}
+                                    {type}
                                 </span>
                             </div>
                         </div>
                     );
                 },
             },
+
             {
                 header: "Vendor",
                 accessorKey: "vendor.name",
@@ -151,7 +145,7 @@ export default function Shops() {
                     const vendor = row.original.vendor;
                     return (
                         <div className="text-sm">
-                            <div className="font-medium text-gray-900">
+                            <div className="font-medium text-gray-900 truncate">
                                 {vendor?.name} {vendor?.last_name}
                             </div>
                             <div className="text-xs text-gray-500">
@@ -165,7 +159,7 @@ export default function Shops() {
                 header: "Pickup Address",
                 accessorKey: "address",
                 cell: ({ row }) => (
-                    <span className="text-gray-600 text-sm">
+                    <span className="text-gray-600 text-sm truncate">
                         {row.original.address}
                     </span>
                 ),

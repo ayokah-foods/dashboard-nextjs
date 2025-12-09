@@ -15,9 +15,9 @@ export function formatHumanReadableDate(dateString: string): string {
     return `${format(date, 'EEE')} ${format(date, 'h:mma')}`;  
   }
 
-  return format(date, 'do, MMMM');  
+  return format(date, 'do, MMM, Y');  
 }
 
 export function formatDate(date: string | Date): string {
-  return format(date, 'dd MMM');
+  return format(date, 'dd MMM, Y');
 }

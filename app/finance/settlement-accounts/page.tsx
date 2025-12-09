@@ -63,9 +63,18 @@ export default function SettlementAccounts() {
     const columns: ColumnDef<SettlementAccountItem>[] = useMemo(
         () => [
             {
-                header: "Name",
+                header: "Bank Name",
                 accessorKey: "name",
+                cell: ({ getValue }) => (
+                    <span
+                        className="block max-w-[150px] truncate text-gray-700"
+                        title={getValue() as string}
+                    >
+                        {getValue() as string}
+                    </span>
+                ),
             },
+
             {
                 header: "Institution Number",
                 accessorKey: "institution_number",
@@ -81,10 +90,29 @@ export default function SettlementAccounts() {
             {
                 header: "Account Name",
                 accessorKey: "account_name",
+                cell: ({ getValue }) => (
+                    <span
+                        className="block max-w-[150px] truncate text-gray-700"
+                        title={getValue() as string}
+                    >
+                        {getValue() as string}
+                    </span>
+                ),
             },
             {
                 header: "Vendor Name",
                 accessorKey: "user.name",
+                cell: ({ row }) => {
+                    const name = row.original.user?.name || "—";
+                    return (
+                        <span
+                            className="block max-w-[150px] truncate text-gray-700"
+                            title={name}
+                        >
+                            {name}
+                        </span>
+                    );
+                },
             },
         ],
         []

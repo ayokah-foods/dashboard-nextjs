@@ -11,6 +11,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { formatAmount } from "@/utils/formatCurrency";
 
 export default function Analytics() {
     const [data, setData] = useState<CategoryAnalyticsItem[]>([]);
@@ -83,13 +84,7 @@ export default function Analytics() {
             {
                 header: "Sales Amount",
                 accessorKey: "total_sales_amount",
-                cell: ({ row }) => (
-                    <span className="text-gray-900">
-                        {parseFloat(
-                            row.original.total_sales_amount
-                        ).toLocaleString()}
-                    </span>
-                ),
+                cell: ({ row }) => formatAmount(row.original.total_sales_amount),
             },
             {
                 header: "Total Orders",
@@ -98,21 +93,6 @@ export default function Analytics() {
                     <span className="text-gray-900">
                         {row.original.total_orders}
                     </span>
-                ),
-            },
-            {
-                header: "Action",
-                accessorKey: "id",
-                cell: ({ row }) => (
-                    <div className="flex items-center gap-2">
-                        <Link
-                            href={`/categories/${row.original.slug}`}
-                            className="bg-blue-500 text-white p-1.5 rounded hover:bg-blue-600 flex items-center gap-1"
-                        >
-                            <EyeIcon className="w-4 h-4" />
-                            View
-                        </Link>
-                    </div>
                 ),
             },
         ],

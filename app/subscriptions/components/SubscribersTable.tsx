@@ -7,6 +7,7 @@ import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatAmount } from "@/utils/formatCurrency";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Image from "next/image";
+import Avatar from "@/utils/Avatar";
 
 interface SubscriberType {
     id: number;
@@ -54,20 +55,12 @@ export default function SubscribersTable({ limit }: Props) {
                     const shop = row.original.shop;
                     return (
                         <div className="flex items-center space-x-3">
-                            {shop?.logo ? (
-                                <Image
-                                    width={40}
-                                    height={40}
-                                    src={shop.logo}
-                                    alt={shop.name}
-                                    className="w-8 h-8 rounded-full object-cover border border-gray-200"
-                                />
-                            ) : (
-                                <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs">
-                                    N/A
-                                </div>
-                            )}
-                            <span className="font-medium text-gray-800">
+                            <Avatar
+                                src={shop?.logo}
+                                alt={shop?.name || "Shop"}
+                                size={8}
+                            />
+                            <span className="font-medium text-gray-800 truncate">
                                 {shop?.name || "—"}
                             </span>
                         </div>
@@ -139,6 +132,10 @@ export default function SubscribersTable({ limit }: Props) {
                 header: "Started On",
                 accessorFn: (row) => formatHumanReadableDate(row.start_date),
             },
+            {
+                header: "End Date",
+                accessorFn: (row) => formatHumanReadableDate(row.end_date),
+            }, 
         ],
         []
     );
