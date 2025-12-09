@@ -163,8 +163,15 @@ export default function ProfileCard({
                     </div>
 
                     <div>
-                        <p className="text-gray-400 font-semibold uppercase text-xs mb-1">
-                            Shipping Address
+                        <p
+                            className={clsx(
+                                "font-semibold uppercase text-xs mb-1",
+                                "text-gray-400"
+                            )}
+                        >
+                            {user?.role === "customer"
+                                ? "Delivery Address"
+                                : "Pickup Address"}
                         </p>
                         {loading ? (
                             <Skeleton width={180} />
@@ -203,7 +210,7 @@ export default function ProfileCard({
                             {/* Delete Button */}
                             <button
                                 onClick={() => setIsDeleteModalOpen(true)}
-                                className="px-3 py-1.5 bg-red-600 text-white rounded-md text-sm hover:bg-red-700 transition"
+                                className="px-3 py-2.5 bg-red-600 text-white rounded-md text-sm hover:bg-red-700 transition cursor-pointer"
                             >
                                 Delete
                             </button>

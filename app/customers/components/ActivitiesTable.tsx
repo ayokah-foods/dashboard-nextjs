@@ -44,7 +44,19 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({
             {
                 header: "Activity",
                 accessorKey: "activity",
+                cell: ({ getValue }) => {
+                    const value = getValue() as string;
+                    return (
+                        <span
+                            className="text-gray-700 truncate line-clamp-1 max-w-[200px] block"
+                            title={value} // shows full text on hover
+                        >
+                            {value}
+                        </span>
+                    );
+                },
             },
+
             {
                 header: "Location",
                 accessorKey: "location",
@@ -53,14 +65,18 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({
                 header: "Device",
                 accessorKey: "device",
                 cell: ({ getValue }) => {
-                    const value = getValue() as string;
+                    const value = (getValue() as string).replace(/"/g, "");
                     return (
-                        <span className="text-gray-700">
-                            {value.replace(/"/g, "")}
+                        <span
+                            className="text-gray-700 truncate line-clamp-1 max-w-[150px] block"
+                            title={value} // <-- show full text on hover
+                        >
+                            {value}
                         </span>
                     );
                 },
             },
+
             {
                 header: "Last Seen",
                 accessorKey: "login_time",

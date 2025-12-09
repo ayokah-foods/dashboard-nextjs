@@ -19,6 +19,7 @@ import {
 import ProductAreaChart from "./ProductAreaChart";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface ProductTableProps {
     limit: number;
@@ -100,12 +101,15 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
     const columns: ColumnDef<Product>[] = useMemo(
         () => [
             {
-                header: "Item",
+                header: "Item & Rating",
                 accessorKey: "title",
                 cell: ({ row }) => {
                     const image = row.original.images?.[0];
                     const title = row.original.title;
                     const category = row.original.category?.name;
+                    const rating: number = row.original.average_rating || 0; // no parseFloat needed
+                    const fullStars = Math.floor(rating); // full stars
+                    const hasHalfStar = rating - fullStars >= 0.5;
 
                     return (
                         <div className="flex items-center space-x-2">
@@ -117,45 +121,49 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                                 className="w-10 h-10 object-cover rounded"
                             />
                             <div className="flex flex-col">
-                                <span className="font-medium text-gray-800">
+                                <span className="text-xs font-medium text-gray-800 truncate">
                                     {title}
                                 </span>
                                 {category && (
-                                    <span className="text-xs text-gray-500">
+                                    <span className="text-xs text-gray-500 truncate">
                                         {category}
                                     </span>
                                 )}
+                                <div className="flex items-center gap-0.5 mt-1 text-xs!">
+                                    {[...Array(5)].map((_, index) => {
+                                        if (index < fullStars) {
+                                            return (
+                                                <StarIcon
+                                                    key={index}
+                                                    className="w-4 h-4 text-yellow-500 text-xs!"
+                                                />
+                                            );
+                                        } else if (
+                                            index === fullStars &&
+                                            hasHalfStar
+                                        ) {
+                                            return (
+                                                <StarIcon
+                                                    key={index}
+                                                    className="w-4 h-4 text-yellow-300 text-xs!"
+                                                />
+                                            ); // half star style
+                                        } else {
+                                            return (
+                                                <StarIcon
+                                                    key={index}
+                                                    className="w-4 h-4 text-gray-300 text-xs!"
+                                                />
+                                            );
+                                        }
+                                    })}
+                                </div>
                             </div>
                         </div>
                     );
                 },
             },
-            {
-                header: "Avg. Rating",
-                accessorKey: "average_rating",
-                cell: ({ getValue }) => {
-                    const rating = parseFloat(getValue() as string) || 0;
-                    const stars = Math.round(rating);
 
-                    return (
-                        <div className="flex items-center gap-0.5">
-                            {[...Array(5)].map((_, index) => (
-                                <StarIcon
-                                    key={index}
-                                    className={`w-4 h-4 ${
-                                        index < stars
-                                            ? "text-yellow-500"
-                                            : "text-gray-300"
-                                    }`}
-                                />
-                            ))}
-                            <span className="ml-2 text-sm text-gray-600">
-                                {rating.toFixed(1)}
-                            </span>
-                        </div>
-                    );
-                },
-            },
             {
                 header: "Price",
                 cell: ({ row }) => {
@@ -166,8 +174,8 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                         row.original.regular_price || "0"
                     );
 
-                    const formattedSales = `$${salesPrice.toFixed(2)}`;
-                    const formattedRegular = `$${regularPrice.toFixed(2)}`;
+                    const formattedSales = `${(formatAmount(salesPrice))}`;
+                    const formattedRegular = `${(formatAmount(regularPrice))}`;
 
                     return (
                         <div className="flex flex-col text-xs">

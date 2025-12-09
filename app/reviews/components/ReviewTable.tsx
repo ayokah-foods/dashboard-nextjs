@@ -33,7 +33,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 cell: ({ getValue }) => {
                     const value = getValue() as ReviewType["user"] | null;
                     return (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 truncate">
                             <Avatar
                                 src={value?.profile_photo ?? ""}
                                 alt={value?.name || "User"}
@@ -91,7 +91,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                             href={`/orders/${orderId}`}
                             className="text-amber-600 font-medium hover:underline"
                         >
-                            #{orderId}
+                            Order #{orderId}
                         </Link>
                     );
                 },
@@ -160,9 +160,8 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
 
     return (
         <div>
-            <div className="mb-4">
+            <div className="mb-8 mt-8">
                 <input
-                    hidden
                     type="text"
                     placeholder="Search by customer name or comment..."
                     value={search}

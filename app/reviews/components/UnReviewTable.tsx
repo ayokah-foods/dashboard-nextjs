@@ -11,6 +11,8 @@ import { User } from "@/types/UserType";
 import ReviewType from "@/types/ReviewType";
 import UnReviewOrderType from "@/types/UnReviewOrderType";
 import Link from "next/link";
+import { formatAmount } from "@/utils/formatCurrency";
+import StatusBadge from "@/utils/StatusBadge";
 
 interface ReviewTableProps {
     limit: number;
@@ -57,7 +59,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                             href={`/orders/${orderId}`}
                             className="text-amber-600 font-medium hover:underline"
                         >
-                            #{orderId}
+                            Order #{orderId}
                         </Link>
                     );
                 },
@@ -84,27 +86,25 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     const total = getValue() as string;
                     return (
                         <span className="font-semibold">
-                            ${Number(total).toLocaleString()}
+                            {formatAmount(total)}
                         </span>
                     );
                 },
             },
             {
-                header: "Status",
+                header: "Shipping Status",
                 accessorKey: "shipping_status",
                 cell: ({ getValue }) => {
-                    const status = getValue() as string;
-                    return (
-                        <span
-                            className={`px-2 py-1 text-xs rounded ${
-                                status === "delivered"
-                                    ? "bg-green-100 text-green-700"
-                                    : "bg-yellow-100 text-yellow-700"
-                            }`}
-                        >
-                            {status}
-                        </span>
-                    );
+                    const value = String(getValue() ?? "N/A");
+                    return <StatusBadge status={value} />;
+                },
+            },
+            {
+                header: "Payment Status",
+                accessorKey: "payment_status",
+                cell: ({ getValue }) => {
+                    const value = String(getValue() ?? "N/A");
+                    return <StatusBadge status={value} type="payment" />;
                 },
             },
             {
