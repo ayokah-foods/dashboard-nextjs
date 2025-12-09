@@ -54,6 +54,7 @@ export type Order = {
     order_items: OrderItem[];
     vendor: User;
     product: Product;
+    shipping_service_code: any[];
 };
 
 export type Product = {
@@ -83,6 +84,7 @@ export type Product = {
     shop: Shop;
     average_rating: number;
     vendor: User;
+    sku: string;
 };
 
 export type Shop = {

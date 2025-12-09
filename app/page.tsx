@@ -22,7 +22,7 @@ const Home: React.FC = () => {
     return (
         <div className="space-y-4 text-gray-700">
             <div className="flex items-center justify-between">
-                <Greetings userName="David" />
+                <Greetings userName="Ayokah" />
                 <SelectDropdown
                     options={[
                         { value: "all", label: "All" },

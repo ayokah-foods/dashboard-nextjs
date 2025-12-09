@@ -10,6 +10,7 @@ import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { getRecentOrders } from "@/lib/api_/orders";
 import StatusBadge from "@/utils/StatusBadge";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface OrderTableProps {
     limit: number;
@@ -38,7 +39,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                         photo: string;
                     } | null;
                     return (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 truncate">
                             <Avatar
                                 src={value?.photo}
                                 alt={value?.name || "User"}
@@ -57,7 +58,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                         image: string;
                     } | null;
                     return (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 truncate">
                             <Image
                                 src={value?.image || ""}
                                 alt={value?.title || "Product"}
@@ -76,9 +77,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 cell: ({ getValue }) => {
                     const value = getValue() as string;
                     const numericValue = parseFloat(value);
-                    return isNaN(numericValue)
-                        ? "Invalid"
-                        : `$${numericValue.toFixed(2)}`;
+                    return (formatAmount(numericValue));
                 },
             },
             {

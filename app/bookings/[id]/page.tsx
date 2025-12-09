@@ -13,7 +13,7 @@ import {
 } from "@/lib/api_/bookings";
 import { BookingItem, BookingResponse } from "@/types/BookingType";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import CustomerSummary from "../components/CustomerSummary"; // ✅ assuming you’ve modularized it
+import { CustomerSummary } from "@/app/orders/[id]/page";
 
 const statusOptions = [
     { label: "Processing", value: "processing" },

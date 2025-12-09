@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { getStats } from "../../lib/api_/orders";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface StatCardProps {
     title: string;
@@ -77,7 +78,7 @@ const Overview: React.FC<OverviewProps> = ({ period }) => {
         {
             title: "Total Revenue",
             value: stats
-                ? `$${Number(stats.total_revenue).toLocaleString()}`
+                ? `${formatAmount(stats.total_revenue)}`
                 : undefined,
         },
         { title: "Total Orders", value: stats?.total_orders },

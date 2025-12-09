@@ -50,7 +50,7 @@ function ReviewCard({ review }: { review: ReviewType }) {
                     </p>{" "}
                 </div>
                 <StarRating rating={review.rating} />
-                <p className="mt-1 text-sm text-gray-500 truncate w-56">
+                <p className="mt-1 text-sm text-gray-500 truncate w-49">
                     {review.comment}
                 </p>
             </div>
