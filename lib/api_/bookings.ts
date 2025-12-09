@@ -1,9 +1,8 @@
 import axios from "@/lib/axios";
 import {
-    GraphPoint,
     BookingResponse,
-    OrderStatsType,
 } from "@/types/BookingType";
+import { GraphPoint, OrderStatsType } from "@/types/OrderType";
 
 export async function getRecentBookings(
     limit: number,

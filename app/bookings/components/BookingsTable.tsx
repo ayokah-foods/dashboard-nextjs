@@ -9,7 +9,7 @@ import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { getRecentBookings } from "@/lib/api_/bookings";
 import StatusBadge from "@/utils/StatusBadge";
-import { BookingResponse } from "@/types/BookingType";
+import { BookingItem, BookingResponse } from "@/types/BookingType";
 
 interface BookingTableProps {
     limit: number;
@@ -33,11 +33,11 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                 header: "Customer",
                 accessorKey: "customer",
                 cell: ({ getValue }) => {
-                    const value = getValue() as BookingResponse["customer"];
+                    const value = getValue() as BookingItem["customer"];
                     return (
                         <div className="flex items-center space-x-2">
                             <Avatar
-                                src={value?.photo || ""}
+                                src={value?.profile_photo || ""}
                                 alt={value?.name || "Customer"}
                             />
                             <span>{value?.name ?? "N/A"}</span>
@@ -49,7 +49,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                 header: "Service",
                 accessorKey: "service",
                 cell: ({ getValue }) => {
-                    const value = getValue() as BookingResponse["service"];
+                    const value = getValue() as BookingItem["service"];
                     return (
                         <div className="flex items-center space-x-2">
                             <Image

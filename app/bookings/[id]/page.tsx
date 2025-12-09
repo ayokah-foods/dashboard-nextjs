@@ -13,7 +13,7 @@ import {
 } from "@/lib/api_/bookings";
 import { BookingItem, BookingResponse } from "@/types/BookingType";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { CustomerSummary } from "@/app/orders/[id]/page";
+import CustomerSummary from "@/app/orders/components/CustomerSummary";
 
 const statusOptions = [
     { label: "Processing", value: "processing" },
