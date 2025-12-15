@@ -33,6 +33,7 @@ import {
     MapPinIcon,
     BanknotesIcon,
 } from "@heroicons/react/24/outline";
+import { FaCashRegister } from "react-icons/fa";
 
 export const NAVIGATION = [
     {
@@ -124,6 +125,12 @@ export const NAVIGATION = [
         ],
     },
     {
+        name: "Coupon Management",
+        href: "/coupon",
+        icon: AdjustmentsHorizontalIcon,
+        children: [{ name: "Coupons", href: "/coupons/countries" }],
+    },
+    {
         name: "Banner Management",
         href: "/categories",
         icon: FlagIcon,
@@ -194,24 +201,12 @@ export const NAVIGATION = [
             { name: "Privacy & Compliance", href: "/settings/policies" },
         ],
     },
-    // {
-    //     name: "Location Management",
-    //     href: "/locations",
-    //     icon: MapPinIcon,
-    //     children: [
-    //         { name: "Countries", href: "/locations/countries" },
-    //         { name: "Provinces", href: "/locations/states" },
-    //         { name: "Cities", href: "/locations/cities" },
-    //     ],
-    // },
+
     {
         name: "Platform Settings",
         href: "/settings/app",
         icon: AdjustmentsHorizontalIcon,
-        children: [
-            { name: "Settings", href: "/settings/app" },
-            { name: "Team members", href: "/teams" },
-        ],
+        children: [{ name: "Team members", href: "/teams" }],
     },
 ];
 

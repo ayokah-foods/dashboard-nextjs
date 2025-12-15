@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { create, updateFaq } from "@/lib/api_/faqs";
+import { createFaq, updateFaq } from "@/lib/api_/faqs";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { Faq } from "@/types/FaqType";
@@ -28,7 +28,8 @@ export default function FaqForm({ onClose, faq }: Props) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!type?.value) {
+
+        if (!type) {
             toast.error("Type is required");
             return;
         }
@@ -40,21 +41,24 @@ export default function FaqForm({ onClose, faq }: Props) {
             toast.error("Answer is required");
             return;
         }
+
         setLoading(true);
 
-        const formData = new FormData();
-        formData.append("question", String(question));
-        formData.append("answer", String(answer));
-        formData.append("type", String(type?.value || ""));
+        const payload = {
+            question: String(question).trim(),
+            answer: String(answer).trim(),
+            type: type.value,
+        };
 
         try {
             if (faq?.id) {
-                await updateFaq(String(faq.id), formData);
+                await updateFaq(faq.id, payload);
                 toast.success("FAQ updated successfully");
             } else {
-                await create(formData);
+                await createFaq(payload);
                 toast.success("FAQ added successfully");
             }
+
             onClose();
             window.location.reload();
         } catch (error) {

@@ -24,13 +24,7 @@ const Home: React.FC = () => {
             <div className="flex items-center justify-between">
                 <Greetings userName="Ayokah" />
                 <SelectDropdown
-                    options={[
-                        { value: "all", label: "All" },
-                        { value: "this_week", label: "This week" },
-                        { value: "last_week", label: "Last week" },
-                        { value: "last_month", label: "Last month" },
-                        { value: "last_year", label: "Last year" },
-                    ]}
+                    options={periods}
                     value={selectedPeriod}
                     onChange={setSelectedPeriod}
                 />

@@ -12,17 +12,19 @@ export async function listFaqs(
     return response.data;
 }
 
-export async function create(formData: FormData) {
-    const response = await axios.post(`/faqs`, formData);
+type FaqPayload = {
+    question: string;
+    answer: string;
+    type: string;
+};
+
+export async function createFaq(payload: FaqPayload) {
+    const response = await axios.post("/faqs", payload);
     return response.data;
 }
-export async function updateFaq(id: string, formData: FormData) {
-    const response = await axios.put(`/faqs/${id}`, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            Accept: "application/json",
-        },
-    });
+
+export async function updateFaq(id: string, payload: FaqPayload) {
+    const response = await axios.put(`/faqs/${id}`, payload);
     return response.data;
 }
 

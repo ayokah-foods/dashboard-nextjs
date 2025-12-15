@@ -343,8 +343,8 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                 </label>
                 <SelectDropdown
                     options={typeOptions}
-                    value={type || { label: "Select type", value: "" }}
-                    onChange={(opt) => setType(opt)}
+                    value={type!}
+                    onChange={setType}
                     className="w-full"
                 />
             </div>
