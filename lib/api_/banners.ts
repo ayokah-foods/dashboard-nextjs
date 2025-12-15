@@ -40,7 +40,7 @@ export async function deleteBannerType(bannerTypeId: number) {
     return response.data;
 }
 const API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_URL_ || "http://localhost:8000/api";
+    process.env.NEXT_PUBLIC_API_URL_ || "https://api.ayokah.co.uk/api/v1";
 
 export async function getBannerByType(
     type: string
