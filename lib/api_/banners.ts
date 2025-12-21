@@ -29,7 +29,7 @@ export async function addBannerType(formData: FormData) {
 }
 
 export async function listBannerTypes(limit?: number, offset?: number) {
-    const response = await axios.get(`/banner-types`, {
+    const response = await axios.get(`/banner/type`, {
         params: { limit, offset },
     });
     return response.data;
