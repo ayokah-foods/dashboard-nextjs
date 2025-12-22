@@ -37,12 +37,26 @@ export default function CategoryForm({ onClose, category }: Props) {
     );
     const { categories } = useCategoryStore();
 
+    // const categoryOptions = useMemo(() => {
+    //     return categories.map((cat) => ({
+    //         label: cat.name,
+    //         value: String(cat.id),
+    //     }));
+    // }, [categories]);
     const categoryOptions = useMemo(() => {
-        return categories.map((cat) => ({
-            label: cat.name,
-            value: String(cat.id),
-        }));
-    }, [categories]);
+        const currentType = type?.value;
+        const filteredCategories = currentType
+            ? categories.filter((cat) => cat.type === currentType)
+            : categories; // Show all if no type is selected
+        return (
+            filteredCategories
+                .filter((cat) => String(cat.id) !== String(category?.id))
+                .map((cat) => ({
+                    label: cat.name,
+                    value: String(cat.id),
+                }))
+        );
+    }, [categories, type, category?.id]); 
 
     const typeOptions = [
         { label: "Product", value: "products" },
