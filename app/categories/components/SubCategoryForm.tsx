@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useEffect } from "react";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-// ❌ REMOVED: import { useCategoryStore } from "@/store/CategoryStore";
 import {
     addCategory,
     getCategories,
@@ -10,13 +9,17 @@ import {
 } from "@/lib/api_/categories";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
-// Ensure CategoryType is the correct type for the parent categories list!
 import {
     CategoryType,
     FlattenedSubCategory,
     CategoryResponse,
 } from "@/types/CategoryType";
-// Note: You may need to ensure CategoryResponse is imported/available in your types file.
+
+const typeOptions = [
+    { label: "Product", value: "products" },
+    { label: "Service", value: "services" },
+];
+type DropdownOption = { label: string; value: string };
 
 export default function SubCategoryForm({
     onClose,
@@ -26,10 +29,7 @@ export default function SubCategoryForm({
     category?: FlattenedSubCategory;
 }) {
     const [name, setName] = useState(category?.name ?? "");
-    const [selectedParent, setSelectedParent] = useState<{
-        label: string;
-        value: string;
-    } | null>(
+    const [selectedParent, setSelectedParent] = useState<DropdownOption | null>(
         category?.parent_id
             ? {
                   label: category.parent_name ?? "",
@@ -38,8 +38,12 @@ export default function SubCategoryForm({
             : null
     );
 
-    // ❌ REMOVED: const { categories, setCategories: saveToStore } = useCategoryStore();
-
+    const [type, setType] = useState<DropdownOption | null>(
+        category?.parent_name && category.parent_type
+            ? typeOptions.find((opt) => opt.value === category.parent_type) ||
+                  null
+            : null
+    );
     // Local state for categories, initialized as empty
     const [localCategories, setLocalCategories] = useState<CategoryType[]>([]);
     const [loading, setLoading] = useState(false);
@@ -47,26 +51,42 @@ export default function SubCategoryForm({
 
     // ✅ Implemented: useEffect to call getCategories once on mount
     useEffect(() => {
-        const fetchCategories = async () => {
-            setIsFetching(true);
-            try {
-                // Assuming getCategories returns the CategoryResponse type
-                const response: CategoryResponse = await getCategories(100);
+        // Only fetch if a type is selected
+        if (!type?.value) {
+            setLocalCategories([]); // Clear categories if type is deselected
+            setSelectedParent(null); // Clear selected parent
+            setIsFetching(false);
+            return;
+        }
 
-                // ❌ REMOVED: saveToStore(response.data);
+        const fetchCategories = async (typeValue: string) => {
+            setIsFetching(true);
+            // Clear current list and selected parent while fetching new data
+            setLocalCategories([]);
+            setSelectedParent(null);
+
+            try {
+                // Call API using the selected 'type' parameter
+                const response: CategoryResponse = await getCategories(
+                    100,
+                    0,
+                    undefined,
+                    typeValue
+                );
 
                 setLocalCategories(response.data);
             } catch (error) {
-                console.error("Failed to fetch categories", error);
-                toast.error("Failed to load parent categories.");
+                console.error("Failed to fetch categories by type", error);
+                toast.error(
+                    "Failed to load parent categories for the selected type."
+                );
             } finally {
                 setIsFetching(false);
             }
         };
 
-        // Call fetchCategories only once on mount (empty dependency array)
-        fetchCategories();
-    }, []); // Empty dependency array ensures it runs only on mount
+        fetchCategories(type.value);
+    }, [type]); // 🔑 Dependency array watches the 'type' state
 
     const categoryOptions = useMemo(() => {
         if (isFetching) {
@@ -77,7 +97,7 @@ export default function SubCategoryForm({
 
         return (
             localCategories
-                // Filter out the category being edited itself, to prevent selecting itself as a parent
+                // Filter out the category being edited itself
                 .filter((cat) => cat.id !== category?.id)
                 .map((cat) => ({
                     label: cat.name,
@@ -131,6 +151,18 @@ export default function SubCategoryForm({
                 />
             </div>
 
+            {/* 3. New Type Select Dropdown */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Type <span className="text-red-500">*</span>
+                </label>
+                <SelectDropdown
+                    options={typeOptions}
+                    value={type || { label: "Select type", value: "" }}
+                    onChange={(opt) => setType(opt)}
+                    className="w-full"
+                />
+            </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                     Parent Category <span className="text-red-500">*</span>
@@ -141,18 +173,28 @@ export default function SubCategoryForm({
                         selectedParent || {
                             label: isFetching
                                 ? "Loading..."
-                                : "Select category",
+                                : type
+                                ? "Select category"
+                                : "Select Type first", // Guidance added
                             value: "",
                         }
                     }
                     onChange={(opt) => setSelectedParent(opt)}
                     className="w-full"
-                    // Disable dropdown while fetching or if no options are available
-                    disabled={isFetching || categoryOptions.length === 0}
+                    // Disable if fetching or if no options are available OR if no Type is selected
+                    disabled={
+                        isFetching || categoryOptions.length === 0 || !type
+                    }
                 />
                 {isFetching && (
                     <p className="text-xs text-amber-600 mt-1">
-                        Fetching parent categories...
+                        Fetching parent categories for{" "}
+                        {type?.label || "selected type"}...
+                    </p>
+                )}
+                {!type && (
+                    <p className="text-xs text-red-500 mt-1">
+                        Please select a Type to load parent categories.
                     </p>
                 )}
             </div>

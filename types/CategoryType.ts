@@ -43,6 +43,7 @@ export interface FlattenedSubCategory {
     slug: string;
     parent_id: number;
     parent_name: string;
+    parent_type?: string;
     parent_slug: string;
 }
 
