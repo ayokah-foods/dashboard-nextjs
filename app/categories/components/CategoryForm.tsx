@@ -1,25 +1,32 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { useCategoryStore } from "@/store/CategoryStore";
-import { addCategory, updateCategory } from "@/lib/api_/categories";
+import {
+    addCategory,
+    updateCategory,
+    getCategories,
+} from "@/lib/api_/categories";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
-import { CategoryType } from "@/types/CategoryType";
+import { CategoryType, CategoryResponse } from "@/types/CategoryType"; 
 
 interface Props {
     onClose: () => void;
     category?: CategoryType;
 }
 
+const typeOptions = [
+    { label: "Product", value: "products" },
+    { label: "Service", value: "services" },
+];
+
+type DropdownOption = { label: string; value: string };
+
 export default function CategoryForm({ onClose, category }: Props) {
     const [name, setName] = useState(category?.name || "");
-    const [selectedParent, setSelectedParent] = useState<{
-        label: string;
-        value: string;
-    } | null>(
+    const [selectedParent, setSelectedParent] = useState<DropdownOption | null>(
         category?.parent_id
             ? {
                   label: category.parent_name || "",
@@ -32,43 +39,80 @@ export default function CategoryForm({ onClose, category }: Props) {
         category?.image || null
     );
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [type, setType] = useState<{ label: string; value: string } | null>(
-        category?.type ? { label: category.type, value: category.type } : null
+    const [type, setType] = useState<DropdownOption | null>(
+        category?.type
+            ? typeOptions.find((opt) => opt.value === category.type) || null
+            : null
     );
-    const { categories } = useCategoryStore();
+    const [localCategories, setLocalCategories] = useState<CategoryType[]>([]);
+    const [isFetching, setIsFetching] = useState(false);
 
-    // const categoryOptions = useMemo(() => {
-    //     return categories.map((cat) => ({
-    //         label: cat.name,
-    //         value: String(cat.id),
-    //     }));
-    // }, [categories]);
+    useEffect(() => {
+        const typeValue = type?.value;
+        if (!typeValue) {
+            setLocalCategories([]);
+            setSelectedParent(null);
+            return;
+        }
+
+        const fetchCategoriesByType = async () => {
+            setIsFetching(true);
+            try {
+                const response: CategoryResponse = await getCategories(
+                    100, // limit
+                    0, // offset
+                    undefined, // search
+                    typeValue // type
+                );
+
+                setLocalCategories(response.data);
+
+                if (
+                    selectedParent &&
+                    !response.data.some(
+                        (cat) => String(cat.id) === selectedParent.value
+                    )
+                ) {
+                    setSelectedParent(null);
+                }
+            } catch (error) {
+                console.error("Failed to fetch categories by type", error);
+                toast.error(
+                    `Failed to load parent categories for ${typeValue}.`
+                );
+            } finally {
+                setIsFetching(false);
+            }
+        };
+
+        fetchCategoriesByType();
+    }, [type, selectedParent]);
+
     const categoryOptions = useMemo(() => {
-        const currentType = type?.value;
-        const filteredCategories = currentType
-            ? categories.filter((cat) => cat.type === currentType)
-            : categories; // Show all if no type is selected
+        if (isFetching) {
+            return [
+                { label: "Loading categories...", value: "", disabled: true },
+            ];
+        }
+
         return (
-            filteredCategories
+            localCategories
                 .filter((cat) => String(cat.id) !== String(category?.id))
                 .map((cat) => ({
                     label: cat.name,
                     value: String(cat.id),
                 }))
         );
-    }, [categories, type, category?.id]); 
+    }, [localCategories, isFetching, category?.id]);
 
-    const typeOptions = [
-        { label: "Product", value: "products" },
-        { label: "Service", value: "services" },
-    ];
     const [loading, setLoading] = useState(false);
+
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        const maxSize = 1 * 1024 * 1024; // 3MB
+        const maxSize = 1 * 1024 * 1024; // 1MB (Changed from 3MB in comment)
         const validTypes = ["image/jpeg", "image/png", "image/webp"];
 
         if (!validTypes.includes(file.type)) {
@@ -114,6 +158,8 @@ export default function CategoryForm({ onClose, category }: Props) {
             toast.error(
                 `Failed to ${category?.id ? "update" : "add"} category`
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -145,6 +191,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                     className="w-full"
                 />
             </div>
+
             {/* Parent Category */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -155,22 +202,46 @@ export default function CategoryForm({ onClose, category }: Props) {
                     options={categoryOptions}
                     value={
                         selectedParent || {
-                            label: "Select category",
+                            label: isFetching
+                                ? "Loading..."
+                                : type
+                                ? "Select category"
+                                : "Select Type first", // Guidance added
                             value: "",
                         }
                     }
                     onChange={(opt) => setSelectedParent(opt)}
                     className="w-full"
+                    // Disable if fetching, no options, or if no Type is selected
+                    disabled={
+                        isFetching || categoryOptions.length === 0 || !type
+                    }
                 />
+                {isFetching && (
+                    <p className="text-xs text-amber-600 mt-1">
+                        Fetching parent categories for {type?.label || "type"}
+                        ...
+                    </p>
+                )}
+                {!type && (
+                    <p className="text-xs text-red-500 mt-1">
+                        Please select a Type to load parent categories.
+                    </p>
+                )}
             </div>
 
+            {/* Description, Image, and Submit Button sections remain the same */}
+
+            {/* ... (rest of the form remains the same) */}
+
+            {/* Description */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                     Description <span className="text-red-500">*</span>
                 </label>
                 <textarea
                     rows={4}
-                    maxLength={255} // ✅ use maxLength instead of limit
+                    maxLength={255}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
@@ -181,6 +252,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                 </div>
             </div>
 
+            {/* Image Upload */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                     Cat Image <span className="text-red-500">*</span>
