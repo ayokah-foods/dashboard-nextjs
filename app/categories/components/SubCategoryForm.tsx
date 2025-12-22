@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { useCategoryStore } from "@/store/CategoryStore";
+// ❌ REMOVED: import { useCategoryStore } from "@/store/CategoryStore";
 import {
     addCategory,
     getCategories,
@@ -10,7 +10,13 @@ import {
 } from "@/lib/api_/categories";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
-import { CategoryType, FlattenedSubCategory } from "@/types/CategoryType";
+// Ensure CategoryType is the correct type for the parent categories list!
+import {
+    CategoryType,
+    FlattenedSubCategory,
+    CategoryResponse,
+} from "@/types/CategoryType";
+// Note: You may need to ensure CategoryResponse is imported/available in your types file.
 
 export default function SubCategoryForm({
     onClose,
@@ -31,34 +37,54 @@ export default function SubCategoryForm({
               }
             : null
     );
-    const { categories, setCategories: saveToStore } = useCategoryStore();
+
+    // ❌ REMOVED: const { categories, setCategories: saveToStore } = useCategoryStore();
+
+    // Local state for categories, initialized as empty
     const [localCategories, setLocalCategories] = useState<CategoryType[]>([]);
     const [loading, setLoading] = useState(false);
+    const [isFetching, setIsFetching] = useState(true); // Start as true since we must fetch
 
+    // ✅ Implemented: useEffect to call getCategories once on mount
     useEffect(() => {
         const fetchCategories = async () => {
+            setIsFetching(true);
             try {
-                const response = await getCategories(100);
-                saveToStore(response.data);
+                // Assuming getCategories returns the CategoryResponse type
+                const response: CategoryResponse = await getCategories(100);
+
+                // ❌ REMOVED: saveToStore(response.data);
+
                 setLocalCategories(response.data);
             } catch (error) {
                 console.error("Failed to fetch categories", error);
+                toast.error("Failed to load parent categories.");
+            } finally {
+                setIsFetching(false);
             }
         };
 
-        if (categories.length === 0) {
-            fetchCategories();
-        } else {
-            setLocalCategories(localCategories);
-        }
-    }, [categories, saveToStore, localCategories]);
+        // Call fetchCategories only once on mount (empty dependency array)
+        fetchCategories();
+    }, []); // Empty dependency array ensures it runs only on mount
 
     const categoryOptions = useMemo(() => {
-        return localCategories.map((cat) => ({
-            label: cat.name,
-            value: String(cat.id),
-        }));
-    }, [localCategories]);
+        if (isFetching) {
+            return [
+                { label: "Loading categories...", value: "", disabled: true },
+            ];
+        }
+
+        return (
+            localCategories
+                // Filter out the category being edited itself, to prevent selecting itself as a parent
+                .filter((cat) => cat.id !== category?.id)
+                .map((cat) => ({
+                    label: cat.name,
+                    value: String(cat.id),
+                }))
+        );
+    }, [localCategories, isFetching, category?.id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -84,6 +110,8 @@ export default function SubCategoryForm({
             toast.error(
                 `Failed to ${category?.id ? "update" : "add"} category`
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -111,13 +139,22 @@ export default function SubCategoryForm({
                     options={categoryOptions}
                     value={
                         selectedParent || {
-                            label: "Select category",
+                            label: isFetching
+                                ? "Loading..."
+                                : "Select category",
                             value: "",
                         }
                     }
                     onChange={(opt) => setSelectedParent(opt)}
                     className="w-full"
+                    // Disable dropdown while fetching or if no options are available
+                    disabled={isFetching || categoryOptions.length === 0}
                 />
+                {isFetching && (
+                    <p className="text-xs text-amber-600 mt-1">
+                        Fetching parent categories...
+                    </p>
+                )}
             </div>
             <SubmitButton loading={loading} label="Save changes" />
         </form>
