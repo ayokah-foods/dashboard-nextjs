@@ -20,6 +20,7 @@ import ProductAreaChart from "./ProductAreaChart";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
 import { formatAmount } from "@/utils/formatCurrency";
+import Link from "next/link";
 
 interface ProductTableProps {
     limit: number;
@@ -106,59 +107,66 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                 cell: ({ row }) => {
                     const image = row.original.images?.[0];
                     const title = row.original.title;
+                    const slug = row.original.slug;
                     const category = row.original.category?.name;
-                    const rating: number = row.original.average_rating || 0; // no parseFloat needed
-                    const fullStars = Math.floor(rating); // full stars
+                    const rating: number = row.original.average_rating || 0;
+                    const fullStars = Math.floor(rating);
                     const hasHalfStar = rating - fullStars >= 0.5;
 
                     return (
-                        <div className="flex items-center space-x-2">
-                            <Image
-                                src={image || "/placeholder.png"}
-                                alt={title}
-                                width={40}
-                                height={40}
-                                className="w-10 h-10 object-cover rounded"
-                            />
-                            <div className="flex flex-col">
-                                <span className="text-xs font-medium text-gray-800 truncate">
-                                    {title}
-                                </span>
-                                {category && (
-                                    <span className="text-xs text-gray-500 truncate">
-                                        {category}
+                        <div className="flex items-center space-x-2 min-w-0">
+                            {/* Wrap the image and text in a Link */}
+                            <Link
+                                href={`/items/${slug}`}
+                                className="flex items-center space-x-2 min-w-0 group"
+                            >
+                                <Image
+                                    src={image || "/placeholder.png"}
+                                    alt={title}
+                                    width={40}
+                                    height={40}
+                                    className="w-10 h-10 object-cover rounded flex-shrink-0"
+                                />
+                                <div className="flex flex-col min-w-0">
+                                    <span className="block text-xs font-medium text-gray-800 truncate group-hover:text-blue-600 group-hover:underline">
+                                        {title}
                                     </span>
-                                )}
-                                <div className="flex items-center gap-0.5 mt-1 text-xs!">
-                                    {[...Array(5)].map((_, index) => {
-                                        if (index < fullStars) {
-                                            return (
-                                                <StarIcon
-                                                    key={index}
-                                                    className="w-4 h-4 text-yellow-500 text-xs!"
-                                                />
-                                            );
-                                        } else if (
-                                            index === fullStars &&
-                                            hasHalfStar
-                                        ) {
-                                            return (
-                                                <StarIcon
-                                                    key={index}
-                                                    className="w-4 h-4 text-yellow-300 text-xs!"
-                                                />
-                                            ); // half star style
-                                        } else {
-                                            return (
-                                                <StarIcon
-                                                    key={index}
-                                                    className="w-4 h-4 text-gray-300 text-xs!"
-                                                />
-                                            );
-                                        }
-                                    })}
+                                    {category && (
+                                        <span className="block text-xs text-gray-500 truncate">
+                                            {category}
+                                        </span>
+                                    )}
+                                    <div className="flex items-center gap-0.5 mt-1">
+                                        {[...Array(5)].map((_, index) => {
+                                            if (index < fullStars) {
+                                                return (
+                                                    <StarIcon
+                                                        key={index}
+                                                        className="w-3 h-3 text-yellow-500"
+                                                    />
+                                                );
+                                            } else if (
+                                                index === fullStars &&
+                                                hasHalfStar
+                                            ) {
+                                                return (
+                                                    <StarIcon
+                                                        key={index}
+                                                        className="w-3 h-3 text-yellow-300"
+                                                    />
+                                                );
+                                            } else {
+                                                return (
+                                                    <StarIcon
+                                                        key={index}
+                                                        className="w-3 h-3 text-gray-300"
+                                                    />
+                                                );
+                                            }
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     );
                 },
@@ -174,8 +182,8 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                         row.original.regular_price || "0"
                     );
 
-                    const formattedSales = `${(formatAmount(salesPrice))}`;
-                    const formattedRegular = `${(formatAmount(regularPrice))}`;
+                    const formattedSales = `${formatAmount(salesPrice)}`;
+                    const formattedRegular = `${formatAmount(regularPrice)}`;
 
                     return (
                         <div className="flex flex-col text-xs">

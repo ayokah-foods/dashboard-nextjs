@@ -16,6 +16,7 @@ import AnalysisAreaChart from "./components/AnalysisAreaChart";
 import toast from "react-hot-toast";
 import ConfirmationModal from "../components/commons/ConfirmationModal";
 import Avatar from "@/utils/Avatar";
+import Link from "next/link";
 
 const typeOptions = [
     { label: "All Types", value: "" },
@@ -119,20 +120,33 @@ export default function Shops() {
                 header: "Shop",
                 accessorKey: "name",
                 cell: ({ row }) => {
-                    const { name, logo, type, category, products_count } =
+                    const { name, logo, type, category, products_count, slug } =
                         row.original;
+
                     return (
-                        <div className="flex items-center gap-3">
-                            <Avatar src={logo || ""} alt={name} size={10} />
-                            <div className="flex flex-col">
-                                <span className="text-gray-900 font-medium leading-tight truncate">
-                                    {name}
-                                </span>
-                                <span className="text-xs text-gray-500 capitalize truncate">
-                                    {category?.name} | <b>{products_count}</b>{" "}
-                                    {type}
-                                </span>
-                            </div>
+                        <div className="flex items-center gap-3 min-w-0">
+                            <Link
+                                href={`/shops/${slug}`}
+                                className="flex items-center gap-3 min-w-0 group"
+                            >
+                                <div className="flex-shrink-0">
+                                    <Avatar
+                                        src={logo || ""}
+                                        alt={name}
+                                        size={10}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col min-w-0">
+                                    <span className="block text-gray-900 font-medium leading-tight truncate group-hover:text-blue-600 group-hover:underline">
+                                        {name}
+                                    </span>
+                                    <span className="block text-xs text-gray-500 capitalize truncate">
+                                        {category?.name} |{" "}
+                                        <b>{products_count}</b> {type}
+                                    </span>
+                                </div>
+                            </Link>
                         </div>
                     );
                 },
