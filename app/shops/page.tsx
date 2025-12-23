@@ -126,7 +126,7 @@ export default function Shops() {
                     return (
                         <div className="flex items-center gap-3 min-w-0">
                             <Link
-                                href={`/shops/${slug}`}
+                                href={`https://ayokah.co.uk/shops/${slug}`}
                                 className="flex items-center gap-3 min-w-0 group"
                             >
                                 <div className="flex-shrink-0">
@@ -138,13 +138,13 @@ export default function Shops() {
                                 </div>
 
                                 <div className="flex flex-col min-w-0">
-                                    <span className="block text-gray-900 font-medium leading-tight truncate group-hover:text-blue-600 group-hover:underline">
+                                    <p className="block text-gray-900! font-medium leading-tight truncate group-hover:text-blue-600 group-hover:underline">
                                         {name}
-                                    </span>
-                                    <span className="block text-xs text-gray-500 capitalize truncate">
+                                    </p>
+                                    <p className="block text-xs text-gray-500! capitalize truncate">
                                         {category?.name} |{" "}
                                         <b>{products_count}</b> {type}
-                                    </span>
+                                    </p>
                                 </div>
                             </Link>
                         </div>

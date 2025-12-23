@@ -117,7 +117,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                         <div className="flex items-center space-x-2 min-w-0">
                             {/* Wrap the image and text in a Link */}
                             <Link
-                                href={`/items/${slug}`}
+                                href={`https://ayokah.co.uk/items/${slug}`}
                                 className="flex items-center space-x-2 min-w-0 group"
                             >
                                 <Image
@@ -128,13 +128,13 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                                     className="w-10 h-10 object-cover rounded flex-shrink-0"
                                 />
                                 <div className="flex flex-col min-w-0">
-                                    <span className="block text-xs font-medium text-gray-800 truncate group-hover:text-blue-600 group-hover:underline">
+                                    <p className="block text-xs font-medium text-gray-800! truncate group-hover:text-blue-600 group-hover:underline">
                                         {title}
-                                    </span>
+                                    </p>
                                     {category && (
-                                        <span className="block text-xs text-gray-500 truncate">
+                                        <p className="block text-xs text-gray-500! truncate">
                                             {category}
-                                        </span>
+                                        </p>
                                     )}
                                     <div className="flex items-center gap-0.5 mt-1">
                                         {[...Array(5)].map((_, index) => {
