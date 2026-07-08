@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface WalletSummaryProps {
     loading: boolean;
@@ -60,7 +61,7 @@ export default function WalletSummary({
                         <div>
                             <p className="text-sm text-gray-500">{label}</p>
                             <p className="text-3xl font-bold text-gray-800">
-                                {loading ? <Skeleton width={80} /> : `$${value}`}
+                                {loading ? <Skeleton width={80} /> : `${formatAmount(value)}`}
                             </p>
                         </div>
                     </div>
