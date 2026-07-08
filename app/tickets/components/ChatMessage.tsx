@@ -62,7 +62,7 @@ export default function ChatMessages({
                                               "after:-left-2.5 after:border-t-white after:border-r-white", // The white tail
                                           ]
                                         : [
-                                              "bg-hub-secondary text-white rounded-2xl rounded-tr-none",
+                                              "bg-ayokah-secondary text-white rounded-2xl rounded-tr-none",
                                               "after:-right-2.5 after:border-t-hub-secondary after:border-l-hub-secondary", // The primary color tail
                                           ],
                                 )}
@@ -111,7 +111,7 @@ export default function ChatMessages({
                                                 className={cn(
                                                     "w-3.5 h-3.5",
                                                     isCustomer
-                                                        ? "text-hub-secondary"
+                                                        ? "text-ayokah-secondary"
                                                         : "text-white",
                                                 )}
                                             />

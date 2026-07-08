@@ -52,7 +52,7 @@ export default function SelectDropdown({
                                 className={({ active }) =>
                                     `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
                                         active
-                                            ? "bg-ayokah-primary text-hub-secondary"
+                                            ? "bg-ayokah-primary text-ayokah-secondary"
                                             : "text-gray-700"
                                     }`
                                 }
@@ -65,7 +65,7 @@ export default function SelectDropdown({
                                             {option.label}
                                         </span>
                                         {selected && (
-                                            <span className="absolute inset-y-0 left-2 flex items-center text-hub-secondary">
+                                            <span className="absolute inset-y-0 left-2 flex items-center text-ayokah-secondary">
                                                 <CheckIcon className="h-4 w-4" />
                                             </span>
                                         )}

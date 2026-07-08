@@ -176,7 +176,7 @@ export default function CityForm({ onClose, city }: CityFormProps) {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 bg-ayokah-primary text-white text-sm font-medium rounded-xl hover:bg-hub-secondary cursor-pointer disabled:opacity-50"
+                    className="px-4 py-2 bg-ayokah-primary text-white text-sm font-medium rounded-xl hover:bg-ayokah-secondary cursor-pointer disabled:opacity-50"
                 >
                     {loading ? "Saving..." : "Save City"}
                 </button>

@@ -11,7 +11,7 @@ export function SubmitButton({ label = 'Save changes', loading = false }: Submit
         <button
             type="submit"
             disabled={loading}
-            className={`w-full inline-flex items-center justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-bold rounded-md text-white  ${loading ? 'bg-ayokah-primary cursor-not-allowed' : 'bg-ayokah-primary hover:bg-hub-secondary cursor-pointer'
+            className={`w-full inline-flex items-center justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-bold rounded-md text-white  ${loading ? 'bg-ayokah-primary cursor-not-allowed' : 'bg-ayokah-primary hover:bg-ayokah-secondary cursor-pointer'
                 }`}
         >
             {loading ? (

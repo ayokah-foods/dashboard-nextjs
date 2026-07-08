@@ -84,7 +84,7 @@ export default function ShopPerformance() {
 
                     return (
                         <div className="flex items-center gap-2 text-gray-800 font-medium">
-                            <Icon className="w-4 h-4 text-hub-secondary" />
+                            <Icon className="w-4 h-4 text-ayokah-secondary" />
                             {type.charAt(0).toUpperCase() + type.slice(1)}
                         </div>
                     );

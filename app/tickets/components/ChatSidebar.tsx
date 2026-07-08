@@ -95,7 +95,7 @@ export default function ChatSidebar({
                         <div className="flex justify-between items-baseline">
                             {/* Participant Names */}
                             <h3
-                                className={`text-xs truncate font-bold ${isActive ? "text-hub-secondary" : "text-gray-900"}`}
+                                className={`text-xs truncate font-bold ${isActive ? "text-ayokah-secondary" : "text-gray-900"}`}
                             >
                                 {chat.customer_name} vs {chat.provider_name}
                             </h3>
@@ -114,7 +114,7 @@ export default function ChatSidebar({
                         <p
                             className={`text-[11px] truncate mt-1 leading-relaxed ${
                                 isActive
-                                    ? "text-hub-secondary font-medium"
+                                    ? "text-ayokah-secondary font-medium"
                                     : "text-gray-500"
                             }`}
                         >

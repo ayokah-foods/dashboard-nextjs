@@ -191,7 +191,7 @@ export default function Shops() {
                     return (
                         <Link href={vendorPath} className="group block">
                             <div className="text-sm">
-                                <div className="flex item-center gap-1 font-medium text-gray-900 group-hover:text-hub-secondary transition-colors">
+                                <div className="flex item-center gap-1 font-medium text-gray-900 group-hover:text-ayokah-secondary transition-colors">
                                     {vendor?.name} {vendor?.last_name}
                                     {/* Adding a small external link icon is helpful for Admins */}
                                     <svg
@@ -315,7 +315,7 @@ export default function Shops() {
                             setShopToTakeAction(row.original); // Pass full object
                             setIsModalOpen(true);
                         }}
-                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-ayokah-primary text-hub-secondary rounded hover:bg-gray-50 transition cursor-pointer"
+                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-ayokah-primary text-ayokah-secondary rounded hover:bg-gray-50 transition cursor-pointer"
                     >
                         Take Action
                         <ClipboardDocumentCheckIcon className="w-4 h-4" />

@@ -154,7 +154,7 @@ function TanStackTable<T>({
                                 })
                             }
                             disabled={pagination.pageIndex === 0}
-                            className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-hub-secondary text-white rounded-md disabled:opacity-40 transition cursor-pointer"
+                            className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-ayokah-secondary text-white rounded-md disabled:opacity-40 transition cursor-pointer"
                         >
                             <ArrowLeftIcon className="w-4 h-4 mr-1" />
                             Previous
@@ -176,7 +176,7 @@ function TanStackTable<T>({
                                 pagination.pageIndex >=
                                 Math.ceil(pagination.totalRows / pagination.pageSize) - 1
                             }
-                            className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-hub-secondary text-white rounded-md disabled:opacity-40 transition cursor-pointer"
+                            className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-ayokah-secondary text-white rounded-md disabled:opacity-40 transition cursor-pointer"
                         >
                             Next
                             <ArrowRightIcon className="w-4 h-4 ml-1" />

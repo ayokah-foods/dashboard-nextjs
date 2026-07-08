@@ -114,7 +114,7 @@ export function RecentReviews() {
                 {reviews.map((review) => (
                     <div
                         key={review.id}
-                        className="cursor-pointer hover:bg-hub-secondary-50/50 rounded-lg p-1"
+                        className="cursor-pointer hover:bg-ayokah-secondary-50/50 rounded-lg p-1"
                     >
                         <ReviewCard review={review} />
                     </div>

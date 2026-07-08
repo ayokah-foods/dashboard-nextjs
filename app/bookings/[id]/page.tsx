@@ -82,7 +82,7 @@ function CustomerSummary({ customer, stats }: { customer: any; stats: any }) {
                     </p>
                 </div>
                 <div>
-                    <p className="font-bold text-hub-secondary">
+                    <p className="font-bold text-ayokah-secondary">
                         {formatAmount(stats?.total_revenue || 0)}
                     </p>
                     <p className="text-[10px] text-gray-500 uppercase">Spent</p>
@@ -167,12 +167,12 @@ export default function OrderDetail() {
         if (diffDays > 0) {
             return {
                 text: `${diffDays} ${diffDays === 1 ? "day" : "days"} remaining`,
-                color: "text-hub-secondary",
+                color: "text-ayokah-secondary",
             };
         }
         return {
             text: `${diffHours} ${diffHours === 1 ? "hour" : "hours"} remaining`,
-            color: "text-hub-secondary/20",
+            color: "text-ayokah-secondary/20",
         };
     };
 
@@ -187,7 +187,7 @@ export default function OrderDetail() {
                     </h1>
                     <p className="mt-1 text-sm text-gray-400">
                         Service Method:{" "}
-                        <span className="font-semibold uppercase text-hub-secondary">
+                        <span className="font-semibold uppercase text-ayokah-secondary">
                             {booking.delivery_method}
                         </span>
                     </p>
@@ -251,13 +251,13 @@ export default function OrderDetail() {
                             <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900">
                                 {booking.service.title}
                             </h2>
-                            <p className="mb-4 text-sm font-medium text-hub-secondary">
+                            <p className="mb-4 text-sm font-medium text-ayokah-secondary">
                                 By {booking.shop.name}
                             </p>
 
                             <div className="grid grid-cols-1 gap-4 pt-4 border-t border-dashed sm:grid-cols-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-ayokah-primary/10 text-hub-secondary">
+                                    <div className="p-2 rounded-lg bg-ayokah-primary/10 text-ayokah-secondary">
                                         <FiCalendar size={20} />
                                     </div>
                                     <div>
@@ -272,7 +272,7 @@ export default function OrderDetail() {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-ayokah-primary/10 text-hub-secondary">
+                                    <div className="p-2 rounded-lg bg-ayokah-primary/10 text-ayokah-secondary">
                                         <FiClock size={20} />
                                     </div>
                                     <div>
@@ -329,12 +329,12 @@ export default function OrderDetail() {
                             <span className="font-bold text-gray-900">
                                 Total Payable
                             </span>
-                            <span className="text-xl font-black text-hub-secondary">
+                            <span className="text-xl font-black text-ayokah-secondary">
                                 {formatAmount(booking.amount)}
                             </span>
                         </div>
                     </div>
-                    <div className="bg-ayokah-primary/10 p-3 rounded-lg text-[11px] text-hub-secondary not-[]:leading-relaxed border border-ayokah-primary/50">
+                    <div className="bg-ayokah-primary/10 p-3 rounded-lg text-[11px] text-ayokah-secondary not-[]:leading-relaxed border border-ayokah-primary/50">
                         * This booking is for a{" "}
                         <strong>{booking.delivery_method}</strong> session.
                         Ensure the customer is available during the selected

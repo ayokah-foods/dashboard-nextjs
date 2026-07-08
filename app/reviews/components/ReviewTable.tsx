@@ -89,7 +89,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     return (
                         <Link
                             href={`/orders/${orderId}`}
-                            className="text-hub-secondary font-medium hover:underline"
+                            className="text-ayokah-secondary font-medium hover:underline"
                         >
                             #{orderId}
                         </Link>
@@ -102,7 +102,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 cell: ({ getValue }) => {
                     const rating = Number(getValue());
                     return (
-                        <span className="text-hub-secondary font-semibold">
+                        <span className="text-ayokah-secondary font-semibold">
                             {rating} / 5
                         </span>
                     );

@@ -36,7 +36,7 @@ export default function WalletSummary({
         {
             label: "Pending Amount",
             value: totalPending,
-            icon: <ClockIcon className="w-6 h-6 text-hub-secondary" />,
+            icon: <ClockIcon className="w-6 h-6 text-ayokah-secondary" />,
         },
     ];
 
@@ -46,7 +46,7 @@ export default function WalletSummary({
                 <h2 className="text-lg font-semibold text-gray-800 mb-4">Wallet Balance</h2>
                 <button
                     onClick={() => router.back()}
-                    className="flex items-center text-lg rounded-lg text-hub-secondary-500 hover:text-hub-secondary-600 transition cursor-pointer"
+                    className="flex items-center text-lg rounded-lg text-ayokah-secondary-500 hover:text-ayokah-secondary-600 transition cursor-pointer"
                 >
                     <ArrowLeftCircleIcon className="w-5 h-5 mr-1" />
                     Back

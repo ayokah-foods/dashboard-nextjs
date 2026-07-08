@@ -56,7 +56,7 @@ export default function PolicyEditor({ type }: PolicyEditorProps) {
                 <div className="flex justify-end space-x-3">
                     <button
                         onClick={handleSave}
-                        className="bg-hub-secondary inline-flex items-center cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-hub-secondary"
+                        className="bg-ayokah-secondary inline-flex items-center cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-ayokah-secondary"
                     >
                         Save {type}
                     </button>

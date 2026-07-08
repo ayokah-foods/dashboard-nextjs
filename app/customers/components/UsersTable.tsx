@@ -78,7 +78,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                     const userId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-ayokah-primary text-white rounded hover:bg-hub-secondary cursor-pointer"
+                            className="px-3 py-1 bg-ayokah-primary text-white rounded hover:bg-ayokah-secondary cursor-pointer"
                             onClick={() => {
                                 router.push(`/customers/${userId}`);
                             }}

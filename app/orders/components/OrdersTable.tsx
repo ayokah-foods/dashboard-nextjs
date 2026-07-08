@@ -108,7 +108,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     const orderId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
+                            className="px-3 py-1 bg-ayokah-secondary text-white rounded hover:bg-ayokah-secondary cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/orders/${orderId}`;
                             }}

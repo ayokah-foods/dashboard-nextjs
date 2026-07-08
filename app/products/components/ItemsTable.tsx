@@ -233,14 +233,14 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                     return shop ? (
                         <div className="flex flex-col text-gray-700">
                             <div className="flex items-center gap-2">
-                                <BuildingStorefrontIcon className="w-4 h-4 text-hub-secondary shrink-0" />
+                                <BuildingStorefrontIcon className="w-4 h-4 text-ayokah-secondary shrink-0" />
                                 {/* Link for the Shop Name */}
                                 <a
                                     href={shopUrl}
                                     target="_blank"
                                     title="View Shop"
                                     rel="noopener noreferrer"
-                                    className="font-medium truncate max-w-40 text-sm text-gray-800 hover:text-hub-secondary/20 hover:underline transition-colors"
+                                    className="font-medium truncate max-w-40 text-sm text-gray-800 hover:text-ayokah-secondary/20 hover:underline transition-colors"
                                 >
                                     {shop.name}
                                 </a>
@@ -264,7 +264,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
 
                     return (
                         <div className="flex items-center gap-1 text-gray-700">
-                            <EyeIcon className="w-4 h-4 text-hub-secondary" />
+                            <EyeIcon className="w-4 h-4 text-ayokah-secondary" />
                             <span>{views}</span>
                         </div>
                     );

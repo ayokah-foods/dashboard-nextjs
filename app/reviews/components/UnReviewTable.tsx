@@ -55,7 +55,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     return (
                         <Link
                             href={`/orders/${orderId}`}
-                            className="text-hub-secondary font-medium hover:underline"
+                            className="text-ayokah-secondary font-medium hover:underline"
                         >
                             Order #{orderId}
                         </Link>
@@ -99,7 +99,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                             className={`px-2 py-1 text-xs rounded ${
                                 status === "delivered"
                                     ? "bg-ayokah/10 text-ayokah-secondary"
-                                    : "bg-ayokah-primary text-hub-secondary"
+                                    : "bg-ayokah-primary text-ayokah-secondary"
                             }`}
                         >
                             {status}

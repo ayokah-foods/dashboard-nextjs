@@ -85,7 +85,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                                     target="_blank"
                                     title={value?.title}
                                     rel="noopener noreferrer"
-                                    className="font-medium text-sm text-gray-800 hover:text-hub-secondary/20 hover:underline transition-colors truncate max-w-30 mr-2"
+                                    className="font-medium text-sm text-gray-800 hover:text-ayokah-secondary/20 hover:underline transition-colors truncate max-w-30 mr-2"
                                 >
                                     <span className="truncate max-w-20">
                                         {value?.title ?? "N/A"}
@@ -127,7 +127,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                                 target="_blank"
                                 title="View provider"
                                 rel="noopener noreferrer"
-                                className="font-medium text-sm text-gray-800 hover:text-hub-secondary/20 hover:underline transition-colors truncate"
+                                className="font-medium text-sm text-gray-800 hover:text-ayokah-secondary/20 hover:underline transition-colors truncate"
                             >
                                 {value?.name ?? "N/A"}
                             </a>
@@ -169,7 +169,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                     const bookingId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
+                            className="px-3 py-1 bg-ayokah-secondary text-white rounded hover:bg-ayokah-secondary cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/bookings/${bookingId}`;
                             }}

@@ -75,7 +75,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                     const userId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
+                            className="px-3 py-1 bg-ayokah-secondary text-white rounded hover:bg-ayokah-secondary cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/vendors/${userId}`;
                             }}

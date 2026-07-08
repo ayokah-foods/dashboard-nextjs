@@ -63,7 +63,7 @@ export default function SubscriptionPage() {
                             setEditingSubscription(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-ayokah-primary text-white hover:bg-hub-secondary cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-ayokah-primary text-white hover:bg-ayokah-secondary cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Subscription

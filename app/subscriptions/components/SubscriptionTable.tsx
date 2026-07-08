@@ -63,7 +63,7 @@ export default function SubscriptionTable({
                             href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-hub-secondary underline hover:text-hub-secondary break-words"
+                            className="text-ayokah-secondary underline hover:text-ayokah-secondary break-words"
                         >
                             {link.length > 25
                                 ? link.substring(0, 25) + "..."
@@ -81,7 +81,7 @@ export default function SubscriptionTable({
                                 aria-label="update"
                                 title="update subscription"
                                 onClick={() => onEdit(row.original)}
-                                className="bg-blue-500 text-white p-1.5 rounded hover:bg-hub-secondary cursor-pointer"
+                                className="bg-blue-500 text-white p-1.5 rounded hover:bg-ayokah-secondary cursor-pointer"
                             >
                                 <PencilSquareIcon className="w-4 h-4" />
                             </button>

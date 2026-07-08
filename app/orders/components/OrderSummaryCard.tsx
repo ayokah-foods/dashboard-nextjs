@@ -55,7 +55,7 @@ export default function OrderSummaryCard({
                                 orderMeta.payment_status === "completed"
                                     ? "bg-ayokah/10 text-ayokah-secondary"
                                     : orderMeta.payment_status === "pending"
-                                      ? "bg-ayokah-primary text-hub-secondary"
+                                      ? "bg-ayokah-primary text-ayokah-secondary"
                                       : "bg-red-100 text-red-800"
                             }`}
                         >

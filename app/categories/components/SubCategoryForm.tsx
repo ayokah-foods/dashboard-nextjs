@@ -187,7 +187,7 @@ export default function SubCategoryForm({
                     }
                 />
                 {isFetching && (
-                    <p className="text-xs text-hub-secondary mt-1">
+                    <p className="text-xs text-ayokah-secondary mt-1">
                         Fetching parent categories for{" "}
                         {type?.label || "selected type"}...
                     </p>

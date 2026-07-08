@@ -50,7 +50,7 @@ export default function ProductCard({
                         href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/items/${product.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-hub-secondary hover:underline transition-colors"
+                        className="hover:text-ayokah-secondary hover:underline transition-colors"
                     >
                         {product.title}
                     </Link>

@@ -140,7 +140,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                     return vendor ? (
                         <div className="flex flex-col text-gray-700">
                             <div className="flex items-center gap-2">
-                                <BuildingStorefrontIcon className="w-4 h-4 text-hub-secondary" />
+                                <BuildingStorefrontIcon className="w-4 h-4 text-ayokah-secondary" />
                                 <span>{vendor.name}</span>
                             </div>
                             <span className="text-xs text-gray-500 mt-0.5 ml-6">
@@ -161,7 +161,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                     const views = getValue() as number;
                     return (
                         <div className="flex items-center gap-1 text-gray-700">
-                            <EyeIcon className="w-4 h-4 text-hub-secondary" />
+                            <EyeIcon className="w-4 h-4 text-ayokah-secondary" />
                             <span>{views}</span>
                         </div>
                     );
@@ -190,7 +190,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                     const productId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
+                            className="px-3 py-1 bg-ayokah-secondary text-white rounded hover:bg-ayokah-secondary cursor-pointer"
                             onClick={() =>
                                 (window.location.href = `/products/${productId}`)
                             }

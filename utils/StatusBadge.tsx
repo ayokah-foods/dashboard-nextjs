@@ -32,7 +32,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
                     return "bg-ayokah/10 text-ayokah-primary";
                 case "unpaid":
                 case "pending":
-                    return "bg-ayokah-primary text-hub-secondary";
+                    return "bg-ayokah-primary text-ayokah-secondary";
                 case "cancelled":
                 case "declined":
                     return "bg-red-100 text-red-600";
@@ -49,7 +49,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
             case "processing":
                 return "bg-ayokah-primary/50 text-ayokah-primary";
             case "ongoing":
-                return "bg-ayokah-primary text-hub-secondary";
+                return "bg-ayokah-primary text-ayokah-secondary";
             case "active":
             case "approved":
             case "delivered":

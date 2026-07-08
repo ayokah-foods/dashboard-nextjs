@@ -81,7 +81,7 @@ export default function ChatHeader({
                                 href={`https://africanmarkethub.ca/items/${serviceSlug}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-[9px] font-bold text-hub-secondary bg-blue-50 px-1.5 py-0.5 rounded uppercase tracking-tighter flex items-center gap-1 hover:bg-ayokah-primary/10 transition-colors"
+                                className="text-[9px] font-bold text-ayokah-secondary bg-blue-50 px-1.5 py-0.5 rounded uppercase tracking-tighter flex items-center gap-1 hover:bg-ayokah-primary/10 transition-colors"
                             >
                                 View Service <LuExternalLink size={10} />
                             </a>
@@ -99,7 +99,7 @@ export default function ChatHeader({
             </div>
 
             <div className="hidden animate-pulse sm:flex items-center gap-1.5 px-3 py-1 bg-gray-50 text-ayokah-primary rounded-full border border-ayokah-primary/10 shrink-0">
-                <LuShield size={14} className="text-hub-secondary" />
+                <LuShield size={14} className="text-ayokah-secondary" />
                 <span className="text-[10px] font-bold uppercase tracking-widest">
                     READ-ONLY View
                 </span>

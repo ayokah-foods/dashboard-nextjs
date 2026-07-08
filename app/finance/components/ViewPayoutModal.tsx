@@ -65,7 +65,7 @@ export default function ViewPayoutModal({
             <div className="mt-5 space-y-4">
                 <div className="text-right text-sm text-gray-700">
                     <span className="font-semibold">Amount:</span>{" "}
-                    <span className="text-hub-secondary font-bold">
+                    <span className="text-ayokah-secondary font-bold">
                         {formatAmount(payout.amount)}
                     </span>
                 </div>
@@ -78,7 +78,7 @@ export default function ViewPayoutModal({
 
                 <div className="flex justify-end">
                     <button
-                        className="rounded-md bg-hub-secondary hover:bg-hub-secondary px-4 py-2 text-sm text-white"
+                        className="rounded-md bg-ayokah-secondary hover:bg-ayokah-secondary px-4 py-2 text-sm text-white"
                         onClick={async () => {
                             const status = decision.value;
                             if (status === "pending") {

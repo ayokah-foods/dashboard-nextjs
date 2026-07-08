@@ -100,7 +100,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                                 href={productUrl}
                                 target="_blank"
                                 title="View Item"
-                                className="font-medium text-sm text-gray-800 hover:text-hub-secondary hover:underline transition-colors"
+                                className="font-medium text-sm text-gray-800 hover:text-ayokah-secondary hover:underline transition-colors"
                             >
                                 {product?.title ?? "Unnamed Product"}
                             </Link>
@@ -173,7 +173,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                             onClick={() =>
                                 router.push(`/orders/${row.original.id}`)
                             }
-                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
+                            className="px-3 py-1 bg-ayokah-secondary text-white rounded hover:bg-ayokah-secondary cursor-pointer"
                         >
                             View
                         </button>
@@ -224,7 +224,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                             />
                         </>
                     ) : (
-                        <p className="flex items-center justify-center w-full text-hub-secondary p-4 border border-ayokah-primary bg-ayokah-primary/20 rounded-xl text-sm text-center">
+                        <p className="flex items-center justify-center w-full text-ayokah-secondary p-4 border border-ayokah-primary bg-ayokah-primary/20 rounded-xl text-sm text-center">
                             {searchInput
                                 ? `No orders found for “${searchInput}”.`
                                 : `This ${type} does not have any orders yet.`}

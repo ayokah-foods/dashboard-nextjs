@@ -98,7 +98,7 @@ function CategoryActionCell({
 
                 <button
                     title="Update"
-                    className="bg-ayokah-primary cursor-pointer text-white p-1.5 rounded-md hover:bg-hub-secondary"
+                    className="bg-ayokah-primary cursor-pointer text-white p-1.5 rounded-md hover:bg-ayokah-secondary"
                     onClick={() => {
                         onEdit(category);
                     }}
@@ -226,7 +226,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                                     target="_blank"
                                     title="View Category"
                                     rel="noopener noreferrer"
-                                    className="font-medium text-sm text-gray-800 hover:text-hub-secondary/20 hover:underline transition-colors"
+                                    className="font-medium text-sm text-gray-800 hover:text-ayokah-secondary/20 hover:underline transition-colors"
                                 >
                                     {name}
                                 </a>
