@@ -74,7 +74,7 @@ export default function ProfileCard({
 
     return (
         <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
-            <div className="relative h-24 bg-gradient-to-r from-hub-primary to-hub-secondary" />
+            <div className="relative h-24 bg-gradient-to-r from-ayokah-primary to-hub-secondary" />
 
             <div className="relative -mt-10 px-6 pb-24">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
@@ -238,7 +238,7 @@ export default function ProfileCard({
                                     onChange={(e) =>
                                         setConfirmText(e.target.value)
                                     }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary mt-2"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200 focus:border-ayokah-primary mt-2"
                                 />
 
                                 <div className="mt-6 flex justify-end gap-3">

@@ -182,7 +182,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                     maxLength={maxLength}
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200 focus:border-ayokah-primary"
                     placeholder={
                         isSMS
                             ? "Max 160 characters for SMS"
@@ -209,7 +209,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                             placeholder="https://example.com"
                             value={cta}
                             onChange={(e) => setCta(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200 focus:border-ayokah-primary"
                         />
                     </div>
 
@@ -219,7 +219,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                         </label>
                         <label
                             htmlFor="notificationImage"
-                            className="relative w-full h-50 aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-hub-primary hover:bg-hub-primary/20 transition-colors overflow-hidden flex items-center justify-center"
+                            className="relative w-full h-50 aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-ayokah-primary hover:bg-ayokah-primary/20 transition-colors overflow-hidden flex items-center justify-center"
                         >
                             {imagePreview ? (
                                 <Image

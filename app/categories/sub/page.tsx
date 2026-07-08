@@ -81,7 +81,7 @@ export default function Sub() {
                             setEditingCategory(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-ayokah-primary text-white hover:bg-hub-secondary"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Subcategory

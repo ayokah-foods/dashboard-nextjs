@@ -83,7 +83,7 @@ export function MetricCard() {
             </div>
             {/* Product Sellers */}
             <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex items-center gap-4">
-                <div className="p-2 rounded-full bg-hub-primary text-hub-secondary">
+                <div className="p-2 rounded-full bg-ayokah-primary text-hub-secondary">
                     <CubeIcon className="w-6 h-6" />
                 </div>
                 <div>

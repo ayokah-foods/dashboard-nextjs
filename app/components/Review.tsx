@@ -15,7 +15,7 @@ function StarRating({ rating }: { rating: number }) {
                 <svg
                     key={index}
                     className={`w-4 h-4 ${
-                        index < rating ? "text-hub-primary" : "text-gray-400"
+                        index < rating ? "text-ayokah-primary" : "text-gray-400"
                     }`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -103,7 +103,7 @@ export function RecentReviews() {
                 </p>
                 <Link
                     href="/reviews"
-                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-hub-primary/50 py-2 px-4 rounded"
+                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-ayokah-primary/50 py-2 px-4 rounded"
                 >
                     See all
                 </Link>

@@ -137,7 +137,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                                     target="_blank"
                                     title="View Item"
                                     rel="noopener noreferrer"
-                                    className="text-sm truncate max-w-40 text-gray-800 font-medium hover:text-hub-primary hover:underline transition-colors"
+                                    className="text-sm truncate max-w-40 text-gray-800 font-medium hover:text-ayokah-primary hover:underline transition-colors"
                                 >
                                     {title}
                                 </Link>
@@ -165,7 +165,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                                     key={index}
                                     className={`w-4 h-4 ${
                                         index < stars
-                                            ? "text-hub-primary"
+                                            ? "text-ayokah-primary"
                                             : "text-gray-300"
                                     }`}
                                 />

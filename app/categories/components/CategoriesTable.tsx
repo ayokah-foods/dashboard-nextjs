@@ -98,7 +98,7 @@ function CategoryActionCell({
 
                 <button
                     title="Update"
-                    className="bg-hub-primary cursor-pointer text-white p-1.5 rounded-md hover:bg-hub-secondary"
+                    className="bg-ayokah-primary cursor-pointer text-white p-1.5 rounded-md hover:bg-hub-secondary"
                     onClick={() => {
                         onEdit(category);
                     }}

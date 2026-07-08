@@ -9,7 +9,7 @@ export default function ProductCard({
 }: any) {
     return (
         <div className="col-span-1 flex flex-col gap-4">
-            <div className="border border-hub-primary/50 rounded-md overflow-hidden">
+            <div className="border border-ayokah-primary/50 rounded-md overflow-hidden">
                 {activeImage ? (
                     <div className="relative w-full h-56">
                         <Image
@@ -29,7 +29,7 @@ export default function ProductCard({
                         <button
                             key={img}
                             onClick={() => setActiveImage(img)}
-                            className="w-20 h-20 rounded-md overflow-hidden border border-hub-primary/50"
+                            className="w-20 h-20 rounded-md overflow-hidden border border-ayokah-primary/50"
                         >
                             <div className="relative w-full h-full">
                                 <Image

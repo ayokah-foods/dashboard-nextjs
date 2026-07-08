@@ -89,7 +89,7 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
                     value={form.name}
                     onChange={handleChange}
                     placeholder="Enter plan name"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200"
                 />
             </div>
 
@@ -104,7 +104,7 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
                     value={form.monthly_price}
                     onChange={handleChange}
                     placeholder="Enter monthly price"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200"
                 />
             </div>
 
@@ -142,7 +142,7 @@ export default function SubscriptionForm({ onClose, subscription }: Props) {
                     value={form.payment_link}
                     onChange={handleChange}
                     placeholder="https://payment.example.com"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200"
                 />
             </div>
 

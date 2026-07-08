@@ -173,7 +173,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                     placeholder="Enter category name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200 focus:border-ayokah-primary"
                 />
             </div>
 
@@ -194,7 +194,7 @@ export default function CategoryForm({ onClose, category }: Props) {
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                     Parent Category{" "}
-                    <span className="text-hub-primary">(optional)</span>
+                    <span className="text-ayokah-primary">(optional)</span>
                 </label>
                 <SelectDropdown
                     options={categoryOptions}
@@ -242,7 +242,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                     maxLength={255}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200 focus:border-ayokah-primary"
                     placeholder="Category description"
                 />
                 <div className="text-sm text-gray-500 mt-1 text-right">
@@ -258,7 +258,7 @@ export default function CategoryForm({ onClose, category }: Props) {
 
                 <label
                     htmlFor="categoryImage"
-                    className="relative w-full h-50 aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-hub-primary hover:bg-hub-primary/20 transition-colors overflow-hidden flex items-center justify-center"
+                    className="relative w-full h-50 aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-ayokah-primary hover:bg-ayokah-primary/20 transition-colors overflow-hidden flex items-center justify-center"
                 >
                     {/* Image Preview fills label */}
                     {imagePreview ? (

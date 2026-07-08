@@ -201,7 +201,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                                     placeholder="Search by name, or order id..."
                                     value={searchInput}
                                     onChange={handleSearchChange}
-                                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900 focus:outline-none focus:ring-0 focus:border-hub-primary"
+                                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900 focus:outline-none focus:ring-0 focus:border-ayokah-primary"
                                 />
                             </div>
 
@@ -224,7 +224,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                             />
                         </>
                     ) : (
-                        <p className="flex items-center justify-center w-full text-hub-secondary p-4 border border-hub-primary bg-hub-primary/20 rounded-xl text-sm text-center">
+                        <p className="flex items-center justify-center w-full text-hub-secondary p-4 border border-ayokah-primary bg-ayokah-primary/20 rounded-xl text-sm text-center">
                             {searchInput
                                 ? `No orders found for “${searchInput}”.`
                                 : `This ${type} does not have any orders yet.`}

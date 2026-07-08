@@ -24,7 +24,7 @@ export default function SettingsPage() {
                             key={page.name}
                             onClick={() => setActiveTab(page.type)}
                             className={`pb-2 px-3 text-sm font-medium border-b-2 cursor-pointer ${activeTab === page.type
-                                ? "border-hub-primary-500 text-hub-primary-600"
+                                ? "border-ayokah-primary-500 text-ayokah-primary-600"
                                 : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                                 }`}
                         >

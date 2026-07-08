@@ -78,7 +78,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                                     key={index}
                                     className={`w-4 h-4 ${
                                         index < stars
-                                            ? "text-hub-primary"
+                                            ? "text-ayokah-primary"
                                             : "text-gray-300"
                                     }`}
                                 />

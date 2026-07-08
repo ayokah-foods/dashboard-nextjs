@@ -70,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
             >
                 <DialogBackdrop className="fixed inset-0 bg-black/50 transition-opacity duration-300" />
                 <div className="fixed inset-0 flex">
-                    <DialogPanel className="relative mr-16 rounded-r-4xl border-hub-primary/80 flex w-full max-w-xs flex-1 transform transition duration-700 ease-in data-closed:translate-x-full sm:duration-700 bg-white">
+                    <DialogPanel className="relative mr-16 rounded-r-4xl border-ayokah-primary/80 flex w-full max-w-xs flex-1 transform transition duration-700 ease-in data-closed:translate-x-full sm:duration-700 bg-white">
                         <TransitionChild>
                             <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
                                 <button
@@ -103,13 +103,13 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                 <button
                     type="button"
                     onClick={() => setSidebarOpen(true)}
-                    className="-m-2.5 p-2.5 text-green-500 hover:text-green-900"
+                    className="-m-2.5 p-2.5 text-ayokah-primary hover:text-green-900"
                 >
                     <Bars3Icon className="size-6 mr-2" />
                 </button>
             </div>
 
-            <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-white px-6 pb-4 border-r rounded-r-4xl border-hub-primary/80">
+            <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-white px-6 pb-4 border-r rounded-r-4xl border-ayokah-primary/80">
                 <SidebarContent
                     collapsed={collapsed}
                     setCollapsed={setCollapsed}
@@ -165,7 +165,7 @@ function BottomMenu({
 }) {
     return (
         <Popover className="relative w-1/2">
-            <div className="fixed bottom-0 z-50 bg-hub-primary text-white rounded-xl shadow-inner px-1.5 py-1.5 flex items-center justify-between">
+            <div className="fixed bottom-0 z-50 bg-ayokah-primary text-white rounded-xl shadow-inner px-1.5 py-1.5 flex items-center justify-between">
                 <div className="flex items-center gap-x-1">
                     <Image
                         className="size-5 rounded-full object-cover"
@@ -207,7 +207,7 @@ function BottomMenu({
                             onClick={item.isLogout ? onLogout : undefined}
                             className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium  ${
                                 item.isLogout
-                                    ? "text-green-500 font-bold bg-white border "
+                                    ? "text-ayokah-primary font-bold bg-white border "
                                     : ""
                             } ${collapsed ? "justify-center" : ""}`}
                         >

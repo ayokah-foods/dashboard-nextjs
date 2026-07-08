@@ -68,10 +68,10 @@ function TanStackTable<T>({
     });
 
     return (
-        <div className="w-full overflow-x-auto rounded-xl border border-hub-primary bg-white shadow-md">
+        <div className="w-full overflow-x-auto rounded-xl border border-ayokah-primary bg-white shadow-md">
             <table className="min-w-full divide-y divide-gray-200 text-sm">
                 {/* Always show table head */}
-                <thead className="bg-hub-primary text-xs font-semibold text-white uppercase">
+                <thead className="bg-ayokah-primary text-xs font-semibold text-white uppercase">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => (
@@ -111,7 +111,7 @@ function TanStackTable<T>({
                         </tr>
                     ) : (
                         table.getRowModel().rows.map((row) => (
-                            <tr key={row.id} className="hover:bg-hub-primary/10 cursor-pointer transition">
+                            <tr key={row.id} className="hover:bg-ayokah-primary/10 cursor-pointer transition">
                                 {row.getVisibleCells().map((cell) => (
                                     <td key={cell.id} className="px-4 py-3 whitespace-nowrap">
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}

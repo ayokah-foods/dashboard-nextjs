@@ -31,7 +31,7 @@ export default function ChatMessages({
     }, [messages, isloadingChatMessage]);
 
     return (
-        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 bg-hub-primary/10 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 bg-ayokah-primary/10 custom-scrollbar">
             {isloadingChatMessage ? (
                 <ChatMessagesSkeleton />
             ) : messages.length > 0 ? (
@@ -98,7 +98,7 @@ export default function ChatMessages({
                                         "flex items-center justify-end gap-1 mt-1 text-[9px] font-medium leading-none",
                                         isCustomer
                                             ? "text-gray-400"
-                                            : "text-hub-primary/80",
+                                            : "text-ayokah-primary/80",
                                     )}
                                 >
                                     <span>

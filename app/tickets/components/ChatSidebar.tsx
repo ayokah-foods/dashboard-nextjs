@@ -45,7 +45,7 @@ export default function ChatSidebar({
             placeholder="Search tickets or users..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-gray-100 border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-hub-primary placeholder:text-gray-400 transition-all"
+            className="w-full bg-gray-100 border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-ayokah-primary placeholder:text-gray-400 transition-all"
           />
         </div>
       </div>
@@ -62,7 +62,7 @@ export default function ChatSidebar({
                     onClick={() => onSelectChat(chat)}
                     className={`flex items-center gap-3 p-4 cursor-pointer border-l-4 transition-all ${
                         isActive
-                            ? "bg-hub-primary/10 border-hub-primary rounded-md shadow-sm"
+                            ? "bg-ayokah-primary/10 border-ayokah-primary rounded-md shadow-sm"
                             : "hover:bg-gray-50 border-transparent"
                     }`}
                 >

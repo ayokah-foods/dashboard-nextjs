@@ -149,7 +149,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
                 </p>
                 <Link
                     href="/orders"
-                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-hub-primary/50 py-2 px-4 rounded"
+                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-ayokah-primary/50 py-2 px-4 rounded"
                 >
                     See all
                 </Link>

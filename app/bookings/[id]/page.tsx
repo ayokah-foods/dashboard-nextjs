@@ -38,7 +38,7 @@ function CustomerSummary({ customer, stats }: { customer: any; stats: any }) {
     return (
         <div className="flex flex-wrap items-center justify-between p-6 text-sm bg-white border shadow-sm rounded-xl border-gray-50">
             <div className="flex items-center gap-4 min-w-[250px]">
-                <div className="relative w-16 h-16 overflow-hidden border-2 rounded-full border-hub-primary">
+                <div className="relative w-16 h-16 overflow-hidden border-2 rounded-full border-ayokah-primary">
                     <Image
                         src={customer.profile_photo}
                         alt={customer.name}
@@ -235,7 +235,7 @@ export default function OrderDetail() {
                 {/* Service Card */}
                 <div className="overflow-hidden bg-white border shadow-sm lg:col-span-2 rounded-xl border-gray-50">
                     <div className="flex items-center gap-2 p-4 font-bold text-gray-700 border-b bg-gray-50">
-                        <FiShield className="text-hub-primary" /> Booked Service
+                        <FiShield className="text-ayokah-primary" /> Booked Service
                         Information
                     </div>
                     <div className="flex flex-col gap-6 p-6 md:flex-row">
@@ -257,7 +257,7 @@ export default function OrderDetail() {
 
                             <div className="grid grid-cols-1 gap-4 pt-4 border-t border-dashed sm:grid-cols-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-hub-primary/10 text-hub-secondary">
+                                    <div className="p-2 rounded-lg bg-ayokah-primary/10 text-hub-secondary">
                                         <FiCalendar size={20} />
                                     </div>
                                     <div>
@@ -272,7 +272,7 @@ export default function OrderDetail() {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-hub-primary/10 text-hub-secondary">
+                                    <div className="p-2 rounded-lg bg-ayokah-primary/10 text-hub-secondary">
                                         <FiClock size={20} />
                                     </div>
                                     <div>
@@ -334,7 +334,7 @@ export default function OrderDetail() {
                             </span>
                         </div>
                     </div>
-                    <div className="bg-hub-primary/10 p-3 rounded-lg text-[11px] text-hub-secondary not-[]:leading-relaxed border border-hub-primary/50">
+                    <div className="bg-ayokah-primary/10 p-3 rounded-lg text-[11px] text-hub-secondary not-[]:leading-relaxed border border-ayokah-primary/50">
                         * This booking is for a{" "}
                         <strong>{booking.delivery_method}</strong> session.
                         Ensure the customer is available during the selected

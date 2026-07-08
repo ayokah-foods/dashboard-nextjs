@@ -136,7 +136,7 @@ export default function Shops() {
                                 rel="noopener noreferrer"
                                 className="hover:opacity-80 transition-opacity"
                             >
-                                <div className="w-10 h-10 relative rounded-full overflow-hidden border border-hub-primary/10 bg-gray-50">
+                                <div className="w-10 h-10 relative rounded-full overflow-hidden border border-ayokah-primary/10 bg-gray-50">
                                     <Image
                                         src={displayLogo}
                                         alt={name}
@@ -315,7 +315,7 @@ export default function Shops() {
                             setShopToTakeAction(row.original); // Pass full object
                             setIsModalOpen(true);
                         }}
-                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-hub-primary text-hub-secondary rounded hover:bg-gray-50 transition cursor-pointer"
+                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-ayokah-primary text-hub-secondary rounded hover:bg-gray-50 transition cursor-pointer"
                     >
                         Take Action
                         <ClipboardDocumentCheckIcon className="w-4 h-4" />
@@ -349,7 +349,7 @@ export default function Shops() {
                     <input
                         type="text"
                         placeholder="Search shops..."
-                        className="w-full px-10 py-2 border border-hub-primary/10 rounded-md text-gray-900 focus:outline-none focus:border-hub-primary/50 focus:ring-0"
+                        className="w-full px-10 py-2 border border-ayokah-primary/10 rounded-md text-gray-900 focus:outline-none focus:border-ayokah-primary/50 focus:ring-0"
                         value={search}
                         onChange={(e) => {
                             setPagination((prev) => ({

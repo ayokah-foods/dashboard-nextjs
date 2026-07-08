@@ -106,7 +106,7 @@ export default function BannerForm({
 
                 <label
                     htmlFor="categoryImage"
-                    className="relative w-full aspect-[3/2] border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-hub-primary hover:bg-hub-primary/20 transition-colors overflow-hidden flex items-center justify-center"
+                    className="relative w-full aspect-[3/2] border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-ayokah-primary hover:bg-ayokah-primary/20 transition-colors overflow-hidden flex items-center justify-center"
                 >
                     {imagePreview ? (
                         <Image

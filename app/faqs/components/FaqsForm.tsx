@@ -80,7 +80,7 @@ export default function FaqForm({ onClose, faq }: Props) {
                     type="text"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200 focus:border-ayokah-primary"
                 />
             </div>
 
@@ -93,7 +93,7 @@ export default function FaqForm({ onClose, faq }: Props) {
                     rows={4}
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-ayokah-primary/200 focus:border-ayokah-primary"
                 />
             </div>
 

@@ -101,7 +101,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
                     const orderId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-hub-primary text-white rounded hover:bg-hub-secondary cursor-pointer"
+                            className="px-3 py-1 bg-ayokah-primary text-white rounded hover:bg-hub-secondary cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/orders/${orderId}`;
                             }}
@@ -146,7 +146,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
                 <p className="text-lg font-bold text-gray-900">Recent orders</p>
                 <Link
                     href="/orders"
-                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-hub-primary/50 py-2 px-4 rounded"
+                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-ayokah-primary/50 py-2 px-4 rounded"
                 >
                     See all
                 </Link>

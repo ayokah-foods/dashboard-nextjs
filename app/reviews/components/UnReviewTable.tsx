@@ -99,7 +99,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                             className={`px-2 py-1 text-xs rounded ${
                                 status === "delivered"
                                     ? "bg-green-100 text-green-700"
-                                    : "bg-hub-primary text-hub-secondary"
+                                    : "bg-ayokah-primary text-hub-secondary"
                             }`}
                         >
                             {status}

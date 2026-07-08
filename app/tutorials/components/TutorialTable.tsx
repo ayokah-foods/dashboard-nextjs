@@ -185,7 +185,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                                 setEditingTutorial(row.original);
                                 setDrawerOpen(true);
                             }}
-                            className="p-2 text-white hover:text-blue-800 bg-hub-primary rounded-xl cursor-pointer"
+                            className="p-2 text-white hover:text-blue-800 bg-ayokah-primary rounded-xl cursor-pointer"
                         >
                             <PencilIcon className="w-5 h-5" />
                         </button>

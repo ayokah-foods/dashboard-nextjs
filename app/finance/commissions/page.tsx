@@ -87,7 +87,7 @@ export default function Commission() {
                 cell: ({ row }) => (
                     <div className="flex items-center gap-3">
                         <button
-                            className="bg-hub-primary text-white p-1.5 rounded hover:bg-hub-secondary"
+                            className="bg-ayokah-primary text-white p-1.5 rounded hover:bg-hub-secondary"
                             onClick={() => handleEdit(row.original)}
                             title="Edit"
                         >
@@ -130,7 +130,7 @@ export default function Commission() {
                         setSelectedCommission(null);
                         setDrawerOpen(true);
                     }}
-                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-ayokah-primary text-white hover:bg-hub-secondary"
                 >
                     <PlusIcon className="w-4 h-4" />
                     Add Commission
