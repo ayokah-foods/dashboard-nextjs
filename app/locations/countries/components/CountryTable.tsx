@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listCountries } from "@/lib/api_/locations";
+import { listCountries } from "@/lib/api/locations";
 import Image from "next/image";
 import { CountryType } from "@/types/LocationType";
 
@@ -72,7 +72,7 @@ const CountryTable: React.FC<CountryTableProps> = ({ limit, onDelete }) => {
                 ),
             },
         ],
-        [onDelete]
+        [onDelete],
     );
 
     // Fetch countries

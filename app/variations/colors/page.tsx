@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import ProductColorsTable from "../components/ProductColorsTable";
 import ProductColorsForm from "../components/ProductColorsForm";
-import { deleteColour } from "@/lib/api_/colours";
+import { deleteColour } from "@/lib/api/colours";
 
 export default function ProductColors() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -57,7 +57,7 @@ export default function ProductColors() {
                             setEditingColor(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Product Colors

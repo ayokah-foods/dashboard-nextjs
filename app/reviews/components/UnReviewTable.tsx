@@ -6,13 +6,11 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listUnReviews } from "@/lib/api_/reviews";
+import { listUnReviews } from "@/lib/api/reviews";
 import { User } from "@/types/UserType";
 import ReviewType from "@/types/ReviewType";
 import UnReviewOrderType from "@/types/UnReviewOrderType";
 import Link from "next/link";
-import { formatAmount } from "@/utils/formatCurrency";
-import StatusBadge from "@/utils/StatusBadge";
 
 interface ReviewTableProps {
     limit: number;
@@ -57,7 +55,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     return (
                         <Link
                             href={`/orders/${orderId}`}
-                            className="text-amber-600 font-medium hover:underline"
+                            className="text-hub-secondary font-medium hover:underline"
                         >
                             Order #{orderId}
                         </Link>
@@ -86,25 +84,27 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     const total = getValue() as string;
                     return (
                         <span className="font-semibold">
-                            {formatAmount(total)}
+                            ${Number(total).toLocaleString()}
                         </span>
                     );
                 },
             },
             {
-                header: "Shipping Status",
+                header: "Status",
                 accessorKey: "shipping_status",
                 cell: ({ getValue }) => {
-                    const value = String(getValue() ?? "N/A");
-                    return <StatusBadge status={value} />;
-                },
-            },
-            {
-                header: "Payment Status",
-                accessorKey: "payment_status",
-                cell: ({ getValue }) => {
-                    const value = String(getValue() ?? "N/A");
-                    return <StatusBadge status={value} type="payment" />;
+                    const status = getValue() as string;
+                    return (
+                        <span
+                            className={`px-2 py-1 text-xs rounded ${
+                                status === "delivered"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-hub-primary text-hub-secondary"
+                            }`}
+                        >
+                            {status}
+                        </span>
+                    );
                 },
             },
             {
@@ -116,7 +116,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 },
             },
         ],
-        []
+        [],
     );
 
     const fetchReviews = useCallback(
@@ -126,7 +126,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 const offset = pageIndex * pagination.pageSize;
                 const response = await listUnReviews(
                     pagination.pageSize,
-                    offset
+                    offset,
                 );
                 setReviews(response.data || []);
                 setTotalReviews(response.total || 0);
@@ -137,7 +137,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     const debouncedFetchReviews = useMemo(
@@ -145,7 +145,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
             debounce((pageIndex: number) => {
                 fetchReviews(pageIndex);
             }, 300),
-        [fetchReviews]
+        [fetchReviews],
     );
 
     useEffect(() => {
@@ -169,7 +169,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     placeholder="Search by customer name or comment..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
                 />
             </div>
             <TanStackTable

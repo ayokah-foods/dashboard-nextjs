@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { CommissionFormType } from "@/types/CommissionFormType";
-import { deleteCommission, getCommissions } from "@/lib/api_/commissions";
+import { deleteCommission, getCommissions } from "@/lib/api/commissions";
 import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import Drawer from "@/app/components/commons/Drawer";
@@ -87,7 +87,7 @@ export default function Commission() {
                 cell: ({ row }) => (
                     <div className="flex items-center gap-3">
                         <button
-                            className="bg-yellow-500 text-white p-1.5 rounded hover:bg-yellow-600"
+                            className="bg-hub-primary text-white p-1.5 rounded hover:bg-hub-secondary"
                             onClick={() => handleEdit(row.original)}
                             title="Edit"
                         >
@@ -104,7 +104,7 @@ export default function Commission() {
                 ),
             },
         ],
-        []
+        [],
     );
     const [pagination, setPagination] = useState({
         pageIndex: 0,
@@ -130,7 +130,7 @@ export default function Commission() {
                         setSelectedCommission(null);
                         setDrawerOpen(true);
                     }}
-                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary"
                 >
                     <PlusIcon className="w-4 h-4" />
                     Add Commission

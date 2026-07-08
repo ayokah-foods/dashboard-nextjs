@@ -1,17 +1,15 @@
 import Image from "next/image";
-import { formatAmount } from "@/utils/formatCurrency";
 import parse from "html-react-parser";
+import Link from "next/link";
 
 export default function ProductCard({
     product,
     activeImage,
     setActiveImage,
-    quantity,
-    unitPrice,
 }: any) {
     return (
         <div className="col-span-1 flex flex-col gap-4">
-            <div className="border border-orange-100 rounded-md overflow-hidden">
+            <div className="border border-hub-primary/50 rounded-md overflow-hidden">
                 {activeImage ? (
                     <div className="relative w-full h-56">
                         <Image
@@ -31,7 +29,7 @@ export default function ProductCard({
                         <button
                             key={img}
                             onClick={() => setActiveImage(img)}
-                            className="w-20 h-20 rounded-md overflow-hidden border border-orange-100"
+                            className="w-20 h-20 rounded-md overflow-hidden border border-hub-primary/50"
                         >
                             <div className="relative w-full h-full">
                                 <Image
@@ -48,28 +46,18 @@ export default function ProductCard({
 
             <div>
                 <h3 className="text-lg font-semibold truncate text-gray-800">
-                    {product.title}
+                    <Link
+                        href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/items/${product.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-hub-secondary hover:underline transition-colors"
+                    >
+                        {product.title}
+                    </Link>
                 </h3>
                 <p className="text-sm text-gray-500 line-clamp-1">
                     {product.description ? parse(product.description) : ""}
                 </p>
-            </div>
-
-            <div className="flex items-center justify-between">
-                <div>
-                    <p className="text-sm text-gray-500">SKU</p>
-                    <p className="font-mono text-sm">{product.sku}</p>
-                </div>
-                <div className="text-right">
-                    <p className="text-sm text-gray-500">Qty</p>
-                    <p className="font-medium">{quantity}</p>
-                </div>
-                <div className="text-right">
-                    <p className="text-sm text-gray-500">Unit price</p>
-                    <p className="font-medium">
-                        {formatAmount(Number(unitPrice))}
-                    </p>
-                </div>
             </div>
         </div>
     );

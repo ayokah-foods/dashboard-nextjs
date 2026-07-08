@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
 import { ShopMetrics } from "@/types/ShopType";
-import { shopMetrics } from "@/lib/api_/shop";
+import { shopMetrics } from "@/lib/api/shop";
 
 export function MetricCard() {
     const [metrics, setMetrics] = useState<ShopMetrics["data"] | null>(null);
@@ -42,7 +42,7 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.total_shops ?? 0
+                            (metrics?.total_shops ?? 0)
                         )}
                     </p>
                 </div>
@@ -59,7 +59,7 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.active_shops ?? 0
+                            (metrics?.active_shops ?? 0)
                         )}
                     </p>
                 </div>
@@ -76,14 +76,14 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.inactive_shops ?? 0
+                            (metrics?.inactive_shops ?? 0)
                         )}
                     </p>
                 </div>
             </div>
             {/* Product Sellers */}
             <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex items-center gap-4">
-                <div className="p-2 rounded-full bg-amber-100 text-amber-600">
+                <div className="p-2 rounded-full bg-hub-primary text-hub-secondary">
                     <CubeIcon className="w-6 h-6" />
                 </div>
                 <div>
@@ -92,7 +92,7 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.total_products ?? 0
+                            (metrics?.total_products ?? 0)
                         )}
                     </p>
                 </div>
@@ -109,7 +109,7 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.total_services ?? 0
+                            (metrics?.total_services ?? 0)
                         )}
                     </p>
                 </div>

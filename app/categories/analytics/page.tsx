@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { categoryAnalytics } from "@/lib/api_/categories";
+import { categoryAnalytics } from "@/lib/api/categories";
 import {
     CategoryAnalyticsItem,
     CategoryAnalyticsType,
@@ -9,8 +9,6 @@ import {
 import { CubeIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
 import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { EyeIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { formatAmount } from "@/utils/formatCurrency";
 
 export default function Analytics() {
@@ -31,7 +29,7 @@ export default function Analytics() {
                     {
                         limit: pagination.pageSize,
                         offset: pagination.pageIndex * pagination.pageSize,
-                    }
+                    },
                 );
                 setData(response.data);
                 setTotal(response.total);
@@ -66,7 +64,7 @@ export default function Analytics() {
 
                     return (
                         <div className="flex items-center gap-2 text-gray-800 font-medium">
-                            <Icon className="w-4 h-4 text-amber-600" />
+                            <Icon className="w-4 h-4 text-hub-secondary" />
                             {type.charAt(0).toUpperCase() + type.slice(1)}
                         </div>
                     );
@@ -84,7 +82,8 @@ export default function Analytics() {
             {
                 header: "Sales Amount",
                 accessorKey: "total_sales_amount",
-                cell: ({ row }) => formatAmount(row.original.total_sales_amount),
+                cell: ({ row }) =>
+                    formatAmount(row.original.total_sales_amount),
             },
             {
                 header: "Total Orders",
@@ -96,7 +95,7 @@ export default function Analytics() {
                 ),
             },
         ],
-        []
+        [],
     );
 
     return (

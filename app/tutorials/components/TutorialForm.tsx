@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { Tutorial } from "@/types/TutorialType";
-import { createTutorial, updateTutorial } from "@/lib/api_/tutorial";
+import { createTutorial, updateTutorial } from "@/lib/api/tutorial";
 import Image from "next/image";
 import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 
@@ -17,16 +16,12 @@ interface Props {
 export default function TutorialForm({ onClose, tutorial }: Props) {
     const [title, setTitle] = useState(tutorial?.title || "");
     const [description, setDescription] = useState(tutorial?.description || "");
-    const [type, setType] = useState<{ label: string; value: string } | null>(
-        tutorial?.type ? { label: tutorial.type, value: tutorial.type } : null
-    );
-
     const [videoPreview, setVideoPreview] = useState(tutorial?.video_url || "");
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
     const [vimeoThumbnail, setVimeoThumbnail] = useState<string | null>(null);
 
     const [imagePreview, setImagePreview] = useState<string | null>(
-        tutorial?.image_url || null
+        tutorial?.image_url || null,
     );
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
@@ -53,17 +48,11 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
         if (tutorial?.image_url) setImagePreview(tutorial.image_url);
     }, [tutorial]);
 
-    const typeOptions = [
-        { label: "Vendor", value: "vendor" },
-        { label: "Customer", value: "customer" },
-        { label: "System", value: "system" },
-    ];
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!title.trim()) return toast.error("Title is required");
         if (!description.trim()) return toast.error("Description is required");
-        if (!type?.value) return toast.error("Type is required");
+        // if (!type?.value) return toast.error("Type is required");
         if (!videoPreview.trim() && !imagePreview?.trim()) {
             return toast.error("Either video URL or image is required");
         }
@@ -72,7 +61,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
         const formData = new FormData();
         formData.append("title", title);
         formData.append("description", description);
-        formData.append("type", type.value);
+        formData.append("type", "system");
         formData.append("video_url", videoPreview);
         formData.append("image", imageFile || "");
 
@@ -89,7 +78,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
         } catch (error) {
             console.error(error);
             toast.error(
-                `Failed to ${tutorial?.id ? "update" : "add"} tutorial`
+                `Failed to ${tutorial?.id ? "update" : "add"} tutorial`,
             );
         } finally {
             setLoading(false);
@@ -245,7 +234,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                     placeholder="Enter title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-hub-primary/200"
                 />
             </div>
 
@@ -283,7 +272,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                         setIsVideoPlaying(false);
                     }}
                     placeholder="Paste YouTube, Vimeo, or direct video URL"
-                    className="w-full border border-gray-300 rounded-lg p-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full border border-gray-300 rounded-lg p-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                 />
                 {renderVideoPreview()}
             </div>
@@ -295,7 +284,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                 </label>
                 <label
                     htmlFor="imageFile"
-                    className="relative w-full aspect-[3/2] border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition overflow-hidden flex items-center justify-center"
+                    className="relative w-full aspect-[3/2] border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-hub-primary hover:bg-hub-primary/20 transition overflow-hidden flex items-center justify-center"
                 >
                     {imagePreview ? (
                         <Image
@@ -306,7 +295,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                             className="object-cover"
                         />
                     ) : (
-                        <div className="flex flex-col items-center text-orange-600">
+                        <div className="flex flex-col items-center text-green-600">
                             <svg
                                 className="w-12 h-12 text-gray-400"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -334,19 +323,6 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                         onChange={handleImageChange}
                     />
                 </label>
-            </div>
-
-            {/* Type */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Type <span className="text-red-500">*</span>
-                </label>
-                <SelectDropdown
-                    options={typeOptions}
-                    value={type!}
-                    onChange={setType}
-                    className="w-full"
-                />
             </div>
 
             <SubmitButton loading={loading} label="Save changes" />

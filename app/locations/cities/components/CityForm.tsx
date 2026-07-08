@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { listCountries, listStates, storeCity } from "@/lib/api_/locations";
+import { listCountries, listStates, storeCity } from "@/lib/api/locations";
 import { CountryType, StateType } from "@/types/LocationType";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 
@@ -122,7 +122,7 @@ export default function CityForm({ onClose, city }: CityFormProps) {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="Enter city name"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
                 />
             </div>
 
@@ -176,7 +176,7 @@ export default function CityForm({ onClose, city }: CityFormProps) {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 bg-amber-500 text-white text-sm font-medium rounded-xl hover:bg-amber-600 cursor-pointer disabled:opacity-50"
+                    className="px-4 py-2 bg-hub-primary text-white text-sm font-medium rounded-xl hover:bg-hub-secondary cursor-pointer disabled:opacity-50"
                 >
                     {loading ? "Saving..." : "Save City"}
                 </button>

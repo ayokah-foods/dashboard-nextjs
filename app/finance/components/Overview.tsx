@@ -10,7 +10,7 @@ import {
     BanknotesIcon,
 } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
-import { getFinanceOverview } from "@/lib/api_/finance";
+import { getFinanceOverview } from "@/lib/api/finance";
 import { FinanceOverviewType } from "@/types/FinanceType";
 import { formatAmount } from "@/utils/formatCurrency";
 
@@ -21,7 +21,7 @@ interface OverviewProps {
 export function Overview({ selectedPeriod }: OverviewProps) {
     const [loading, setLoading] = useState(true);
     const [metrics, setMetrics] = useState<FinanceOverviewType["data"] | null>(
-        null
+        null,
     );
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export function Overview({ selectedPeriod }: OverviewProps) {
         getFinanceOverview({ start_date: selectedPeriod })
             .then((data) => setMetrics(data.data))
             .catch((err) =>
-                console.error("Failed to load finance overview", err)
+                console.error("Failed to load finance overview", err),
             )
             .finally(() => setLoading(false));
     }, [selectedPeriod]);
@@ -56,7 +56,7 @@ export function Overview({ selectedPeriod }: OverviewProps) {
                 title="Revenue"
                 icon={<CurrencyDollarIcon className="w-6 h-6" />}
                 value={formatAmount(
-                    metrics?.sales_summary.total_platform_revenue
+                    metrics?.sales_summary.total_platform_revenue,
                 )}
                 loading={loading}
                 color="yellow"
@@ -66,7 +66,7 @@ export function Overview({ selectedPeriod }: OverviewProps) {
                 title="Pending Payments"
                 icon={<ClockIcon className="w-6 h-6" />}
                 value={formatAmount(
-                    metrics?.sales_summary.customer_pending_payments
+                    metrics?.sales_summary.customer_pending_payments,
                 )}
                 loading={loading}
                 color="red"
@@ -76,7 +76,7 @@ export function Overview({ selectedPeriod }: OverviewProps) {
                 title="Unpaid Vendor Earnings"
                 icon={<CurrencyDollarIcon className="w-6 h-6" />}
                 value={formatAmount(
-                    metrics?.vendor_summary.unpaid_vendor_earnings
+                    metrics?.vendor_summary.unpaid_vendor_earnings,
                 )}
                 loading={loading}
                 color="orange"
@@ -94,7 +94,7 @@ export function Overview({ selectedPeriod }: OverviewProps) {
                 title="Earnings Recorded"
                 icon={<BanknotesIcon className="w-6 h-6" />}
                 value={formatAmount(
-                    metrics?.wallet_summary.total_earnings_recorded
+                    metrics?.wallet_summary.total_earnings_recorded,
                 )}
                 loading={loading}
                 color="orange"
@@ -104,7 +104,7 @@ export function Overview({ selectedPeriod }: OverviewProps) {
                 title="Available to Withdraw"
                 icon={<BanknotesIcon className="w-6 h-6" />}
                 value={formatAmount(
-                    metrics?.wallet_summary.total_available_to_withdraw
+                    metrics?.wallet_summary.total_available_to_withdraw,
                 )}
                 loading={loading}
                 color="purple"
@@ -137,7 +137,11 @@ export function MetricCard({
             <div>
                 <p className="text-sm text-gray-500">{title}</p>
                 <p className="text-3xl font-bold">
-                    {loading ? <Skeleton width={70} height={28} /> : value ?? 0}
+                    {loading ? (
+                        <Skeleton width={70} height={28} />
+                    ) : (
+                        (value ?? 0)
+                    )}
                 </p>
             </div>
         </div>

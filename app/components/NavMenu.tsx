@@ -11,7 +11,7 @@ import { User } from "@/types/UserType";
 const NavMenu = ({ user }: { user: User | null }) => {
     const pathname = usePathname();
     const [openSections, setOpenSections] = useState<Record<string, boolean>>(
-        {}
+        {},
     );
 
     const filteredNavigation = useMemo(() => {
@@ -21,15 +21,18 @@ const NavMenu = ({ user }: { user: User | null }) => {
             // Only allow these sections for staff
             const allowed = [
                 "Customer Management",
-                "Items Management",
-                "Vendor Management",
-                "Support Tickets",
+                "Order Management",
+                "Booking Management",
                 "Reviews Management",
+                "Vendor Management",
+                "Items Management",
                 "Category Management",
                 "Variation Management",
-                "Banner Management",
                 "Shop Management",
+                "Banner Management",
+                "Subscriptions",
                 "FAQs Management",
+                "Support Tickets",
             ];
             return NAVIGATION.filter((nav) => allowed.includes(nav.name));
         }
@@ -56,8 +59,8 @@ const NavMenu = ({ user }: { user: User | null }) => {
                             className={clsx(
                                 "w-full flex items-center justify-between px-3 py-1.5 rounded-md text-xs font-semibold overflow-y-auto scrollbar-thin scrollbar-thumb-gray-50 hover:scrollbar-thumb-gray-100 scrollbar-track-transparent",
                                 isActiveParent
-                                    ? "text-orange-800"
-                                    : "text-gray-700 hover:text-orange-800"
+                                    ? "text-green-500"
+                                    : "text-gray-700 hover:text-green-500",
                             )}
                         >
                             <span className="flex items-center gap-x-3">
@@ -84,8 +87,8 @@ const NavMenu = ({ user }: { user: User | null }) => {
                                                 className={clsx(
                                                     "block px-3 py-1.5 text-xs rounded-md",
                                                     isActiveSub
-                                                        ? "bg-orange-50 text-orange-600"
-                                                        : "text-gray-500 hover:text-orange-800 hover:bg-orange-50"
+                                                        ? "bg-hub-primary/10 text-green-600"
+                                                        : "text-gray-500 hover:text-green-500 hover:bg-hub-primary/10",
                                                 )}
                                             >
                                                 {subItem.name}

@@ -7,7 +7,7 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { getBookingGraph } from "@/lib/api_/bookings";
+import { getBookingGraph } from "@/lib/api/bookings";
 import { GraphPoint } from "@/types/OrderType";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -28,7 +28,7 @@ const BookingAreaChart = () => {
 
     const monthOptions = MONTHS.map((m) => ({ label: m, value: m }));
     const [selected, setSelected] = useState<{ label: string; value: string }>(
-        monthOptions[0]
+        monthOptions[0],
     );
 
     const fetchChartData = useCallback(async (start_date: string) => {
@@ -38,7 +38,7 @@ const BookingAreaChart = () => {
 
             if (Array.isArray(raw) && raw.length > 0) {
                 const categories = raw.map((item: GraphPoint) =>
-                    formatDate(new Date(item.day))
+                    formatDate(new Date(item.day)),
                 );
                 const series = raw.map((item: GraphPoint) => item.total);
                 setChartData({ categories, series });
@@ -139,7 +139,7 @@ const BookingAreaChart = () => {
                 hover: { size: 6 },
             },
         }),
-        [chartData]
+        [chartData],
     );
     return (
         <div className="p-6 card text-gray-950">

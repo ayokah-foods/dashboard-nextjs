@@ -1,6 +1,6 @@
 "use client";
 
-import { getTransactions } from "@/lib/api_/transactions";
+import { getTransactions } from "@/lib/api/transactions";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import {
     Summary,
@@ -63,12 +63,12 @@ export default function Transactions() {
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     const debouncedFetch = useMemo(
         () => debounce(fetchTransactions, 300),
-        [fetchTransactions]
+        [fetchTransactions],
     );
 
     useEffect(() => {
@@ -138,7 +138,7 @@ export default function Transactions() {
                 ),
             },
         ],
-        []
+        [],
     );
 
     return (
@@ -159,7 +159,7 @@ export default function Transactions() {
                         placeholder="Search by vendor name..."
                         value={search}
                         onChange={handleSearchChange}
-                        className="mb-4 w-full max-w-sm text-gray-800 px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-600"
+                        className="mb-4 w-full max-w-sm text-gray-800 px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-hub-secondary"
                     />
                 </div>
             </div>
@@ -288,7 +288,11 @@ function MetricCard({ title, value, icon, loading, color }: MetricCardProps) {
             <div>
                 <p className="text-sm text-gray-500">{title}</p>
                 <p className="text-3xl font-bold text-gray-950">
-                    {loading ? <Skeleton width={80} height={28} /> : value ?? 0}
+                    {loading ? (
+                        <Skeleton width={80} height={28} />
+                    ) : (
+                        (value ?? 0)
+                    )}
                 </p>
             </div>
         </div>

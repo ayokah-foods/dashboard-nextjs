@@ -7,7 +7,7 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { shopAnalytics } from "@/lib/api_/shop";
+import { shopAnalytics } from "@/lib/api/shop";
 import { ShopAnalyticsItem } from "@/types/ShopType";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -28,7 +28,7 @@ const AreaChart = () => {
 
     const monthOptions = MONTHS.map((m) => ({ label: m, value: m }));
     const [selected, setSelected] = useState<{ label: string; value: string }>(
-        monthOptions[0]
+        monthOptions[0],
     );
 
     const fetchChartData = useCallback(async (selectedPeriod: string) => {
@@ -43,7 +43,7 @@ const AreaChart = () => {
                 raw.length > 0
             ) {
                 const categories = raw.map((item: ShopAnalyticsItem) =>
-                    formatDate(new Date(item.day))
+                    formatDate(new Date(item.day)),
                 );
                 const series = raw.map((item: ShopAnalyticsItem) => item.total);
                 setChartData({ categories, series });
@@ -144,7 +144,7 @@ const AreaChart = () => {
                 hover: { size: 6 },
             },
         }),
-        [chartData]
+        [chartData],
     );
     return (
         <div className="p-6 card text-gray-950">

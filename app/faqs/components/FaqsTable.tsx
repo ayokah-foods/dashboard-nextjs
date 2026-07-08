@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
-import { deleteFaq, listFaqs, updateStatus } from "@/lib/api_/faqs";
+import { deleteFaq, listFaqs, updateStatus } from "@/lib/api/faqs";
 import { Faq } from "@/types/FaqType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -155,7 +155,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                                 setEditingFaq(row.original);
                                 setDrawerOpen(true);
                             }}
-                            className="p-2 text-white hover:text-blue-800 bg-amber-500 rounded-xl cursor-pointer"
+                            className="p-2 text-white hover:text-blue-800 bg-hub-primary rounded-xl cursor-pointer"
                         >
                             <PencilIcon className="w-5 h-5" />
                         </button>
@@ -186,7 +186,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                 },
             },
         ],
-        []
+        [],
     );
 
     const fetchFaqs = useCallback(
@@ -198,7 +198,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                     pagination.pageSize,
                     offset,
                     type,
-                    search
+                    search,
                 );
                 setFaqs(response.data || []);
                 setTotalFaqs(response.total || 0);
@@ -210,7 +210,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, type]
+        [pagination.pageSize, type],
     );
 
     const debouncedFetch = useMemo(() => {
@@ -239,7 +239,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                     placeholder="Search by question..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
                 />
             </div>
 

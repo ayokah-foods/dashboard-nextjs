@@ -11,12 +11,12 @@ import Image from "next/image";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
-import { updateItemStatus } from "@/lib/api_/products";
+import { updateItemStatus } from "@/lib/api/products";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import StatusBadge from "@/utils/StatusBadge";
 import toast from "react-hot-toast";
-import { deleteCategory, getCategories } from "@/lib/api_/categories";
+import { deleteCategory, getCategories } from "@/lib/api/categories";
 import CategorySummary from "./CategorySummary";
 import { CategoryType } from "@/types/CategoryType";
 import { useCategoryStore } from "@/store/CategoryStore";
@@ -49,13 +49,13 @@ function CategoryActionCell({
 }) {
     const [status, setStatus] = useState<Option>(
         statusOptions.find((opt) => opt.value === category.status) ||
-            statusOptions[0]
+            statusOptions[0],
     );
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<CategoryType | null>(
-        null
+        null,
     );
     const [loading, setLoading] = useState(false);
 
@@ -98,7 +98,7 @@ function CategoryActionCell({
 
                 <button
                     title="Update"
-                    className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600"
+                    className="bg-hub-primary cursor-pointer text-white p-1.5 rounded-md hover:bg-hub-secondary"
                     onClick={() => {
                         onEdit(category);
                     }}
@@ -108,7 +108,7 @@ function CategoryActionCell({
 
                 <button
                     title="Delete"
-                    className="bg-red-500 text-white p-1.5 rounded-md hover:bg-red-600"
+                    className="bg-red-500 cursor-pointer text-white p-1.5 rounded-md hover:bg-red-600"
                     onClick={() => setIsModalOpen(true)}
                 >
                     <TrashIcon className="w-4 h-4" />
@@ -126,7 +126,7 @@ function CategoryActionCell({
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button
-                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="rounded-md border cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={() => setIsModalOpen(false)}
                     >
                         Cancel
@@ -178,15 +178,15 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
     const { setCategories: saveToStore } = useCategoryStore();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<CategoryType | null>(
-        null
+        null,
     );
 
     const updateCategoryStatusInState = (
         id: number,
-        newStatus: "active" | "inactive"
+        newStatus: "active" | "inactive",
     ) => {
         setCategories((prev) =>
-            prev.map((c) => (c.id === id ? { ...c, status: newStatus } : c))
+            prev.map((c) => (c.id === id ? { ...c, status: newStatus } : c)),
         );
     };
 
@@ -197,22 +197,39 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                 accessorKey: "name",
                 cell: ({ row }) => {
                     const { image, name, slug } = row.original;
+
+                    // Construct the external category URL
+                    const categoryUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/categories/${slug}`;
+
                     return (
-                        <div className="flex items-center gap-2">
-                            <Image
-                                src={image || "/placeholder.png"}
-                                alt={name}
-                                width={40}
-                                height={40}
-                                className="w-10 h-10 object-cover rounded"
-                            />
+                        <div className="flex items-center gap-3">
+                            {/* Image Link */}
+                            <a
+                                href={categoryUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="shrink-0"
+                            >
+                                <Image
+                                    src={image || "/placeholder.png"}
+                                    alt={name}
+                                    width={40}
+                                    height={40}
+                                    className="w-10 h-10 object-cover rounded border hover:opacity-80 transition-opacity"
+                                />
+                            </a>
+
                             <div className="flex flex-col">
-                                <span className="font-medium text-gray-800">
+                                {/* Name Link */}
+                                <a
+                                    href={categoryUrl}
+                                    target="_blank"
+                                    title="View Category"
+                                    rel="noopener noreferrer"
+                                    className="font-medium text-sm text-gray-800 hover:text-hub-secondary/20 hover:underline transition-colors"
+                                >
                                     {name}
-                                </span>
-                                <span className="text-xs text-gray-500">
-                                    {slug}
-                                </span>
+                                </a>
                             </div>
                         </div>
                     );
@@ -267,7 +284,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                             onStatusUpdate={(newStatus) =>
                                 updateCategoryStatusInState(
                                     category.id,
-                                    newStatus
+                                    newStatus,
                                 )
                             }
                             onEdit={(cat) => {
@@ -279,7 +296,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                 },
             },
         ],
-        []
+        [],
     );
 
     const fetchCategories = useCallback(
@@ -291,7 +308,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     pagination.pageSize,
                     offset,
                     search,
-                    type
+                    type,
                 );
                 saveToStore(response.data);
                 setCategories(response.data);
@@ -304,7 +321,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, type, saveToStore]
+        [pagination.pageSize, type, saveToStore],
     );
 
     const debouncedFetch = useMemo(() => {
@@ -335,7 +352,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     placeholder="Search by category name..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
                 />
             </div>
 

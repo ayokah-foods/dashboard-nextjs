@@ -1,122 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  /* === Primary === */
-  --color-hub-primary-900: #7a5015;
-  --color-hub-primary-800: #8f5717;
-  --color-hub-primary-700: #a35f1a;
-  --color-hub-primary-600: #b6661c;
-  --color-hub-primary-500: #cc6e1f;
-  --color-hub-primary-400: #e17e1a;
-  --color-hub-primary-300: #f9b324;
-  --color-hub-primary-200: #fcd76a;
-  --color-hub-primary-100: #fee9a6;
-  --color-hub-primary-50: #fff4d0;
-
-  /* === Secondary === */
-  --color-hub-secondary-900: #79412c;
-  --color-hub-secondary-800: #8f4a2f;
-  --color-hub-secondary-700: #a65333;
-  --color-hub-secondary-600: #bd5c36;
-  --color-hub-secondary-500: #d3653a;
-  --color-hub-secondary-400: #e18d5b;
-  --color-hub-secondary-300: #eab68b;
-  --color-hub-secondary-200: #f3d2ac;
-  --color-hub-secondary-100: #f9e2c9;
-  --color-hub-secondary-50: #fef6ee;
-
-  /* === Lightening Yellow === */
-  --color-hub-lightening-900: #8f5a13;
-  --color-hub-lightening-800: #a76918;
-  --color-hub-lightening-700: #be791d;
-  --color-hub-lightening-600: #d58822;
-  --color-hub-lightening-500: #ec9727;
-  --color-hub-lightening-400: #f3c949;
-  --color-hub-lightening-300: #f6dd7f;
-  --color-hub-lightening-200: #f8e7a8;
-  --color-hub-lightening-100: #f9efcd;
-  --color-hub-lightening-50: #fef8ec;
-
-  /* === Grey === */
-  --color-hub-grey-900: #2d2d2d;
-  --color-hub-grey-800: #3d3d3d;
-  --color-hub-grey-700: #4d4d4d;
-  --color-hub-grey-600: #5e5e5e;
-  --color-hub-grey-500: #707070;
-  --color-hub-grey-400: #939393;
-  --color-hub-grey-300: #b7b7b7;
-  --color-hub-grey-200: #d6d6d6;
-  --color-hub-grey-100: #eaeaea;
-  --color-hub-grey-50: #f9f9f9;
-
-  /* === Green === */
-  --color-hub-green-900: #025f07;
-  --color-hub-green-800: #057a09;
-  --color-hub-green-700: #09950b;
-  --color-hub-green-600: #0cbf0e;
-  --color-hub-green-500: #0fff10;
-  --color-hub-green-400: #3eff3e;
-  --color-hub-green-300: #73ff73;
-  --color-hub-green-200: #a8ffad;
-  --color-hub-green-100: #d6ffdb;
-  --color-hub-green-50: #f1fff3;
-
-  /* === Cinnabar === */
-  --color-hub-cinnabar-900: #8f2a26;
-  --color-hub-cinnabar-800: #a3302c;
-  --color-hub-cinnabar-700: #b73731;
-  --color-hub-cinnabar-600: #cc3d37;
-  --color-hub-cinnabar-500: #e0433d;
-  --color-hub-cinnabar-400: #f35f5a;
-  --color-hub-cinnabar-300: #f78f8c;
-  --color-hub-cinnabar-200: #fbbcbc;
-  --color-hub-cinnabar-100: #fddede;
-  --color-hub-cinnabar-50: #fef5f5;
-
-  /* === Unique Brand Colors === */
-  --color-hub-warning: #f6cd46;
-  --color-hub-success: #04b504;
-  --color-hub-danger: #f44336;
-  --color-hub-white: #f5f5f5;
-  --color-hub-black: #000000;
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+    /* === Primary === */
+    --color-hub-secondary: #016134;
+    --color-hub-primary: #00A85A;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
 }
+
 .card {
-  @apply border border-gray-200 rounded-xl bg-white text-gray-950 shadow-md;
-}
-
-.btn {
-    @apply py-2.5 px-2.5 rounded-lg font-semibold transition-colors duration-200 cursor-pointer;
-}
-
-.btn-primary {
-    @apply bg-orange-800 hover:bg-orange-500 text-white;
-}
-
-/* ------------------------------
-   SECONDARY BUTTON (Gray)
------------------------------- */
-.btn-gray {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-700;
+    @apply border border-gray-200 rounded-xl bg-white text-gray-950 shadow-md;
 }

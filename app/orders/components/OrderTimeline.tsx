@@ -1,10 +1,7 @@
 import dayjs from "dayjs";
-import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
 
 export default function OrderTimeline({
-    timeline,
-    onCopyTracking,
-    onOpenTracking,
+    timeline, 
 }: any) {
     return (
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">

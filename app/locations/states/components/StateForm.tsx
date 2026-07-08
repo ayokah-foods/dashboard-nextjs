@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
-import { storeState, listCountries } from "@/lib/api_/locations";
+import { storeState, listCountries } from "@/lib/api/locations";
 import { CountryType, StateType } from "@/types/LocationType";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 
@@ -41,7 +41,7 @@ export default function StateForm({
     }, []);
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
@@ -84,7 +84,7 @@ export default function StateForm({
                     type="text"
                     value={form.name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
                     placeholder="e.g. London"
                 />
             </div>
@@ -105,7 +105,7 @@ export default function StateForm({
                                   label:
                                       countries.find(
                                           (c) =>
-                                              c.id === Number(form.country_id)
+                                              c.id === Number(form.country_id),
                                       )?.name || "Select Country",
                                   value: String(form.country_id),
                               }

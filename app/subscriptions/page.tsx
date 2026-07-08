@@ -5,7 +5,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-import { deleteSubscription } from "@/lib/api_/subscriptions";
+import { deleteSubscription } from "@/lib/api/subscriptions";
 import { SubscriptionType } from "@/types/SubscriptionType";
 import SubscriptionTable from "./components/SubscriptionTable";
 import SubscriptionForm from "./components/SubscriptionForm";
@@ -53,17 +53,17 @@ export default function SubscriptionPage() {
                     </h1>
                     <p className="text-sm text-gray-600">
                         Manage subscription plans with pricing, features, and
-                        payment links sync with <b className="text-orange-800">Stripe</b>.
+                        payment links.
                     </p>
                 </div>
 
-                <div className="flex gap-3 items-center">
+                <div hidden className="flex gap-3 items-center">
                     <button
                         onClick={() => {
                             setEditingSubscription(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600 cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Subscription

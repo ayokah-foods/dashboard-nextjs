@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import SelectDropdown from "../components/commons/Fields/SelectDropdown";
-import { getNotifications } from "../../lib/api_/notifications";
+import { getNotifications } from "../../lib/api/notifications";
 import {
     NotificationResponse,
     NotificationType,
@@ -30,7 +30,7 @@ import { receiverOptions } from "../setting";
 
 export default function Notifications() {
     const [selectedReceiver, setselectedReceiver] = useState(
-        receiverOptions[0]
+        receiverOptions[0],
     );
     const [notifications, setNotifications] = useState<NotificationType[]>([]);
     const [loading, setLoading] = useState(false);
@@ -77,7 +77,9 @@ export default function Notifications() {
             {
                 header: "Receiver",
                 accessorFn: (row) => `${row.receiver}`,
-                cell: ({ getValue }) => <span>{getValue() as string}</span>,
+                cell: ({ getValue }) => (
+                    <span>{(getValue() as string).toUpperCase()}</span>
+                ),
             },
 
             {
@@ -179,7 +181,7 @@ export default function Notifications() {
                                                     <button
                                                         onClick={() =>
                                                             setPreviewImage(
-                                                                null
+                                                                null,
                                                             )
                                                         }
                                                         className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
@@ -204,7 +206,7 @@ export default function Notifications() {
                     const url = getValue() as string;
                     return (
                         <Link
-                            href={url}
+                            href={url || ""}
                             popoverTarget="_blank"
                             className="text-hub-cinnabar-300 underline"
                             target="_blank"
@@ -217,13 +219,13 @@ export default function Notifications() {
             },
 
             {
-                header: "Sent",
+                header: "Sent At",
                 accessorKey: "created_at",
                 cell: ({ getValue }) =>
                     formatHumanReadableDate(getValue() as string),
             },
         ],
-        [setPreviewImage, previewImage]
+        [setPreviewImage, previewImage],
     );
 
     return (
@@ -242,7 +244,7 @@ export default function Notifications() {
                 <div className="flex gap-3 items-center">
                     <button
                         onClick={() => setDrawerOpen(true)}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Send New Notification

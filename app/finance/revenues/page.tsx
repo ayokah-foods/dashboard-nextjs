@@ -1,5 +1,5 @@
 "use client";
-import { getCommissionRevenues } from "@/lib/api_/finance";
+import { getCommissionRevenues } from "@/lib/api/finance";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import {
     CommissionRevenueItem,
@@ -37,7 +37,7 @@ export default function Revenues() {
                 const response: CommissionRevenuesType =
                     await getCommissionRevenues(
                         pagination.pageSize,
-                        pageIndex * pagination.pageSize
+                        pageIndex * pagination.pageSize,
                     );
                 setRevenues(response.data);
                 setTotalRows(response.total);
@@ -51,7 +51,7 @@ export default function Revenues() {
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     useEffect(() => {
@@ -99,7 +99,7 @@ export default function Revenues() {
                 ),
             },
         ],
-        []
+        [],
     );
 
     return (
@@ -169,7 +169,11 @@ function MetricCard({ title, value, icon, loading, color }: MetricCardProps) {
             <div>
                 <p className="text-sm text-gray-500">{title}</p>
                 <p className="text-3xl font-bold text-gray-950">
-                    {loading ? <Skeleton width={80} height={28} /> : value ?? 0}
+                    {loading ? (
+                        <Skeleton width={80} height={28} />
+                    ) : (
+                        (value ?? 0)
+                    )}
                 </p>
             </div>
         </div>

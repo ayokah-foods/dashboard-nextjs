@@ -2,34 +2,31 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { listSubscribers } from "@/lib/api_/subscriptions";
+import { listSubscribers } from "@/lib/api/subscriptions";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatAmount } from "@/utils/formatCurrency";
-import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Image from "next/image";
-import Avatar from "@/utils/Avatar";
 
 interface SubscriberType {
     id: number;
     start_date: string;
     end_date: string;
-    vendor: {
-        id: number;
-        name: string;
-        email: string;
-    };
+    status: string;
     subscription: {
         id: number;
         name: string;
         monthly_price: number;
-        yearly_price: number;
+    } | null;
+    vendor: {
+        id: number;
+        name: string;
+        email: string;
     };
     shop: {
         id: number;
         name: string;
         logo: string;
     };
-    status: string;
 }
 
 type Props = {
@@ -46,28 +43,31 @@ export default function SubscribersTable({ limit }: Props) {
         pageSize: limit,
     });
 
-    // Table columns
     const columns: ColumnDef<SubscriberType>[] = useMemo(
         () => [
             {
                 header: "Shop",
-                cell: ({ row }) => {
-                    const shop = row.original.shop;
-                    return (
-                        <div className="flex items-center space-x-3">
-                            <Avatar
-                                src={shop?.logo}
-                                alt={shop?.name || "Shop"}
-                                size={8}
+                cell: ({ row }) => (
+                    <div className="flex items-center gap-3">
+                        {row.original.shop?.logo ? (
+                            <Image
+                                width={32}
+                                height={32}
+                                src={row.original.shop.logo}
+                                alt="logo"
+                                className="size-8 rounded-full object-cover border"
                             />
-                            <span className="font-medium text-gray-800 truncate">
-                                {shop?.name || "—"}
-                            </span>
-                        </div>
-                    );
-                },
+                        ) : (
+                            <div className="size-8 rounded-full bg-gray-200 flex items-center justify-center text-[10px] text-gray-400">
+                                NA
+                            </div>
+                        )}
+                        <span className="font-medium text-gray-900">
+                            {row.original.shop?.name || "Unknown Shop"}
+                        </span>
+                    </div>
+                ),
             },
-
             {
                 header: "Vendor",
                 cell: ({ row }) => (
@@ -82,71 +82,65 @@ export default function SubscribersTable({ limit }: Props) {
                 ),
             },
             {
-                header: "Subscription Plan",
+                header: "Plan",
                 cell: ({ row }) => (
                     <div>
                         <p className="font-semibold text-gray-700">
-                            {row.original.subscription?.name || "—"}
+                            {row.original.subscription?.name || "No Plan"}
                         </p>
                         <p className="text-xs text-gray-500">
-                            Monthly:{" "}
-                            {formatAmount(
-                                row.original.subscription?.monthly_price || 0
-                            )}
+                            {row.original.subscription
+                                ? `${formatAmount(
+                                      row.original.subscription.monthly_price,
+                                  )}/mo`
+                                : "N/A"}
                         </p>
                     </div>
                 ),
             },
             {
                 header: "Status",
+                cell: ({ row }) => (
+                    <span
+                        className={`px-2 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold ${
+                            row.original.status === "active"
+                                ? "bg-green-100 text-green-700"
+                                : "bg-red-100 text-red-600"
+                        }`}
+                    >
+                        {row.original.status}
+                    </span>
+                ),
+            },
+            {
+                header: "Duration",
                 cell: ({ row }) => {
-                    const endDate = new Date(row.original.end_date);
-                    const now = new Date();
-
-                    const remainingDays = Math.max(
-                        0,
-                        Math.ceil(
-                            (endDate.getTime() - now.getTime()) /
-                                (1000 * 60 * 60 * 24)
-                        )
-                    );
-
-                    const isActive = now <= endDate;
-
+                    const start = row.original.start_date;
+                    const end = row.original.end_date;
                     return (
-                        <span
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                isActive
-                                    ? "bg-green-100 text-green-700"
-                                    : "bg-gray-100 text-gray-600"
-                            }`}
-                        >
-                            {isActive
-                                ? `Active (${remainingDays} days left)`
-                                : "Inactive"}
-                        </span>
+                        <div className="text-xs">
+                            <p className="text-gray-700">
+                                Started: {start.split(" ")[0]}
+                            </p>
+                            <p className="text-gray-400 font-light">
+                                Expires: {end.split(" ")[0]}
+                            </p>
+                        </div>
                     );
                 },
             },
-            {
-                header: "Started On",
-                accessorFn: (row) => formatHumanReadableDate(row.start_date),
-            },
-            {
-                header: "End Date",
-                accessorFn: (row) => formatHumanReadableDate(row.end_date),
-            }, 
         ],
-        []
+        [],
     );
 
-    // Fetch data
     const fetchSubscribers = async () => {
         try {
             setLoading(true);
             const response = await listSubscribers();
-            setSubscribers(response.data || []);
-            setTotal(response.data.length || 0);
+            // Note: Adjust based on whether your API service returns the full JSON or just data
+            const data = response.data || [];
+            setSubscribers(data);
+            setTotal(data.length);
         } catch (err) {
             console.error(err);
             setError("Failed to load subscribers");
@@ -160,7 +154,7 @@ export default function SubscribersTable({ limit }: Props) {
     }, []);
 
     return (
-        <div className="space-y-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <TanStackTable
                 data={subscribers}
                 columns={columns}
@@ -171,9 +165,7 @@ export default function SubscribersTable({ limit }: Props) {
                     pageSize: pagination.pageSize,
                     totalRows: total,
                 }}
-                onPaginationChange={(newPagination) =>
-                    setPagination(newPagination)
-                }
+                onPaginationChange={setPagination}
             />
         </div>
     );

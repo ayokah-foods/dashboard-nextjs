@@ -12,18 +12,18 @@ import {
     DialogPanel,
     DialogTitle,
 } from "@headlessui/react";
-import BannersForm from "../categories/components/BannersForm";
-import BannersTable from "../categories/components/BannersTable";
-import { deleteBanner } from "../../lib/api_/banners";
+import BannersForm from "./components/BannersForm";
+import BannersTable from "./components/BannersTable";
+import { deleteBanner } from "../../lib/api/banners";
 
 export default function Banners() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<BannerType | null>(
-        null
+        null,
     );
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState<BannerType | null>(
-        null
+        null,
     );
 
     const confirmDelete = (category: BannerType) => {
@@ -63,7 +63,7 @@ export default function Banners() {
                             setEditingCategory(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600 cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Banner

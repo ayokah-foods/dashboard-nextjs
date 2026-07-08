@@ -11,7 +11,7 @@ export default function NotificationStats({ stats, loading }: Props) {
     if (!stats) return null;
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             <MetricCard
                 title="Total Notifications"
                 icon={<BellIcon className="w-6 h-6" />}
@@ -34,55 +34,16 @@ export default function NotificationStats({ stats, loading }: Props) {
                 value={stats.sms}
                 loading={loading}
                 color="cyan"
-            />
+            /> 
 
             <MetricCard
                 title="Pending"
-                icon={<BellIcon className="w-6 h-6" />}
+                icon={<CheckCircleIcon className="w-6 h-6" />}
                 value={stats.pending}
                 loading={loading}
                 color="yellow"
-            />
-
-            <MetricCard
-                title="Delivered"
-                icon={<CheckCircleIcon className="w-6 h-6" />}
-                value={stats.delivered}
-                loading={loading}
-                color="green"
-            />
-
-            <MetricCard
-                title="Failed"
-                icon={<XCircleIcon className="w-6 h-6" />}
-                value={stats.failed}
-                loading={loading}
-                color="red"
-            />
-
-            <MetricCard
-                title="To Vendors"
-                icon={<UserGroupIcon className="w-6 h-6" />}
-                value={stats.vendor}
-                loading={loading}
-                color="purple"
-            />
-
-            <MetricCard
-                title="To Customers"
-                icon={<UserIcon className="w-6 h-6" />}
-                value={stats.customer}
-                loading={loading}
-                color="orange"
-            />
-
-            <MetricCard
-                title="Single User"
-                icon={<UserIcon className="w-6 h-6" />}
-                value={stats.single}
-                loading={loading}
-                color="indigo"
-            />
+            /> 
+ 
         </div>
     );
 }

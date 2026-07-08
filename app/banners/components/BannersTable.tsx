@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listBanners } from "@/lib/api_/categories";
+import { listBanners } from "@/lib/api/categories";
 import { BannerType } from "@/types/CategoryType";
 import {
     CubeIcon,
@@ -39,7 +39,7 @@ const BannersTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
 
                     return (
                         <div className="flex items-center gap-2 text-gray-800 font-medium">
-                            <Icon className="w-4 h-4 text-amber-600" />
+                            <Icon className="w-4 h-4 text-hub-secondary" />
                             {type.charAt(0).toUpperCase() + type.slice(1)}
                         </div>
                     );
@@ -70,8 +70,10 @@ const BannersTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
                 cell: ({ row }) => (
                     <div className="flex items-center gap-2">
                         <button
+                            aria-label="delete"
+                            title="delete banner"
                             onClick={() => onDelete(row.original)}
-                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
+                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600 cursor-pointer"
                         >
                             <TrashIcon className="w-4 h-4" />
                         </button>
@@ -79,7 +81,7 @@ const BannersTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
                 ),
             },
         ],
-        [onDelete]
+        [onDelete],
     );
 
     const fetchBanners = async (offset: number, pageSize: number) => {

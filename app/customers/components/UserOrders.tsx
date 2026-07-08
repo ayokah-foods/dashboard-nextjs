@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getUserOrder } from "@/lib/api_/users";
+import { getUserOrder } from "@/lib/api/users";
 import { Order } from "@/types/OrderType";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -11,6 +11,7 @@ import Image from "next/image";
 import StatusBadge from "@/utils/StatusBadge";
 import { debounce } from "lodash";
 import TableSkeleton from "@/app/components/Skeletons/TableSkeleton";
+import Link from "next/link";
 
 interface UserOrdersProps {
     userId: string;
@@ -37,7 +38,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                 setSearch(value);
                 setPagination((prev) => ({ ...prev, pageIndex: 0 }));
             }, 500),
-        [setSearch]
+        [setSearch],
     );
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +57,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                     offset,
                     search,
                     type,
-                    userId
+                    userId,
                 );
                 setCartItems(response.data ?? []);
                 setTotalOrders(response.total ?? 0);
@@ -83,20 +84,26 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             accessorKey: "product.title",
             cell: ({ row }) => {
                 const product = row.original?.product;
-
+                const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
+                const productUrl = `${frontendUrl}/items/${product?.slug}`;
                 return (
                     <div className="flex items-center gap-3">
                         <Image
                             width={40}
                             height={40}
                             src={product?.images?.[0] || "/no-image.png"}
-                            alt={product?.title}
+                            alt={product?.title || "Product image"}
                             className="w-10 h-10 object-cover rounded-md border"
                         />
                         <div>
-                            <div className="font-medium text-sm text-gray-800">
+                            <Link
+                                href={productUrl}
+                                target="_blank"
+                                title="View Item"
+                                className="font-medium text-sm text-gray-800 hover:text-hub-secondary hover:underline transition-colors"
+                            >
                                 {product?.title ?? "Unnamed Product"}
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 );
@@ -166,7 +173,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                             onClick={() =>
                                 router.push(`/orders/${row.original.id}`)
                             }
-                            className="px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 cursor-pointer"
+                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
                         >
                             View
                         </button>
@@ -194,7 +201,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                                     placeholder="Search by name, or order id..."
                                     value={searchInput}
                                     onChange={handleSearchChange}
-                                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900 focus:outline-none focus:ring-0 focus:border-amber-400"
+                                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900 focus:outline-none focus:ring-0 focus:border-hub-primary"
                                 />
                             </div>
 
@@ -217,7 +224,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                             />
                         </>
                     ) : (
-                        <p className="flex items-center justify-center w-full text-yellow-900 p-4 border border-amber-500 bg-amber-50 rounded-xl text-sm text-center">
+                        <p className="flex items-center justify-center w-full text-hub-secondary p-4 border border-hub-primary bg-hub-primary/20 rounded-xl text-sm text-center">
                             {searchInput
                                 ? `No orders found for “${searchInput}”.`
                                 : `This ${type} does not have any orders yet.`}

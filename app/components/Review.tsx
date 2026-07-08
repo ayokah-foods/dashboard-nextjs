@@ -5,7 +5,7 @@ import Image from "next/image";
 import ReviewType from "@/types/ReviewType";
 import { formatHumanReadableDate } from "../../utils/formatHumanReadableDate";
 import RecentReviewsSkeleton from "./Skeletons/RecentReviewsSkeleton";
-import { listReviews } from "../../lib/api_/reviews";
+import { listReviews } from "../../lib/api/reviews";
 import Link from "next/link";
 
 function StarRating({ rating }: { rating: number }) {
@@ -15,7 +15,7 @@ function StarRating({ rating }: { rating: number }) {
                 <svg
                     key={index}
                     className={`w-4 h-4 ${
-                        index < rating ? "text-yellow-400" : "text-gray-400"
+                        index < rating ? "text-hub-primary" : "text-gray-400"
                     }`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -50,7 +50,7 @@ function ReviewCard({ review }: { review: ReviewType }) {
                     </p>{" "}
                 </div>
                 <StarRating rating={review.rating} />
-                <p className="mt-1 text-sm text-gray-500 truncate w-49">
+                <p className="mt-1 text-sm text-gray-500 truncate w-50">
                     {review.comment}
                 </p>
             </div>
@@ -103,7 +103,7 @@ export function RecentReviews() {
                 </p>
                 <Link
                     href="/reviews"
-                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-amber-50 py-2 px-4 rounded"
+                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-hub-primary/50 py-2 px-4 rounded"
                 >
                     See all
                 </Link>

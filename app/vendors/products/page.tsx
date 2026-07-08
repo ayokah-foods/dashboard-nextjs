@@ -7,7 +7,7 @@ import {
     ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
-import { userStats } from "@/lib/api_/users";
+import { userStats } from "@/lib/api/users";
 import VendorAreaChart from "../components/VendorAreaChart";
 import UsersTable from "@/app/customers/components/UsersTable";
 
@@ -58,7 +58,7 @@ export default function Vendor() {
                                 {loading ? (
                                     <Skeleton width={50} height={28} />
                                 ) : (
-                                    stats?.total_users ?? 0
+                                    (stats?.total_users ?? 0)
                                 )}
                             </p>
                         </div>
@@ -77,7 +77,7 @@ export default function Vendor() {
                                 {loading ? (
                                     <Skeleton width={50} height={28} />
                                 ) : (
-                                    stats?.verified_users ?? 0
+                                    (stats?.verified_users ?? 0)
                                 )}
                             </p>
                         </div>
@@ -95,7 +95,7 @@ export default function Vendor() {
                                 {loading ? (
                                     <Skeleton width={50} height={28} />
                                 ) : (
-                                    stats?.unverified_users ?? 0
+                                    (stats?.unverified_users ?? 0)
                                 )}
                             </p>
                         </div>

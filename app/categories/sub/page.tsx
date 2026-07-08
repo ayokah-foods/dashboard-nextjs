@@ -7,7 +7,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import SubCategoryForm from "../components/SubCategoryForm";
 import { FlattenedSubCategory } from "@/types/CategoryType";
-import { deleteCategory } from "@/lib/api_/categories";
+import { deleteCategory } from "@/lib/api/categories";
 import toast from "react-hot-toast";
 import {
     Transition,
@@ -81,7 +81,7 @@ export default function Sub() {
                             setEditingCategory(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Subcategory

@@ -6,7 +6,7 @@ import {
     addCategory,
     getCategories,
     updateCategory,
-} from "@/lib/api_/categories";
+} from "@/lib/api/categories";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import {
@@ -35,14 +35,14 @@ export default function SubCategoryForm({
                   label: category.parent_name ?? "",
                   value: String(category.parent_id),
               }
-            : null
+            : null,
     );
 
     const [type, setType] = useState<DropdownOption | null>(
         category?.parent_name && category.parent_type
             ? typeOptions.find((opt) => opt.value === category.parent_type) ||
                   null
-            : null
+            : null,
     );
     // Local state for categories, initialized as empty
     const [localCategories, setLocalCategories] = useState<CategoryType[]>([]);
@@ -71,14 +71,14 @@ export default function SubCategoryForm({
                     100,
                     0,
                     undefined,
-                    typeValue
+                    typeValue,
                 );
 
                 setLocalCategories(response.data);
             } catch (error) {
                 console.error("Failed to fetch categories by type", error);
                 toast.error(
-                    "Failed to load parent categories for the selected type."
+                    "Failed to load parent categories for the selected type.",
                 );
             } finally {
                 setIsFetching(false);
@@ -128,7 +128,7 @@ export default function SubCategoryForm({
         } catch (error) {
             console.error(error);
             toast.error(
-                `Failed to ${category?.id ? "update" : "add"} category`
+                `Failed to ${category?.id ? "update" : "add"} category`,
             );
         } finally {
             setLoading(false);
@@ -147,7 +147,7 @@ export default function SubCategoryForm({
                     placeholder="Enter sub category name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                 />
             </div>
 
@@ -174,8 +174,8 @@ export default function SubCategoryForm({
                             label: isFetching
                                 ? "Loading..."
                                 : type
-                                ? "Select category"
-                                : "Select Type first", // Guidance added
+                                  ? "Select category"
+                                  : "Select Type first", // Guidance added
                             value: "",
                         }
                     }
@@ -187,7 +187,7 @@ export default function SubCategoryForm({
                     }
                 />
                 {isFetching && (
-                    <p className="text-xs text-amber-600 mt-1">
+                    <p className="text-xs text-hub-secondary mt-1">
                         Fetching parent categories for{" "}
                         {type?.label || "selected type"}...
                     </p>

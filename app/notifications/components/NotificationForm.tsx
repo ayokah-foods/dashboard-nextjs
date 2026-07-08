@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { sendNotification } from "@/lib/api_/notifications";
+import { sendNotification } from "@/lib/api/notifications";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { getRecentUsers } from "@/lib/api_/users";
+import { getRecentUsers } from "@/lib/api/users";
 import { User } from "@/types/UserType";
 import AsyncSelect from "react-select/async";
 import { debounce } from "lodash";
@@ -56,7 +56,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
     useEffect(() => {
         if (notification) {
             const matched = receiverOptions.find(
-                (opt) => opt.value === notification.receiver
+                (opt) => opt.value === notification.receiver,
             );
             if (matched) setReceiver(matched);
 
@@ -182,13 +182,13 @@ export default function NotificationForm({ onClose, notification }: Props) {
                     maxLength={maxLength}
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                     placeholder={
                         isSMS
                             ? "Max 160 characters for SMS"
                             : isEmail
-                            ? "Max 1000 characters for Email"
-                            : "Type your notification message here"
+                              ? "Max 1000 characters for Email"
+                              : "Type your notification message here"
                     }
                 />
                 {(isSMS || isEmail) && (
@@ -205,11 +205,11 @@ export default function NotificationForm({ onClose, notification }: Props) {
                             Call to Action (CTA) Link
                         </label>
                         <input
-                            type="text"
+                            type="url"
                             placeholder="https://example.com"
                             value={cta}
                             onChange={(e) => setCta(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                         />
                     </div>
 
@@ -219,7 +219,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                         </label>
                         <label
                             htmlFor="notificationImage"
-                            className="relative w-full h-50 aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors overflow-hidden flex items-center justify-center"
+                            className="relative w-full h-50 aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-hub-primary hover:bg-hub-primary/20 transition-colors overflow-hidden flex items-center justify-center"
                         >
                             {imagePreview ? (
                                 <Image
@@ -229,7 +229,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                                     className="object-cover"
                                 />
                             ) : (
-                                <div className="flex flex-col items-center justify-center text-center text-orange-600">
+                                <div className="flex flex-col items-center justify-center text-center text-green-600">
                                     <svg
                                         className="w-12 h-12 text-gray-400"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -304,5 +304,5 @@ const loadUserOptions = debounce(
             callback([]);
         }
     },
-    500
+    500,
 );

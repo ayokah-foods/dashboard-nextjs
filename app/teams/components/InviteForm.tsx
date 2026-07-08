@@ -4,7 +4,7 @@ import { useState } from "react";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { sendInvite } from "@/lib/api_/team";
+import { sendInvite } from "@/lib/api/team";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 
@@ -62,7 +62,7 @@ export default function InviteForm({ onClose }: Props) {
     };
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -79,7 +79,8 @@ export default function InviteForm({ onClose }: Props) {
         try {
             const response = await sendInvite(formData);
             toast.success(response.message);
-            window.location.reload();
+            setLoading(false);
+            onClose();
         } catch (err) {
             const error = err as AxiosError<{
                 errors?: Record<string, string[]>;
@@ -87,7 +88,7 @@ export default function InviteForm({ onClose }: Props) {
             }>;
             if (error.response?.data?.errors) {
                 const messages = Object.values(
-                    error.response.data.errors
+                    error.response.data.errors,
                 ).flat();
                 messages.forEach((msg) => toast.error(msg));
             } else if (error.response?.data?.message) {
@@ -112,7 +113,7 @@ export default function InviteForm({ onClose }: Props) {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                 />
                 {errors.name && (
                     <p className="text-sm text-red-500">{errors.name}</p>
@@ -129,7 +130,7 @@ export default function InviteForm({ onClose }: Props) {
                     name="last_name"
                     value={formData.last_name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                 />
                 {errors.last_name && (
                     <p className="text-sm text-red-500">{errors.last_name}</p>
@@ -146,7 +147,7 @@ export default function InviteForm({ onClose }: Props) {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                 />
                 {errors.email && (
                     <p className="text-sm text-red-500">{errors.email}</p>
@@ -163,7 +164,7 @@ export default function InviteForm({ onClose }: Props) {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                 />
                 {errors.phone && (
                     <p className="text-sm text-red-500">{errors.phone}</p>
@@ -179,7 +180,7 @@ export default function InviteForm({ onClose }: Props) {
                     options={typeOptions}
                     value={
                         typeOptions.find(
-                            (opt) => opt.value === formData.role
+                            (opt) => opt.value === formData.role,
                         ) || typeOptions[0]
                     }
                     onChange={(option) =>
@@ -203,7 +204,7 @@ export default function InviteForm({ onClose }: Props) {
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                        className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                     />
                     <button
                         type="button"

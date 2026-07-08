@@ -6,7 +6,7 @@ import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import { ColumnDef } from "@tanstack/react-table";
 import { Product } from "@/types/ProductType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { mostSellingProducts } from "@/lib/api_/products";
+import { mostSellingProducts } from "@/lib/api/products";
 import StatusBadge from "@/utils/StatusBadge";
 import { getStockBadgeClass } from "@/utils/StockBadge";
 import {
@@ -78,7 +78,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                                     key={index}
                                     className={`w-4 h-4 ${
                                         index < stars
-                                            ? "text-yellow-500"
+                                            ? "text-hub-primary"
                                             : "text-gray-300"
                                     }`}
                                 />
@@ -94,10 +94,10 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                 header: "Price",
                 cell: ({ row }) => {
                     const salesPrice = parseFloat(
-                        row.original.sales_price || "0"
+                        row.original.sales_price || "0",
                     );
                     const regularPrice = parseFloat(
-                        row.original.regular_price || "0"
+                        row.original.regular_price || "0",
                     );
 
                     return (
@@ -109,7 +109,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                                 regularPrice > 0 &&
                                 salesPrice < regularPrice && (
                                     <span className="text-gray-500 line-through">{`$${regularPrice.toFixed(
-                                        2
+                                        2,
                                     )}`}</span>
                                 )}
                         </div>
@@ -140,7 +140,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                     return vendor ? (
                         <div className="flex flex-col text-gray-700">
                             <div className="flex items-center gap-2">
-                                <BuildingStorefrontIcon className="w-4 h-4 text-amber-600" />
+                                <BuildingStorefrontIcon className="w-4 h-4 text-hub-secondary" />
                                 <span>{vendor.name}</span>
                             </div>
                             <span className="text-xs text-gray-500 mt-0.5 ml-6">
@@ -161,7 +161,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                     const views = getValue() as number;
                     return (
                         <div className="flex items-center gap-1 text-gray-700">
-                            <EyeIcon className="w-4 h-4 text-amber-600" />
+                            <EyeIcon className="w-4 h-4 text-hub-secondary" />
                             <span>{views}</span>
                         </div>
                     );
@@ -183,8 +183,25 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                     return formatHumanReadableDate(value);
                 },
             },
+            {
+                header: "Action",
+                accessorKey: "id",
+                cell: ({ getValue }) => {
+                    const productId = getValue();
+                    return (
+                        <button
+                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
+                            onClick={() =>
+                                (window.location.href = `/products/${productId}`)
+                            }
+                        >
+                            View product
+                        </button>
+                    );
+                },
+            },
         ],
-        []
+        [],
     );
 
     const fetchProducts = useCallback(
@@ -194,7 +211,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                 const offset = pageIndex * pagination.pageSize;
                 const response = await mostSellingProducts(
                     pagination.pageSize,
-                    offset
+                    offset,
                 );
                 setProducts(response.data);
                 setTotalProducts(response.total || 0);
@@ -205,7 +222,7 @@ const MostSellingProductsTable: React.FC<MostSellingProductsTableProps> = ({
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     useEffect(() => {

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { getStats } from "../../lib/api_/orders";
+import { getStats } from "../../lib/api/orders";
 import { formatAmount } from "@/utils/formatCurrency";
 
 interface StatCardProps {
@@ -77,9 +77,7 @@ const Overview: React.FC<OverviewProps> = ({ period }) => {
     const statCards = [
         {
             title: "Total Revenue",
-            value: stats
-                ? `${formatAmount(stats.total_revenue)}`
-                : undefined,
+            value: stats ? `${formatAmount(stats.total_revenue)}` : undefined,
         },
         { title: "Total Orders", value: stats?.total_orders },
         { title: "Total Customers", value: stats?.total_customers },

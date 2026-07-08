@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CommissionFormType } from "@/types/CommissionFormType";
-import { createCommission, updateCommission } from "@/lib/api_/commissions";
+import { createCommission, updateCommission } from "@/lib/api/commissions";
 import toast from "react-hot-toast";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { AxiosError } from "axios";
@@ -44,13 +44,13 @@ export default function CommissionForm({
     });
 
     const [selectedType, setSelectedType] = useState<TypeOption>(
-        typeOptions[0]
+        typeOptions[0],
     );
 
     useEffect(() => {
         if (initialData) {
             const match = typeOptions.find(
-                (opt) => opt.value === initialData.type
+                (opt) => opt.value === initialData.type,
             );
             if (match) setSelectedType(match);
             reset(initialData);
@@ -141,7 +141,7 @@ export default function CommissionForm({
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-4 py-2 text-sm rounded-md bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-60"
+                    className="px-4 py-2 text-sm rounded-md bg-hub-secondary text-white hover:bg-hub-secondary disabled:opacity-60"
                 >
                     {initialData ? "Update" : "Create"}
                 </button>

@@ -1,4 +1,4 @@
-export const APP_NAME = "Àyòkáh";
+export const APP_NAME = "African Hub Marketplace";
 export const APP_DESCRIPTION = "Your go to marketplace for African products ";
 
 export const MONTHS = [
@@ -30,10 +30,10 @@ import {
     CubeIcon,
     AdjustmentsHorizontalIcon,
     FlagIcon,
-    MapPinIcon,
     BanknotesIcon,
 } from "@heroicons/react/24/outline";
-import { FaCashRegister } from "react-icons/fa";
+
+export const CANADA_TIMEZONE = "America/Toronto";
 
 export const NAVIGATION = [
     {
@@ -125,12 +125,6 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Coupon Management",
-        href: "/coupon",
-        icon: AdjustmentsHorizontalIcon,
-        children: [{ name: "Coupons", href: "/coupons/countries" }],
-    },
-    {
         name: "Banner Management",
         href: "/categories",
         icon: FlagIcon,
@@ -149,7 +143,7 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Subscription Management",
+        name: "Subscriptions",
         href: "/subscriptions",
         icon: BanknotesIcon,
         children: [
@@ -177,10 +171,10 @@ export const NAVIGATION = [
             { name: "Transactions", href: "/finance/transactions" },
             { name: "Commission Revenues", href: "/finance/revenues" },
             { name: "Commission Rates", href: "/finance/commissions" },
-            {
-                name: "Settlment Accounts",
-                href: "/finance/settlement-accounts",
-            },
+            // {
+            //     name: "Settlment Accounts",
+            //     href: "/finance/settlement-accounts",
+            // },
         ],
     },
     {
@@ -200,22 +194,21 @@ export const NAVIGATION = [
         children: [
             { name: "Privacy & Compliance", href: "/settings/policies" },
         ],
-    },
-
+    }, 
     {
         name: "Platform Settings",
         href: "/settings/app",
         icon: AdjustmentsHorizontalIcon,
-        children: [{ name: "Team members", href: "/teams" }],
+        children: [
+            { name: "Team members", href: "/teams" },
+        ],
     },
 ];
 
 export const PrivacyPages = [
     { name: "Privacy Policy", type: "privacy" },
-    { name: "Terms and Conditions", type: "terms" },
-    { name: "Delivery Policy", type: "delivery" },
-    { name: "Refund Policy", type: "refund" },
-    { name: "Return Policy", type: "return" },
+    { name: "Terms and Conditions", type: "terms" }, 
+    { name: "Return and Refund Policy", type: "return" },
 ];
 
 export const receiverOptions = [
@@ -226,7 +219,7 @@ export const receiverOptions = [
 ];
 
 export const typeOptions = [
-    { label: "SMS", value: "sms" },
+    // { label: "SMS", value: "sms" },
     { label: "Email", value: "email" },
 ];
 
@@ -238,3 +231,32 @@ export const bottomNavigation = [
         isLogout: true,
     },
 ];
+ 
+// export const FAQ_DATA: FAQItem[] = [
+//     {
+//         question: "What products can I find at African Market HubSUPERMARKET?",
+//         answer: "You can find fresh groceries, beverages, home essentials, organic produce, and FMCG products. We ensure quality, verified, and fresh items from trusted local suppliers.",
+//     },
+//     {
+//         question: "How do I place an order for African Market Hubdelivery?",
+//         answer: "Orders can be placed through our African Market Hub platform. Simply select your items, add to cart, and complete checkout. Delivery is available within major towns.",
+//     },
+//     {
+//         question:
+//             "What services does African Market Hub EVENTS & CATERING offer?",
+//         answer: "We provide premium catering for weddings, birthdays, corporate events, private dining, and large outdoor celebrations. Menus can be customized to suit your event needs.",
+//     },
+//     {
+//         question: "Can I hire African Market Hub SERVICES for home tasks?",
+//         answer: "Yes, African Market Hub Services offers home cleaning, laundry, private chef, and other lifestyle support solutions. All service professionals are trained and verified for reliability.",
+//     },
+//     {
+//         question: "How do I contact African Market Hub for support?",
+//         answer: "You can contact us via our email, phone, or contact form on the African Market Hub website. Our team is ready to assist you with any questions or concerns.",
+//     },
+//     {
+//         question:
+//             "Does African Market Hub offer bulk orders or corporate packages?",
+//         answer: "Yes, both our supermarket and catering services can handle bulk orders and corporate packages. Please contact us directly to discuss your specific requirements.",
+//     },
+// ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { getSettlementAccounts } from "@/lib/api_/finance";
+import { getSettlementAccounts } from "@/lib/api/finance";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import {
     SettlementAccountItem,
@@ -32,7 +32,7 @@ export default function SettlementAccounts() {
                     await getSettlementAccounts(
                         pagination.pageSize,
                         pageIndex * pagination.pageSize,
-                        searchTerm
+                        searchTerm,
                     );
                 setSettlementAccounts(response.data);
                 setTotalRows(response.total);
@@ -42,12 +42,12 @@ export default function SettlementAccounts() {
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     const debouncedFetch = useMemo(
         () => debounce(fetchSettlementAccounts, 300),
-        [fetchSettlementAccounts]
+        [fetchSettlementAccounts],
     );
 
     useEffect(() => {
@@ -63,18 +63,9 @@ export default function SettlementAccounts() {
     const columns: ColumnDef<SettlementAccountItem>[] = useMemo(
         () => [
             {
-                header: "Bank Name",
+                header: "Name",
                 accessorKey: "name",
-                cell: ({ getValue }) => (
-                    <span
-                        className="block max-w-[150px] truncate text-gray-700"
-                        title={getValue() as string}
-                    >
-                        {getValue() as string}
-                    </span>
-                ),
             },
-
             {
                 header: "Institution Number",
                 accessorKey: "institution_number",
@@ -90,32 +81,13 @@ export default function SettlementAccounts() {
             {
                 header: "Account Name",
                 accessorKey: "account_name",
-                cell: ({ getValue }) => (
-                    <span
-                        className="block max-w-[150px] truncate text-gray-700"
-                        title={getValue() as string}
-                    >
-                        {getValue() as string}
-                    </span>
-                ),
             },
             {
                 header: "Vendor Name",
                 accessorKey: "user.name",
-                cell: ({ row }) => {
-                    const name = row.original.user?.name || "—";
-                    return (
-                        <span
-                            className="block max-w-[150px] truncate text-gray-700"
-                            title={name}
-                        >
-                            {name}
-                        </span>
-                    );
-                },
             },
         ],
-        []
+        [],
     );
 
     return (
@@ -136,7 +108,7 @@ export default function SettlementAccounts() {
                         placeholder="Search by account name or number..."
                         value={search}
                         onChange={handleSearchChange}
-                        className="mb-4 w-full max-w-sm text-gray-800 px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-600"
+                        className="mb-4 w-full max-w-sm text-gray-800 px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-hub-secondary"
                     />
                 </div>
             </div>

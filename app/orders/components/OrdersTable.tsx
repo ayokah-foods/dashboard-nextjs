@@ -8,7 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentOrders } from "@/lib/api_/orders";
+import { getRecentOrders } from "@/lib/api/orders";
 import StatusBadge from "@/utils/StatusBadge";
 import { formatAmount } from "@/utils/formatCurrency";
 
@@ -77,7 +77,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 cell: ({ getValue }) => {
                     const value = getValue() as string;
                     const numericValue = parseFloat(value);
-                    return (formatAmount(numericValue));
+                    return formatAmount(numericValue);
                 },
             },
             {
@@ -108,7 +108,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     const orderId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 cursor-pointer"
+                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/orders/${orderId}`;
                             }}
@@ -127,7 +127,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 },
             },
         ],
-        []
+        [],
     );
 
     const fetchOrders = useCallback(
@@ -139,7 +139,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     pagination.pageSize,
                     offset,
                     search,
-                    status
+                    status,
                 );
                 setOrders(response.orders);
                 setTotalOrders(response.total || 0);
@@ -150,7 +150,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, status]
+        [pagination.pageSize, status],
     );
 
     const debouncedFetchOrders = useMemo(
@@ -158,7 +158,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
             debounce((pageIndex: number, search: string) => {
                 fetchOrders(pageIndex, search);
             }, 300),
-        [fetchOrders]
+        [fetchOrders],
     );
 
     useEffect(() => {
@@ -181,7 +181,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     placeholder="Search by customer or product name..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900 focus:outline-hub-primary-400"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900 focus:outline-hub-primary-400"
                 />
             </div>
             <TanStackTable

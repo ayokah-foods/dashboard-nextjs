@@ -6,7 +6,7 @@ import {
     changeOrderPaymentStatus,
     changeOrderStatus,
     getOrderDetail,
-} from "@/lib/api_/orders";
+} from "@/lib/api/orders";
 import Skeleton from "react-loading-skeleton";
 import { OrderItem, OrderResponse } from "@/types/OrderType";
 import toast from "react-hot-toast";
@@ -40,7 +40,7 @@ export default function OrderDetailPage() {
 
     const [order, setOrder] = useState<OrderItem | null>(null);
     const [stats, setStats] = useState<OrderResponse["data"]["stats"] | null>(
-        null
+        null,
     );
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
@@ -110,7 +110,7 @@ export default function OrderDetailPage() {
                     statusOptions[0];
                 const foundPayment =
                     paymentStatusOptions.find(
-                        (p) => p.value === paymentStatus
+                        (p) => p.value === paymentStatus,
                     ) ?? paymentStatusOptions[0];
                 setSelectedStatus(foundShipping);
                 setSelectedPaymentStatus(foundPayment);
@@ -143,7 +143,7 @@ export default function OrderDetailPage() {
                                   shipping_status: status.value,
                               },
                           }
-                        : prev
+                        : prev,
                 );
                 toast.success("Shipping status updated");
             } else {
@@ -167,7 +167,7 @@ export default function OrderDetailPage() {
         try {
             const res = await changeOrderPaymentStatus(
                 order.order.id,
-                status.value
+                status.value,
             );
             if (res?.success || res?.status === "success") {
                 setOrder((prev) =>
@@ -179,7 +179,7 @@ export default function OrderDetailPage() {
                                   payment_status: status.value,
                               },
                           }
-                        : prev
+                        : prev,
                 );
                 toast.success("Payment status updated");
             } else {
@@ -229,29 +229,30 @@ export default function OrderDetailPage() {
                       ...prev,
                       order: { ...prev.order, shipping_status: "cancelled" },
                   }
-                : prev
+                : prev,
         );
         toast.success("Order marked cancelled (UI)");
     };
-    const handleSettleVendor = () => {
-        if (!orderMeta) return;
-        if (orderMeta.vendor_payment_settlement_status === "paid") {
-            toast.error("Vendor already settled");
-            return;
-        }
-        setOrder((prev) =>
-            prev
-                ? {
-                      ...prev,
-                      order: {
-                          ...prev.order,
-                          vendor_payment_settlement_status: "paid",
-                      },
-                  }
-                : prev
-        );
-        toast.success("Vendor marked settled (UI)");
-    };
+
+    // const handleSettleVendor = () => {
+    //     if (!orderMeta) return;
+    //     if (orderMeta.vendor_payment_settlement_status === "paid") {
+    //         toast.error("Vendor already settled");
+    //         return;
+    //     }
+    //     setOrder((prev) =>
+    //         prev
+    //             ? {
+    //                 ...prev,
+    //                 order: {
+    //                     ...prev.order,
+    //                     vendor_payment_settlement_status: "paid",
+    //                 },
+    //             }
+    //             : prev
+    //     );
+    //     toast.success("Vendor marked settled (UI)");
+    // };
 
     if (loading || !order || !product || !orderMeta)
         return <Skeleton height={160} count={4} />;
@@ -260,7 +261,6 @@ export default function OrderDetailPage() {
         <div className="p-0 text-gray-700 space-y-6">
             <OrderHeader
                 orderMeta={orderMeta}
-                onPrint={() => window.print()}
                 onDownloadLabel={handleDownloadLabel}
             />
             <div className="flex w-full">
@@ -271,11 +271,7 @@ export default function OrderDetailPage() {
                 />
             </div>
             <div>
-                <OrderSummaryCard
-                    orderMeta={orderMeta}
-                    product={product}
-                    onSettleVendor={handleSettleVendor}
-                />
+                <OrderSummaryCard orderMeta={orderMeta} product={product} />
             </div>
 
             <OrderControls

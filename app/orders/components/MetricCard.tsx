@@ -8,7 +8,7 @@ import {
     TruckIcon,
 } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
-import { orderStats } from "@/lib/api_/orders";
+import { orderStats } from "@/lib/api/orders";
 import { OrderStatsType } from "@/types/OrderType";
 
 export function MetricCard() {
@@ -41,7 +41,7 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.total_processing ?? 0
+                            (metrics?.total_processing ?? 0)
                         )}
                     </p>
                 </div>
@@ -58,7 +58,7 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.total_ongoing ?? 0
+                            (metrics?.total_ongoing ?? 0)
                         )}
                     </p>
                 </div>
@@ -75,7 +75,7 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.total_completed ?? 0
+                            (metrics?.total_completed ?? 0)
                         )}
                     </p>
                 </div>
@@ -92,7 +92,7 @@ export function MetricCard() {
                         {loading ? (
                             <Skeleton width={50} height={28} />
                         ) : (
-                            metrics?.total_cancelled ?? 0
+                            (metrics?.total_cancelled ?? 0)
                         )}
                     </p>
                 </div>

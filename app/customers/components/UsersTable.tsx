@@ -8,7 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { User } from "@/types/UserType";
-import { getRecentUsers } from "@/lib/api_/users";
+import { getRecentUsers } from "@/lib/api/users";
 import StatusBadge from "@/utils/StatusBadge";
 
 interface UsersTableProps {
@@ -78,7 +78,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                     const userId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 cursor-pointer"
+                            className="px-3 py-1 bg-hub-primary text-white rounded hover:bg-hub-secondary cursor-pointer"
                             onClick={() => {
                                 router.push(`/customers/${userId}`);
                             }}
@@ -89,7 +89,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                 },
             },
         ],
-        [router]
+        [router],
     );
 
     const fetchUsers = useCallback(
@@ -101,7 +101,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                     pagination.pageSize,
                     offset,
                     search,
-                    type
+                    type,
                 );
                 setUsers(response.data);
                 setTotalUsers(response.total || 0);
@@ -112,7 +112,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     const debouncedFetchUsers = useMemo(() => {
@@ -141,7 +141,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                     placeholder="Search by name, or phone..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
                 />
             </div>
             <TanStackTable

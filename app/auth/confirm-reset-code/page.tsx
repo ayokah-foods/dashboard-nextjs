@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { confirmResetCode } from "../../../lib/api_/login";
+import { confirmResetCode } from "../../../lib/api/login";
+import Image from "next/image";
 import toast from "react-hot-toast";
 import { SubmitButton } from "../../components/commons/SubmitButton";
 
@@ -53,18 +54,30 @@ export default function ConfirmResetCode() {
     };
 
     return (
-        <>
- 
+        <div className="flex h-screen bg-white text-gray-500">
+            <div
+                className="w-1/2 bg-cover bg-center"
+                style={{ backgroundImage: "url('/login.jpg')" }}
+            ></div>
 
-                <h1 className="text-2xl font-bold mb-6 text-gray-800">Confirm Reset Code</h1>
+            <div className="w-1/2 flex flex-col justify-center items-center px-8">
+                <Image
+                    width={200}
+                    height={200}
+                    src="/logo.svg"
+                    alt="Logo"
+                    className="mb-10"
+                />
+
+                <h1 className="text-2xl font-bold mb-6">Confirm Reset Code</h1>
 
                 <form
                     onSubmit={handleSubmit}
-                    className="w-full max-w-sm space-y-8 text-gray-800"
+                    className="w-full max-w-sm space-y-8"
                 >
                     <div>
                         <label className="block text-sm font-medium mb-1">
-                            Enter the 6-digit code sent to your email address
+                            Reset Code
                         </label>
                         <input
                             type="tel"
@@ -79,6 +92,7 @@ export default function ConfirmResetCode() {
 
                     <SubmitButton label="Verify Code" loading={loading} />
                 </form>
-            </>
+            </div>
+        </div>
     );
 }

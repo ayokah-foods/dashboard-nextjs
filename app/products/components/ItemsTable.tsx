@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { Product, Stats } from "@/types/ProductType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentProducts, updateItemStatus } from "@/lib/api_/products";
+import { getRecentProducts, updateItemStatus } from "@/lib/api/products";
 import StatusBadge from "@/utils/StatusBadge";
 import ItemSummary from "./ItemSummary";
 import { getStockBadgeClass } from "@/utils/StockBadge";
@@ -19,8 +19,8 @@ import {
 import ProductAreaChart from "./ProductAreaChart";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
-import { formatAmount } from "@/utils/formatCurrency";
 import Link from "next/link";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface ProductTableProps {
     limit: number;
@@ -45,7 +45,7 @@ function ProductActionCell({
 }) {
     const [status, setStatus] = useState<Option>(
         statusOptions.find((opt) => opt.value === initialStatus) ||
-            statusOptions[0]
+            statusOptions[0],
     );
 
     const handleStatusChange = async (selected: Option) => {
@@ -92,144 +92,158 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
 
     const updateProductStatusInState = (
         id: number,
-        newStatus: "active" | "inactive"
+        newStatus: "active" | "inactive",
     ) => {
         setProducts((prev) =>
-            prev.map((p) => (p.id === id ? { ...p, status: newStatus } : p))
+            prev.map((p) => (p.id === id ? { ...p, status: newStatus } : p)),
         );
     };
 
     const columns: ColumnDef<Product>[] = useMemo(
         () => [
             {
-                header: "Item & Rating",
+                header: "Item",
                 accessorKey: "title",
                 cell: ({ row }) => {
                     const image = row.original.images?.[0];
                     const title = row.original.title;
                     const slug = row.original.slug;
                     const category = row.original.category?.name;
-                    const rating: number = row.original.average_rating || 0;
-                    const fullStars = Math.floor(rating);
-                    const hasHalfStar = rating - fullStars >= 0.5;
+
+                    // Construct the external URL
+                    const productUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/items/${slug}`;
 
                     return (
-                        <div className="flex items-center space-x-2 min-w-0">
-                            {/* Wrap the image and text in a Link */}
+                        <div className="flex items-center space-x-2">
+                            {/* Wrap image in link */}
                             <Link
-                                href={`https://ayokah.co.uk/items/${slug}`}
-                                className="flex items-center space-x-2 min-w-0 group"
+                                href={productUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="shrink-0"
                             >
                                 <Image
                                     src={image || "/placeholder.png"}
                                     alt={title}
                                     width={40}
                                     height={40}
-                                    className="w-10 h-10 object-cover rounded flex-shrink-0"
+                                    className="w-10 h-10 object-cover rounded border hover:opacity-80 transition-opacity"
                                 />
-                                <div className="flex flex-col min-w-0">
-                                    <p className="block text-xs font-medium text-gray-800! truncate group-hover:text-blue-600 group-hover:underline">
-                                        {title}
-                                    </p>
-                                    {category && (
-                                        <p className="block text-xs text-gray-500! truncate">
-                                            {category}
-                                        </p>
-                                    )}
-                                    <div className="flex items-center gap-0.5 mt-1">
-                                        {[...Array(5)].map((_, index) => {
-                                            if (index < fullStars) {
-                                                return (
-                                                    <StarIcon
-                                                        key={index}
-                                                        className="w-3 h-3 text-yellow-500"
-                                                    />
-                                                );
-                                            } else if (
-                                                index === fullStars &&
-                                                hasHalfStar
-                                            ) {
-                                                return (
-                                                    <StarIcon
-                                                        key={index}
-                                                        className="w-3 h-3 text-yellow-300"
-                                                    />
-                                                );
-                                            } else {
-                                                return (
-                                                    <StarIcon
-                                                        key={index}
-                                                        className="w-3 h-3 text-gray-300"
-                                                    />
-                                                );
-                                            }
-                                        })}
-                                    </div>
-                                </div>
                             </Link>
+
+                            <div className="flex flex-col">
+                                <Link
+                                    href={productUrl}
+                                    target="_blank"
+                                    title="View Item"
+                                    rel="noopener noreferrer"
+                                    className="text-sm truncate max-w-40 text-gray-800 font-medium hover:text-hub-primary hover:underline transition-colors"
+                                >
+                                    {title}
+                                </Link>
+                                {category && (
+                                    <span className="text-xs text-gray-500">
+                                        {category}
+                                    </span>
+                                )}
+                            </div>
                         </div>
                     );
                 },
             },
+            {
+                header: "Avg. Rating",
+                accessorKey: "average_rating",
+                cell: ({ getValue }) => {
+                    const rating = parseFloat(getValue() as string) || 0;
+                    const stars = Math.round(rating);
 
+                    return (
+                        <div className="flex items-center gap-0.5">
+                            {[...Array(5)].map((_, index) => (
+                                <StarIcon
+                                    key={index}
+                                    className={`w-4 h-4 ${
+                                        index < stars
+                                            ? "text-hub-primary"
+                                            : "text-gray-300"
+                                    }`}
+                                />
+                            ))}
+                            <span className="ml-2 text-sm text-gray-600">
+                                {rating.toFixed(1)}
+                            </span>
+                        </div>
+                    );
+                },
+            },
             {
                 header: "Price",
                 cell: ({ row }) => {
-                    const salesPrice = parseFloat(
-                        row.original.sales_price || "0"
-                    );
-                    const regularPrice = parseFloat(
-                        row.original.regular_price || "0"
-                    );
+                    const salesPrice = row.original.sales_price;
+                    const regularPrice = row.original.regular_price;
 
-                    const formattedSales = `${formatAmount(salesPrice)}`;
-                    const formattedRegular = `${formatAmount(regularPrice)}`;
+                    const hasDiscount =
+                        parseFloat(salesPrice) > 0 &&
+                        parseFloat(regularPrice) > 0 &&
+                        parseFloat(salesPrice) < parseFloat(regularPrice);
 
                     return (
                         <div className="flex flex-col text-xs">
+                            {/* Main Selling Price */}
                             <span className="text-gray-800 font-semibold">
-                                {formattedSales}
+                                {formatAmount(salesPrice)}
                             </span>
-                            {salesPrice > 0 &&
-                                regularPrice > 0 &&
-                                salesPrice < regularPrice && (
-                                    <span className="text-gray-500 line-through text-xs">
-                                        {formattedRegular}
-                                    </span>
-                                )}
+
+                            {hasDiscount && (
+                                <span className="text-gray-500 line-through text-[10px]">
+                                    {formatAmount(regularPrice)}
+                                </span>
+                            )}
                         </div>
                     );
                 },
             },
-
             {
                 header: "Stock",
                 accessorKey: "quantity",
                 cell: ({ getValue }) => {
                     const quantity = getValue() as number;
                     const max = 100;
-                    const stock = getStockBadgeClass(quantity, max);
+                    const badgeClass = getStockBadgeClass(quantity, max);
+
                     return (
                         <span
-                            className={`px-2 py-0.5 text-xs font-medium rounded-full ${stock.class}`}
+                            className={`px-2 py-0.5 text-xs font-medium rounded-full ${badgeClass}`}
                         >
-                            {quantity} • {stock.level}
+                            {quantity}
                         </span>
                     );
                 },
             },
+
             {
                 header: "Vendor",
-                accessorKey: "vendor.name",
+                accessorKey: "shop.name",
                 cell: ({ row }) => {
-                    const vendor = row.original.vendor;
+                    const shop = row.original.shop;
                     const type = row.original.type;
+                    const shopUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/shops/${shop?.slug}`;
 
-                    return vendor ? (
+                    return shop ? (
                         <div className="flex flex-col text-gray-700">
                             <div className="flex items-center gap-2">
-                                <BuildingStorefrontIcon className="w-4 h-4 text-amber-600" />
-                                <span>{vendor.name}</span>
+                                <BuildingStorefrontIcon className="w-4 h-4 text-hub-secondary shrink-0" />
+                                {/* Link for the Shop Name */}
+                                <a
+                                    href={shopUrl}
+                                    target="_blank"
+                                    title="View Shop"
+                                    rel="noopener noreferrer"
+                                    className="font-medium truncate max-w-40 text-sm text-gray-800 hover:text-hub-secondary/20 hover:underline transition-colors"
+                                >
+                                    {shop.name}
+                                </a>
                             </div>
                             <span className="text-xs text-gray-500 mt-0.5 ml-6">
                                 {type === "services"
@@ -250,7 +264,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
 
                     return (
                         <div className="flex items-center gap-1 text-gray-700">
-                            <EyeIcon className="w-4 h-4 text-amber-600" />
+                            <EyeIcon className="w-4 h-4 text-hub-secondary" />
                             <span>{views}</span>
                         </div>
                     );
@@ -283,14 +297,14 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                         onStatusUpdate={(newStatus) =>
                             updateProductStatusInState(
                                 row.original.id,
-                                newStatus as "active" | "inactive"
+                                newStatus as "active" | "inactive",
                             )
                         }
                     />
                 ),
             },
         ],
-        []
+        [],
     );
 
     const fetchProducts = useCallback(
@@ -303,7 +317,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                     offset,
                     search,
                     type,
-                    status
+                    status,
                 );
                 setProducts(response.data);
                 setTotalProducts(response.total || 0);
@@ -315,7 +329,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, type, status]
+        [pagination.pageSize, type, status],
     );
 
     const debouncedFetchProducts = useMemo(() => {
@@ -348,7 +362,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                     placeholder="Search by product or vendor name..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
                 />
             </div>
 

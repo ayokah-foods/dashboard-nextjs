@@ -5,7 +5,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
-import { deleteState } from "@/lib/api_/locations";
+import { deleteState } from "@/lib/api/locations";
 import { StateType } from "@/types/LocationType";
 import StateTable from "./components/StateTable";
 import StateForm from "./components/StateForm";
@@ -58,7 +58,7 @@ export default function StatePage() {
                             setEditingState(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600 cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create State

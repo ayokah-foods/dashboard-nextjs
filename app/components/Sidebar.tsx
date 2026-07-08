@@ -51,6 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
             }
         }
     }, []);
+    
 
     const handleLogout = () => {
         document.cookie =
@@ -69,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
             >
                 <DialogBackdrop className="fixed inset-0 bg-black/50 transition-opacity duration-300" />
                 <div className="fixed inset-0 flex">
-                    <DialogPanel className="relative mr-16 rounded-r-4xl border-orange-200 flex w-full max-w-xs flex-1 transform transition duration-700 ease-in data-closed:translate-x-full sm:duration-700 bg-white">
+                    <DialogPanel className="relative mr-16 rounded-r-4xl border-hub-primary/80 flex w-full max-w-xs flex-1 transform transition duration-700 ease-in data-closed:translate-x-full sm:duration-700 bg-white">
                         <TransitionChild>
                             <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
                                 <button
@@ -102,13 +103,13 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                 <button
                     type="button"
                     onClick={() => setSidebarOpen(true)}
-                    className="-m-2.5 p-2.5 text-orange-800 hover:text-orange-900"
+                    className="-m-2.5 p-2.5 text-green-500 hover:text-green-900"
                 >
                     <Bars3Icon className="size-6 mr-2" />
                 </button>
             </div>
 
-            <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-white px-6 pb-4 border-r rounded-r-4xl border-orange-200">
+            <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-white px-6 pb-4 border-r rounded-r-4xl border-hub-primary/80">
                 <SidebarContent
                     collapsed={collapsed}
                     setCollapsed={setCollapsed}
@@ -130,24 +131,26 @@ const SidebarContent = ({
     user: User | null;
     onLogout: () => void;
 }) => (
-    <div
-        className="flex grow flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-50 hover:scrollbar-thumb-gray-100 scrollbar-track-transparent pt-2 mb-12"
-        style={{ height: "calc(100vh - 60px)" }}
-    >
-        <div className="flex items-center justify-center mb-2">
+    <div className="flex flex-col h-full pt-2">
+        <div className="flex items-center justify-center mb-2 shrink-0">
+            {" "}
             <Image
                 src="/logo.svg"
-                alt="Àyòkáh"
-                width={150}
-                height={40}
-                className="h-10 w-30"
+                alt="African Market Hub"
+                width={120}
+                height={60}
+                className="h-15 w-50"
                 priority
             />
         </div>
-        <nav className="flex flex-1 flex-col justify-between">
+        <nav className="flex flex-1 flex-col overflow-y-auto no-scrollbar">
+            {" "}
             <NavMenu user={user} />
-            <BottomMenu collapsed={collapsed} user={user} onLogout={onLogout} />
         </nav>
+        <div className="mt-auto pb-12">
+            {" "}
+            <BottomMenu collapsed={collapsed} user={user} onLogout={onLogout} />
+        </div>
     </div>
 );
 
@@ -162,7 +165,7 @@ function BottomMenu({
 }) {
     return (
         <Popover className="relative w-1/2">
-            <div className="fixed bottom-0 z-50 bg-hub-primary-400 text-white rounded-xl shadow-inner px-1.5 py-1.5 flex items-center justify-between">
+            <div className="fixed bottom-0 z-50 bg-hub-primary text-white rounded-xl shadow-inner px-1.5 py-1.5 flex items-center justify-between">
                 <div className="flex items-center gap-x-1">
                     <Image
                         className="size-5 rounded-full object-cover"
@@ -173,7 +176,7 @@ function BottomMenu({
                     />
                     <div className="flex flex-col">
                         <span className="text-sm font-semibold">
-                            {user?.name} {user?.last_name}
+                            {user?.name}
                         </span>
                         <span className="max-w-[120px] truncate text-xs text-white">
                             {user?.email}
@@ -182,7 +185,7 @@ function BottomMenu({
                 </div>
 
                 <PopoverButton
-                    className="text-white hover:text-white transition"
+                    className="text-white transition"
                     aria-label="Toggle menu"
                 >
                     {({ open }) => (
@@ -202,16 +205,16 @@ function BottomMenu({
                         <button
                             key={item.name}
                             onClick={item.isLogout ? onLogout : undefined}
-                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium hover:bg-white/10 ${
+                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium  ${
                                 item.isLogout
-                                    ? "text-orange-800 font-bold bg-white border hover:bg-white hover:text-white"
+                                    ? "text-green-500 font-bold bg-white border "
                                     : ""
                             } ${collapsed ? "justify-center" : ""}`}
                         >
                             <item.icon
                                 className={`size-4 ${
                                     item.isLogout
-                                        ? "text-red-500 hover:text-white font-bold"
+                                        ? "text-red-500  font-bold"
                                         : "text-white"
                                 }`}
                             />

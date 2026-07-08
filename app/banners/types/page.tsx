@@ -7,13 +7,13 @@ import { BannerType } from "@/types/CategoryType";
 import toast from "react-hot-toast";
 import BannerTypesTable from "../components/BannerTypesTable";
 import BannerTypesForm from "../components/BannerTypesForm";
-import { deleteBannerType } from "@/lib/api_/banners";
+import { deleteBannerType } from "@/lib/api/banners";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 
 export default function BannerTypes() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<BannerType | null>(
-        null
+        null,
     );
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [typeToDelete, settypeToDelete] = useState<BannerType | null>(null);
@@ -59,7 +59,7 @@ export default function BannerTypes() {
                             setEditingCategory(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600 cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-hub-primary text-white hover:bg-hub-secondary cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Banner Type

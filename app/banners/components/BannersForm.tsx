@@ -5,7 +5,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { addBanner, listBannerTypes } from "@/lib/api_/banners";
+import { addBanner, listBannerTypes } from "@/lib/api/banners";
 import { BannerType } from "@/types/CategoryType";
 
 export default function BannerForm({
@@ -16,7 +16,7 @@ export default function BannerForm({
     category?: BannerType;
 }) {
     const [type, setType] = useState<{ label: string; value: string } | null>(
-        category?.type ? { label: category.type, value: category.type } : null
+        category?.type ? { label: category.type, value: category.type } : null,
     );
     const [image, setImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -74,7 +74,7 @@ export default function BannerForm({
                     (type: { id: number; name: string }) => ({
                         label: type.name,
                         value: String(type.id),
-                    })
+                    }),
                 );
                 setTypeOptions(formatted);
             } catch (error) {
@@ -106,7 +106,7 @@ export default function BannerForm({
 
                 <label
                     htmlFor="categoryImage"
-                    className="relative w-full aspect-[3/2] border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors overflow-hidden flex items-center justify-center"
+                    className="relative w-full aspect-[3/2] border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-hub-primary hover:bg-hub-primary/20 transition-colors overflow-hidden flex items-center justify-center"
                 >
                     {imagePreview ? (
                         <Image
@@ -116,7 +116,7 @@ export default function BannerForm({
                             className="object-cover"
                         />
                     ) : (
-                        <div className="flex flex-col items-center justify-center text-center text-orange-600">
+                        <div className="flex flex-col items-center justify-center text-center text-green-600">
                             <svg
                                 className="w-12 h-12 text-gray-400"
                                 xmlns="http://www.w3.org/2000/svg"

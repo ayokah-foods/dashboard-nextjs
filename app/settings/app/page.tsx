@@ -14,7 +14,7 @@ import Textarea from "@/app/components/commons/Fields/TextArea";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import Skeleton from "react-loading-skeleton";
 import toast from "react-hot-toast";
-import { getAppSettings, saveAppSettings } from "@/lib/api_/settings";
+import { getAppSettings, saveAppSettings } from "@/lib/api/settings";
 
 interface AppSettingsData {
     app_name: string;
@@ -76,7 +76,7 @@ const useAppSettingsForm = () => {
             const { id, value } = e.target;
             setValues((prev) => ({ ...prev, [id]: value }));
         },
-        []
+        [],
     );
 
     const handleFileChange = useCallback(
@@ -86,7 +86,7 @@ const useAppSettingsForm = () => {
                 setValues((prev) => ({ ...prev, app_logo: file }));
             }
         },
-        []
+        [],
     );
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -128,7 +128,7 @@ const useAppSettingsForm = () => {
             };
             console.error("Submission error:", err);
             toast.error(
-                err?.response?.data?.error_detail || "Failed to save settings."
+                err?.response?.data?.error_detail || "Failed to save settings.",
             );
         } finally {
             setIsSubmitting(false);

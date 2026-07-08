@@ -6,7 +6,7 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listReviews } from "@/lib/api_/reviews";
+import { listReviews } from "@/lib/api/reviews";
 import ReviewType from "@/types/ReviewType";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,7 +33,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 cell: ({ getValue }) => {
                     const value = getValue() as ReviewType["user"] | null;
                     return (
-                        <div className="flex items-center space-x-2 truncate">
+                        <div className="flex items-center space-x-2">
                             <Avatar
                                 src={value?.profile_photo ?? ""}
                                 alt={value?.name || "User"}
@@ -89,9 +89,9 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     return (
                         <Link
                             href={`/orders/${orderId}`}
-                            className="text-amber-600 font-medium hover:underline"
+                            className="text-hub-secondary font-medium hover:underline"
                         >
-                            Order #{orderId}
+                            #{orderId}
                         </Link>
                     );
                 },
@@ -102,7 +102,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 cell: ({ getValue }) => {
                     const rating = Number(getValue());
                     return (
-                        <span className="text-yellow-600 font-semibold">
+                        <span className="text-hub-secondary font-semibold">
                             {rating} / 5
                         </span>
                     );
@@ -117,7 +117,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 },
             },
         ],
-        []
+        [],
     );
 
     const fetchReviews = useCallback(
@@ -135,7 +135,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     const debouncedFetchReviews = useMemo(
@@ -143,7 +143,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
             debounce((pageIndex: number) => {
                 fetchReviews(pageIndex);
             }, 300),
-        [fetchReviews]
+        [fetchReviews],
     );
 
     useEffect(() => {
@@ -160,13 +160,14 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
 
     return (
         <div>
-            <div className="mb-8 mt-8">
+            <div className="mb-4">
                 <input
+                    hidden
                     type="text"
                     placeholder="Search by customer name or comment..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
                 />
             </div>
             <TanStackTable

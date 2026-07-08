@@ -3,7 +3,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
-import { storeCountry } from "@/lib/api_/locations";
+import { storeCountry } from "@/lib/api/locations";
 import { CountryType } from "@/types/LocationType";
 import Image from "next/image";
 
@@ -29,7 +29,7 @@ export default function CountryForm({
     });
 
     const [previewUrl, setPreviewUrl] = useState<string | null>(
-        country?.flag ? country.flag : null
+        country?.flag ? country.flag : null,
     );
 
     const [loading, setLoading] = useState(false);
@@ -87,7 +87,7 @@ export default function CountryForm({
                     type="text"
                     value={form.name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
                     placeholder="e.g. Kenya"
                 />
             </div>
@@ -102,7 +102,7 @@ export default function CountryForm({
                     type="file"
                     accept="image/*"
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
                 />
 
                 {/* ✅ Preview Image */}
@@ -128,7 +128,7 @@ export default function CountryForm({
                     type="text"
                     value={form.dial_code}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
                     placeholder="+254"
                 />
             </div>
@@ -142,7 +142,7 @@ export default function CountryForm({
                     type="text"
                     value={form.currency}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
                     placeholder="KES"
                 />
             </div>
@@ -156,7 +156,7 @@ export default function CountryForm({
                     type="text"
                     value={form.short_name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200"
                     placeholder="KE"
                 />
             </div>

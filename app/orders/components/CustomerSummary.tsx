@@ -1,5 +1,4 @@
 import Image from "next/image";
-import dayjs from "dayjs";
 import { formatAmount } from "@/utils/formatCurrency";
 export default function CustomerSummary({
     customer,
@@ -13,7 +12,7 @@ export default function CustomerSummary({
     return (
         <div className="w-full max-w-full bg-white rounded-xl p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between shadow-sm border border-gray-200 gap-4 text-sm text-gray-700">
             <div className="flex items-center gap-4 min-w-[220px]">
-                <div className="relative w-14 h-14 rounded-full border-4 border-orange-800 overflow-hidden shrink-0">
+                <div className="relative w-14 h-14 rounded-full border-4 border-hub-secondary/80 overflow-hidden shrink-0">
                     <Image
                         src={customer.profile_photo}
                         alt={`${customer.name}'s profile`}

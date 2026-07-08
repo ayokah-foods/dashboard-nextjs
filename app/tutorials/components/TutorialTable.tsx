@@ -17,7 +17,7 @@ import {
     deleteTutorial,
     listTutorials,
     updateTutorialStatus,
-} from "@/lib/api_/tutorial";
+} from "@/lib/api/tutorial";
 import TutorialForm from "./TutorialForm";
 
 interface TutorialTableProps {
@@ -34,7 +34,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
     // 🔹 State for deletion modal
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tutorialToDelete, setTutorialToDelete] = useState<string | null>(
-        null
+        null,
     );
 
     const [pagination, setPagination] = useState({
@@ -45,7 +45,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
 
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingTutorial, setEditingTutorial] = useState<Tutorial | null>(
-        null
+        null,
     );
 
     /** 🔹 Status Switch */
@@ -93,7 +93,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
             await deleteTutorial(tutorialToDelete);
             toast.success("Tutorial deleted successfully");
             setTutorials((prev) =>
-                prev.filter((t) => t.id !== tutorialToDelete)
+                prev.filter((t) => t.id !== tutorialToDelete),
             );
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -138,7 +138,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                 header: "Title",
                 accessorKey: "title",
                 cell: ({ getValue }) => (
-                    <span className="font-medium text-gray-800">
+                    <span className="font-medium text-gray-800 max-w-0 truncate">
                         {getValue() as string}
                     </span>
                 ),
@@ -165,15 +165,6 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                 },
             },
             {
-                header: "Type",
-                accessorKey: "type",
-                cell: ({ getValue }) => (
-                    <span className="capitalize text-sm text-gray-800">
-                        {getValue() as string}
-                    </span>
-                ),
-            },
-            {
                 header: "Status",
                 accessorKey: "status",
                 cell: ({ row }) => (
@@ -194,7 +185,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                                 setEditingTutorial(row.original);
                                 setDrawerOpen(true);
                             }}
-                            className="p-2 text-white hover:text-blue-800 bg-amber-500 rounded-xl cursor-pointer"
+                            className="p-2 text-white hover:text-blue-800 bg-hub-primary rounded-xl cursor-pointer"
                         >
                             <PencilIcon className="w-5 h-5" />
                         </button>
@@ -225,7 +216,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                 },
             },
         ],
-        []
+        [],
     );
 
     /** 🔹 Fetch Tutorials */
@@ -238,7 +229,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                     pagination.pageSize,
                     offset,
                     search,
-                    type
+                    type,
                 );
                 setTutorials(response.data || []);
                 setTotalTutorials(response.total || 0);
@@ -250,7 +241,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, type]
+        [pagination.pageSize, type],
     );
 
     const debouncedFetch = useMemo(() => {
@@ -279,7 +270,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                     placeholder="Search by title..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
                 />
             </div>
 

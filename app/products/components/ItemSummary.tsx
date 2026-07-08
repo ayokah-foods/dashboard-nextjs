@@ -38,7 +38,7 @@ export default function ItemSummary({ loading, stats }: ItemSummaryProps) {
         {
             label: "Product Items",
             value: stats.total_product,
-            icon: <ShoppingBagIcon className="w-6 h-6 text-yellow-600" />,
+            icon: <ShoppingBagIcon className="w-6 h-6 text-hub-secondary" />,
         },
     ];
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { reviewStats } from "@/lib/api_/reviews";
+import { reviewStats } from "@/lib/api/reviews";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { ReviewMetricType } from "@/types/ReviewType";
 
@@ -49,7 +49,7 @@ export function ReviewMetrics() {
                               key={star}
                               className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex items-center gap-4"
                           >
-                              <div className="p-2 rounded-full bg-yellow-100 text-yellow-600">
+                              <div className="p-2 rounded-full bg-hub-primary text-hub-secondary">
                                   <StarIcon className="w-6 h-6" />
                               </div>
                               <div>

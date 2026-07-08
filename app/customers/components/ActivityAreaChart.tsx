@@ -7,7 +7,7 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { getActivityGraph } from "@/lib/api_/users";
+import { getActivityGraph } from "@/lib/api/users";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
     ssr: false,
@@ -30,8 +30,17 @@ const AreaChart = ({ type }: AreaChartProps) => {
     const [hasData, setHasData] = useState<boolean>(false);
 
     const monthOptions = MONTHS.map((m) => ({ label: m, value: m }));
+
+    const currentMonthIndex = new Date().getMonth(); // 0-based index
+    const currentMonth = MONTHS[currentMonthIndex];
+
+    const defaultMonth =
+        monthOptions.find(
+            (m) => m.value.toLowerCase() === currentMonth.toLowerCase(),
+        ) || monthOptions[0];
+
     const [selected, setSelected] = useState<{ label: string; value: string }>(
-        monthOptions[0]
+        defaultMonth,
     );
 
     const fetchChartData = useCallback(
@@ -46,10 +55,10 @@ const AreaChart = ({ type }: AreaChartProps) => {
                     raw.length > 0
                 ) {
                     const categories = raw.map((item: { day: string }) =>
-                        formatDate(new Date(item.day))
+                        formatDate(new Date(item.day)),
                     );
                     const series = raw.map((item: { total: string }) =>
-                        parseFloat(item.total)
+                        parseFloat(item.total),
                     );
                     setChartData({ categories, series });
                     setHasData(true);
@@ -64,7 +73,7 @@ const AreaChart = ({ type }: AreaChartProps) => {
                 setLoading(false);
             }
         },
-        [type]
+        [type],
     );
 
     useEffect(() => {
@@ -151,7 +160,7 @@ const AreaChart = ({ type }: AreaChartProps) => {
                 hover: { size: 6 },
             },
         }),
-        [chartData]
+        [chartData],
     );
     return (
         <div className="p-6 card text-gray-950">
@@ -160,7 +169,7 @@ const AreaChart = ({ type }: AreaChartProps) => {
                 <SelectDropdown
                     options={monthOptions}
                     value={selected}
-                    onChange={setSelected}
+                    onChange={(opt) => setSelected(opt)}
                 />
             </div>
 

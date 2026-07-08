@@ -7,9 +7,10 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentBookings } from "@/lib/api_/bookings";
+import { getRecentBookings } from "@/lib/api/bookings";
 import StatusBadge from "@/utils/StatusBadge";
-import { BookingItem, BookingResponse } from "@/types/BookingType";
+import { BookingResponse } from "@/types/BookingType";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface BookingTableProps {
     limit: number;
@@ -33,33 +34,103 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                 header: "Customer",
                 accessorKey: "customer",
                 cell: ({ getValue }) => {
-                    const value = getValue() as BookingItem["customer"];
+                    const value = getValue() as BookingResponse["customer"];
                     return (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 ">
                             <Avatar
                                 src={value?.profile_photo || ""}
                                 alt={value?.name || "Customer"}
                             />
-                            <span>{value?.name ?? "N/A"}</span>
+                            <span
+                                className="truncate max-w-40"
+                                title={value?.name}
+                            >
+                                {value?.name ?? "N/A"}
+                            </span>
+                        </div>
+                    );
+                },
+            },
+
+            {
+                header: "Service",
+                accessorKey: "service",
+                cell: ({ getValue }) => {
+                    const value = getValue() as BookingResponse["service"];
+                    const displayImage = Array.isArray(value?.images)
+                        ? value.images[0]
+                        : value?.images;
+                    const serviceUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/items/${value?.slug}?type=services`;
+
+                    return (
+                        <div className="flex items-center space-x-2">
+                            <a
+                                href={serviceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="shrink-0"
+                            >
+                                <Image
+                                    src={displayImage || "/placeholder.png"}
+                                    alt={value?.title || "Service"}
+                                    width={38}
+                                    height={38}
+                                    className="w-9 h-9 object-cover rounded-md border hover:opacity-80 transition-opacity"
+                                />
+                            </a>
+
+                            <div className="flex flex-col">
+                                <a
+                                    href={serviceUrl}
+                                    target="_blank"
+                                    title={value?.title}
+                                    rel="noopener noreferrer"
+                                    className="font-medium text-sm text-gray-800 hover:text-hub-secondary/20 hover:underline transition-colors truncate max-w-30 mr-2"
+                                >
+                                    <span className="truncate max-w-20">
+                                        {value?.title ?? "N/A"}
+                                    </span>
+                                </a>
+                            </div>
                         </div>
                     );
                 },
             },
             {
-                header: "Service",
-                accessorKey: "service",
+                header: "Provider",
+                accessorKey: "shop",
                 cell: ({ getValue }) => {
-                    const value = getValue() as BookingItem["service"];
+                    const value = getValue() as BookingResponse["shop"];
+                    const shopUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/shops/${value?.slug}`;
+
                     return (
-                        <div className="flex items-center space-x-2">
-                            <Image
-                                src={value?.image || ""}
-                                alt={value?.title || "Service"}
-                                width={40}
-                                height={40}
-                                className="w-10 h-10 object-cover rounded"
-                            />
-                            <span>{value?.title ?? "N/A"}</span>
+                        <div className="flex items-center space-x-2 truncate">
+                            {/* Wrap Avatar in the link */}
+                            <a
+                                href={shopUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="shrink-0"
+                            >
+                                <Image
+                                    src={value?.logo || ""}
+                                    alt={value?.name || "Vendor"}
+                                    width={38}
+                                    height={38}
+                                    className="w-9 h-9 object-cover rounded-md border hover:opacity-80 transition-opacity"
+                                />
+                            </a>
+
+                            {/* Wrap Name in the link */}
+                            <a
+                                href={shopUrl}
+                                target="_blank"
+                                title="View provider"
+                                rel="noopener noreferrer"
+                                className="font-medium text-sm text-gray-800 hover:text-hub-secondary/20 hover:underline transition-colors truncate"
+                            >
+                                {value?.name ?? "N/A"}
+                            </a>
                         </div>
                     );
                 },
@@ -72,7 +143,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                     const numericValue = parseFloat(value as string);
                     return isNaN(numericValue)
                         ? "Invalid"
-                        : `$${numericValue.toFixed(2)}`;
+                        : `${formatAmount(numericValue)}`;
                 },
             },
             {
@@ -98,7 +169,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                     const bookingId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 cursor-pointer"
+                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/bookings/${bookingId}`;
                             }}
@@ -117,7 +188,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                 },
             },
         ],
-        []
+        [],
     );
 
     const fetchBookings = useCallback(
@@ -129,9 +200,9 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                     pagination.pageSize,
                     offset,
                     search,
-                    status
+                    status,
                 );
-                setBookings(response.bookings || []);
+                setBookings(response.bookings);
                 setTotalBookings(response.total || 0);
             } catch (err) {
                 console.error(err);
@@ -140,7 +211,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, status]
+        [pagination.pageSize, status],
     );
 
     const debouncedFetchBookings = useMemo(
@@ -148,7 +219,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
             debounce((pageIndex: number, search: string) => {
                 fetchBookings(pageIndex, search);
             }, 300),
-        [fetchBookings]
+        [fetchBookings],
     );
 
     useEffect(() => {
@@ -171,7 +242,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
                     placeholder="Search by customer or service name..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900 focus:outline-hub-primary-400"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900 focus:outline-hub-primary-400"
                 />
             </div>
             <TanStackTable

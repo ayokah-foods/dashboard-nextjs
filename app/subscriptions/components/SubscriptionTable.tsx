@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
-import { listSubscriptions } from "@/lib/api_/subscriptions";
+import { listSubscriptions } from "@/lib/api/subscriptions";
 import { SubscriptionType } from "@/types/SubscriptionType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatAmount } from "@/utils/formatCurrency";
@@ -37,25 +37,14 @@ export default function SubscriptionTable({
             {
                 header: "Monthly Price",
                 accessorFn: (row) => formatAmount(row.monthly_price),
-            }, 
+            },
             {
                 header: "Features",
                 cell: ({ row }) => {
-                    const featuresData = row.original.features;
-                    let contentString = "";
-
-                    if (Array.isArray(featuresData)) { 
-                        contentString = featuresData.join(", ");
-                    } else if (typeof featuresData === "string") {
-                        contentString = featuresData;
-                    } else {
-                        contentString = "";
-                    } 
+                    const html = row.original.features || "";
                     const truncated =
-                        contentString.length > 50
-                            ? contentString.substring(0, 50) + "..."
-                            : contentString;
- 
+                        html.length > 50 ? html.substring(0, 50) + "..." : html;
+
                     return (
                         <div
                             className="prose prose-sm max-w-none text-gray-700"
@@ -74,9 +63,11 @@ export default function SubscriptionTable({
                             href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-amber-600 underline hover:text-amber-700 break-words"
+                            className="text-hub-secondary underline hover:text-hub-secondary break-words"
                         >
-                            Payment link
+                            {link.length > 25
+                                ? link.substring(0, 25) + "..."
+                                : link}
                         </a>
                     );
                 },
@@ -87,15 +78,19 @@ export default function SubscriptionTable({
                     <div className="flex items-center gap-2">
                         {onEdit && (
                             <button
+                                aria-label="update"
+                                title="update subscription"
                                 onClick={() => onEdit(row.original)}
-                                className="bg-blue-500 text-white p-1.5 rounded hover:bg-blue-600"
+                                className="bg-blue-500 text-white p-1.5 rounded hover:bg-hub-secondary cursor-pointer"
                             >
                                 <PencilSquareIcon className="w-4 h-4" />
                             </button>
                         )}
                         <button
+                            aria-label="delete"
+                            title="delete subscription"
                             onClick={() => onDelete(row.original)}
-                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
+                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600 cursor-pointer"
                         >
                             <TrashIcon className="w-4 h-4" />
                         </button>
@@ -103,7 +98,7 @@ export default function SubscriptionTable({
                 ),
             },
         ],
-        [onDelete, onEdit]
+        [onDelete, onEdit],
     );
 
     const fetchSubscriptions = async () => {

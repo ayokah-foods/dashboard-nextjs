@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { Sizes } from "@/types/SizeType";
-import { listSizes } from "@/lib/api_/sizes";
+import { listSizes } from "@/lib/api/sizes";
 
 type SizeProps = {
     limit: number;
@@ -44,7 +44,7 @@ const ProductSizesTable: React.FC<SizeProps> = ({ limit, onDelete }) => {
                 ),
             },
         ],
-        [onDelete]
+        [onDelete],
     );
 
     const fetchSizes = async (offset: number, pageSize: number) => {

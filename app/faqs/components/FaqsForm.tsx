@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { createFaq, updateFaq } from "@/lib/api_/faqs";
+import { create, updateFaq } from "@/lib/api/faqs";
 import toast from "react-hot-toast";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { Faq } from "@/types/FaqType";
@@ -16,28 +16,28 @@ export default function FaqForm({ onClose, faq }: Props) {
     const [question, setQuestion] = useState(faq?.question || "");
     const [answer, setAnswer] = useState(faq?.answer || "");
     const [type, setType] = useState<{ label: string; value: string } | null>(
-        faq?.type ? { label: faq.type, value: faq.type } : null
+        faq?.type ? { label: faq.type, value: faq.type } : null,
     );
     const [loading, setLoading] = useState(false);
 
     const typeOptions = [
-        { label: "Vendor", value: "vendor" },
-        { label: "Customer", value: "customer" },
+        // { label: "Vendor", value: "vendor" },
+        // { label: "Customer", value: "customer" },
         { label: "General", value: "system" },
     ];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!type) {
+        if (!type?.value) {
             toast.error("Type is required");
             return;
         }
-        if (!String(question).trim()) {
+        if (!question.trim()) {
             toast.error("Question is required");
             return;
         }
-        if (!String(answer).trim()) {
+        if (!answer.trim()) {
             toast.error("Answer is required");
             return;
         }
@@ -45,20 +45,20 @@ export default function FaqForm({ onClose, faq }: Props) {
         setLoading(true);
 
         const payload = {
-            question: String(question).trim(),
-            answer: String(answer).trim(),
+            question: question,
+            answer: answer,
             type: type.value,
+            status: "active",
         };
 
         try {
             if (faq?.id) {
-                await updateFaq(faq.id, payload);
+                await updateFaq(String(faq.id), payload);
                 toast.success("FAQ updated successfully");
             } else {
-                await createFaq(payload);
+                await create(payload);
                 toast.success("FAQ added successfully");
             }
-
             onClose();
             window.location.reload();
         } catch (error) {
@@ -78,10 +78,9 @@ export default function FaqForm({ onClose, faq }: Props) {
                 </label>
                 <input
                     type="text"
-                    placeholder="Enter question"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                 />
             </div>
 
@@ -92,10 +91,9 @@ export default function FaqForm({ onClose, faq }: Props) {
                 </label>
                 <textarea
                     rows={4}
-                    placeholder="Enter answer"
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary"
                 />
             </div>
 

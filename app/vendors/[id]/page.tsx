@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { UserDetailResponse } from "@/types/UserType";
 import { useParams } from "next/navigation";
-import { getUserDetail } from "@/lib/api_/users";
+import { getUserDetail } from "@/lib/api/users";
 import WalletSummary from "../components/WalletSummary";
 import ProfileCard from "@/app/customers/components/ProfileCard";
 import UserOrders from "@/app/customers/components/UserOrders";

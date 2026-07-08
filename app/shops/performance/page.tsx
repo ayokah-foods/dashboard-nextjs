@@ -6,11 +6,10 @@ import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { mostSellingShops } from "@/lib/api_/shop";
+import { mostSellingShops } from "@/lib/api/shop";
 import { ShopPerformanceItem, ShopPerformanceType } from "@/types/ShopType";
 import Image from "next/image";
 import { formatAmount } from "@/utils/formatCurrency";
-import Avatar from "@/utils/Avatar";
 
 export default function ShopPerformance() {
     const [data, setData] = useState<ShopPerformanceItem[]>([]);
@@ -47,17 +46,21 @@ export default function ShopPerformance() {
             {
                 header: "Logo",
                 accessorKey: "logo",
-                cell: ({ row }) => {
-                    const { logo, name } = row.original;
-                    return <Avatar src={logo || ""} alt={name} size={10} />;
-                },
+                cell: ({ row }) => (
+                    <Image
+                        width={50}
+                        height={50}
+                        src={row.original.logo ?? "/placeholder.png"}
+                        alt="Logo"
+                        className="h-8 w-8 object-cover rounded-full"
+                    />
+                ),
             },
-
             {
                 header: "Shop Name",
                 accessorKey: "name",
                 cell: ({ row }) => (
-                    <span className="text-gray-800 font-medium truncate">
+                    <span className="text-gray-800 font-medium">
                         {row.original.name}
                     </span>
                 ),
@@ -66,7 +69,7 @@ export default function ShopPerformance() {
                 header: "Vendor",
                 accessorKey: "vendor_name",
                 cell: ({ row }) => (
-                    <span className="text-gray-700 truncate">
+                    <span className="text-gray-700">
                         {row.original.vendor_name}
                     </span>
                 ),
@@ -81,7 +84,7 @@ export default function ShopPerformance() {
 
                     return (
                         <div className="flex items-center gap-2 text-gray-800 font-medium">
-                            <Icon className="w-4 h-4 text-amber-600" />
+                            <Icon className="w-4 h-4 text-hub-secondary" />
                             {type.charAt(0).toUpperCase() + type.slice(1)}
                         </div>
                     );
@@ -128,17 +131,18 @@ export default function ShopPerformance() {
                 accessorKey: "id",
                 cell: ({ row }) => (
                     <Link
-                        href={`https://ayokah.vercel.app/shops/${row.original.slug}`}
+                        href={`/shops/${row.original.slug}`}
                         target="_blank"
-                        className="inline-flex items-center gap-1 btn btn-primary"
+                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-blue-500 text-blue-600 rounded hover:bg-blue-50 transition"
                     >
                         View
+                        {/* lead to frontend web app */}
                         <ArrowTopRightOnSquareIcon className="w-4 h-4" />
                     </Link>
                 ),
             },
         ],
-        []
+        [],
     );
 
     return (

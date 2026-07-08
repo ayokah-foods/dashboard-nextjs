@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { deleteAdmin, listInvites } from "@/lib/api_/team";
+import { deleteAdmin, listInvites } from "@/lib/api/team";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { Stats, Team } from "@/types/TeamType";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -94,14 +94,14 @@ export default function AdminsTable() {
                 cell: ({ row }) => (
                     <button
                         onClick={() => setConfirmDeleteId(row.original.id)}
-                        className=" flex items-center bg-yellow-500 text-white p-1.5 rounded hover:bg-yellow-600"
+                        className="cursor-pointer flex items-center bg-hub-primary text-white p-1.5 rounded hover:bg-hub-secondary"
                     >
                         <TrashIcon className="w-4 h-4 mr-1" /> Revoke
                     </button>
                 ),
             },
         ],
-        []
+        [],
     );
 
     const fetchTeamMembers = useCallback(
@@ -123,12 +123,12 @@ export default function AdminsTable() {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, pagination.pageIndex, search]
+        [pagination.pageSize, pagination.pageIndex, search],
     );
 
     const debouncedFetch = useMemo(
         () => debounce(fetchTeamMembers, 300),
-        [fetchTeamMembers]
+        [fetchTeamMembers],
     );
 
     useEffect(() => {
@@ -165,7 +165,7 @@ export default function AdminsTable() {
                 placeholder="Search by admin name or email..."
                 value={search}
                 onChange={handleSearchChange}
-                className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
             />
 
             <TanStackTable

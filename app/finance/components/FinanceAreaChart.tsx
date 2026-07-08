@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import { formatDate } from "@/utils/formatHumanReadableDate";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
-import { getFinanceGraph } from "@/lib/api_/finance";
+import { getFinanceGraph } from "@/lib/api/finance";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
     ssr: false,
@@ -40,10 +40,10 @@ const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
                 raw.length > 0
             ) {
                 const categories = raw.map((item: { day: string }) =>
-                    formatDate(new Date(item.day))
+                    formatDate(new Date(item.day)),
                 );
                 const series = raw.map((item: { total: string }) =>
-                    parseFloat(item.total)
+                    parseFloat(item.total),
                 );
                 setChartData({ categories, series });
                 setHasData(true);
@@ -119,7 +119,7 @@ const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
                 hover: { size: 6 },
             },
         }),
-        [chartData]
+        [chartData],
     );
 
     return (

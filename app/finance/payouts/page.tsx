@@ -1,6 +1,6 @@
 "use client";
 
-import { getPayoutRequests } from "@/lib/api_/finance";
+import { getPayoutRequests } from "@/lib/api/finance";
 import {
     MetricCardProps,
     PayoutItem,
@@ -29,7 +29,7 @@ export default function PayoutRequests() {
     const [search, setSearch] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPayout, setSelectedPayout] = useState<PayoutItem | null>(
-        null
+        null,
     );
 
     const [summary, setSummary] = useState<{
@@ -48,7 +48,7 @@ export default function PayoutRequests() {
                 const response: PayoutRequest = await getPayoutRequests(
                     pagination.pageSize,
                     pageIndex * pagination.pageSize,
-                    searchTerm
+                    searchTerm,
                 );
                 setPayouts(response.data);
                 setTotalRows(response.total);
@@ -62,12 +62,12 @@ export default function PayoutRequests() {
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     const debouncedFetch = useMemo(
         () => debounce(fetchPayouts, 300),
-        [fetchPayouts]
+        [fetchPayouts],
     );
 
     useEffect(() => {
@@ -146,7 +146,7 @@ export default function PayoutRequests() {
                 ),
             },
         ],
-        []
+        [],
     );
 
     return (
@@ -167,7 +167,7 @@ export default function PayoutRequests() {
                         placeholder="Search by vendor name..."
                         value={search}
                         onChange={handleSearchChange}
-                        className="mb-4 w-full max-w-sm text-gray-800 px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-600"
+                        className="mb-4 w-full max-w-sm text-gray-800 px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-hub-secondary"
                     />
                 </div>
             </div>
@@ -240,7 +240,11 @@ function MetricCard({ title, value, icon, loading, color }: MetricCardProps) {
             <div>
                 <p className="text-sm text-gray-500">{title}</p>
                 <p className="text-3xl font-bold text-gray-950">
-                    {loading ? <Skeleton width={80} height={28} /> : value ?? 0}
+                    {loading ? (
+                        <Skeleton width={80} height={28} />
+                    ) : (
+                        (value ?? 0)
+                    )}
                 </p>
             </div>
         </div>

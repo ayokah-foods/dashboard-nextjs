@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { userStats } from "../../lib/api_/users";
+import { userStats } from "../../lib/api/users";
 import UsersTable from "./components/UsersTable";
 import {
     UserGroupIcon,
@@ -59,7 +59,7 @@ export default function Customers() {
                             {loading ? (
                                 <Skeleton width={50} height={28} />
                             ) : (
-                                stats?.total_users ?? 0
+                                (stats?.total_users ?? 0)
                             )}
                         </p>
                     </div>
@@ -78,7 +78,7 @@ export default function Customers() {
                             {loading ? (
                                 <Skeleton width={50} height={28} />
                             ) : (
-                                stats?.verified_users ?? 0
+                                (stats?.verified_users ?? 0)
                             )}
                         </p>
                     </div>
@@ -96,7 +96,7 @@ export default function Customers() {
                             {loading ? (
                                 <Skeleton width={50} height={28} />
                             ) : (
-                                stats?.unverified_users ?? 0
+                                (stats?.unverified_users ?? 0)
                             )}
                         </p>
                     </div>

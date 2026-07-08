@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import clsx from "clsx";
 import { UserDetailResponse } from "@/types/UserType";
-import { changeUserStatus, deleteUser } from "@/lib/api_/users";
+import { changeUserStatus, deleteUser } from "@/lib/api/users";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
@@ -47,7 +47,7 @@ export default function ProfileCard({
             await changeUserStatus(user.id.toString(), isActiveBoolean);
 
             setUser((prev) =>
-                prev ? { ...prev, is_active: isActiveBoolean } : prev
+                prev ? { ...prev, is_active: isActiveBoolean } : prev,
             );
 
             toast.success("Status updated successfully");
@@ -63,10 +63,18 @@ export default function ProfileCard({
         { label: "Active", value: "true" },
         { label: "Inactive", value: "false" },
     ];
+    useEffect(() => {
+        if (user) {
+            setSelectedStatus({
+                label: user.is_active ? "Active" : "Inactive",
+                value: user.is_active ? "true" : "false",
+            });
+        }
+    }, [user]);
 
     return (
         <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
-            <div className="relative h-24 bg-gradient-to-r from-orange-400 to-yellow-400" />
+            <div className="relative h-24 bg-gradient-to-r from-hub-primary to-hub-secondary" />
 
             <div className="relative -mt-10 px-6 pb-24">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
@@ -76,7 +84,7 @@ export default function ProfileCard({
                         <div className="w-20 h-20 relative border-4 border-white rounded-full overflow-hidden shadow-md">
                             <Image
                                 fill
-                                src={user?.profile_photo ?? "/placeholder.jpg"}
+                                src={user?.profile_photo ?? "/placeholder.png"}
                                 alt={user?.name ?? "User"}
                                 className="object-cover"
                             />
@@ -104,7 +112,7 @@ export default function ProfileCard({
                                         "px-2 py-0.5 text-xs rounded-full font-semibold",
                                         user?.is_active
                                             ? "bg-green-100 text-green-700"
-                                            : "bg-red-100 text-red-700"
+                                            : "bg-red-100 text-red-700",
                                     )}
                                 >
                                     {user?.is_active ? "Active" : "Inactive"}
@@ -118,7 +126,7 @@ export default function ProfileCard({
                                         "px-2 py-0.5 text-xs rounded-full font-semibold",
                                         user?.email_verified_at
                                             ? "bg-green-100 text-green-700"
-                                            : "bg-gray-200 text-gray-600"
+                                            : "bg-gray-200 text-gray-600",
                                     )}
                                 >
                                     {user?.email_verified_at
@@ -140,7 +148,7 @@ export default function ProfileCard({
                             {loading ? (
                                 <Skeleton width={100} />
                             ) : (
-                                user?.phone ?? "N/A"
+                                (user?.phone ?? "N/A")
                             )}
                         </p>
                         <p>
@@ -154,7 +162,7 @@ export default function ProfileCard({
                                         day: "numeric",
                                         month: "long",
                                         year: "numeric",
-                                    }
+                                    },
                                 )
                             ) : (
                                 "N/A"
@@ -163,25 +171,18 @@ export default function ProfileCard({
                     </div>
 
                     <div>
-                        <p
-                            className={clsx(
-                                "font-semibold uppercase text-xs mb-1",
-                                "text-gray-400"
-                            )}
-                        >
-                            {user?.role === "customer"
-                                ? "Delivery Address"
-                                : "Pickup Address"}
+                        <p className="text-gray-400 font-semibold uppercase text-xs mb-1">
+                            Shipping Address
                         </p>
                         {loading ? (
                             <Skeleton width={180} />
-                        ) : user?.address ? (
+                        ) : user?.address_book ? (
                             <p className="text-gray-700">
                                 {[
-                                    user.address.street_address,
-                                    user.address.city,
-                                    user.address.state,
-                                    user.address.country,
+                                    user?.address_book?.street_address,
+                                    user?.address_book?.city,
+                                    user?.address_book?.state,
+                                    user?.address_book?.country,
                                 ]
                                     .filter(Boolean)
                                     .join(", ")}
@@ -210,7 +211,7 @@ export default function ProfileCard({
                             {/* Delete Button */}
                             <button
                                 onClick={() => setIsDeleteModalOpen(true)}
-                                className="px-3 py-2.5 bg-red-600 text-white rounded-md text-sm hover:bg-red-700 transition cursor-pointer"
+                                className="px-3 py-1.5 bg-red-600 text-white rounded-md text-sm hover:bg-red-700 transition"
                             >
                                 Delete
                             </button>
@@ -237,7 +238,7 @@ export default function ProfileCard({
                                     onChange={(e) =>
                                         setConfirmText(e.target.value)
                                     }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 mt-2"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-hub-primary/200 focus:border-hub-primary mt-2"
                                 />
 
                                 <div className="mt-6 flex justify-end gap-3">
@@ -254,21 +255,20 @@ export default function ProfileCard({
                                         onClick={async () => {
                                             try {
                                                 await deleteUser(
-                                                    user?.id?.toString() ?? ""
+                                                    user?.id?.toString() ?? "",
                                                 );
                                                 toast.success(
-                                                    "User deleted successfully"
+                                                    "User deleted successfully",
                                                 );
                                                 setIsDeleteModalOpen(false);
-                                                window.location.href =
-                                                    "/customers";
+                                                window.location.href = "/users";
                                             } catch (error) {
                                                 console.error(
                                                     "Failed to delete user",
-                                                    error
+                                                    error,
                                                 );
                                                 toast.error(
-                                                    "Failed to delete user"
+                                                    "Failed to delete user",
                                                 );
                                             }
                                         }}

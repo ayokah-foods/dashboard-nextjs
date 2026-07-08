@@ -6,7 +6,7 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { Activities } from "@/types/UserType";
-import { getUserActivities } from "@/lib/api_/users";
+import { getUserActivities } from "@/lib/api/users";
 
 interface ActivitiesTableProps {
     limit: number;
@@ -34,7 +34,7 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({
                 cell: ({ row }) => {
                     const user = row.original.user;
                     return (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 truncate">
                             <Avatar src={user.profile_photo} alt={user.name} />
                             <span>{user.name}</span>
                         </div>
@@ -69,7 +69,7 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({
                     return (
                         <span
                             className="text-gray-700 truncate line-clamp-1 max-w-[150px] block"
-                            title={value} // <-- show full text on hover
+                            title={value}
                         >
                             {value}
                         </span>
@@ -84,7 +84,7 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({
                     formatHumanReadableDate(getValue() as string),
             },
         ],
-        []
+        [],
     );
 
     const fetchUserActivities = useCallback(
@@ -95,7 +95,7 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({
                 const response = await getUserActivities(
                     pagination.pageSize,
                     offset,
-                    role
+                    role,
                 );
                 setActivities(response.data || []);
                 setTotalActivities(response.total || 0);
@@ -106,7 +106,7 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     useEffect(() => {

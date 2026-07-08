@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { BannerType } from "@/types/CategoryType";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listBannerTypes } from "@/lib/api_/banners";
+import { listBannerTypes } from "@/lib/api/banners";
 
 type BannerProps = {
     limit: number;
@@ -44,7 +44,7 @@ const BannerTypesTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
                 ),
             },
         ],
-        [onDelete]
+        [onDelete],
     );
 
     const fetchBanners = async (offset: number, pageSize: number) => {

@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { User } from "@/types/UserType";
-import { getRecentUsers } from "@/lib/api_/users";
+import { getRecentUsers } from "@/lib/api/users";
 import StatusBadge from "@/utils/StatusBadge";
 
 interface VendorsTableProps {
@@ -75,7 +75,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                     const userId = getValue();
                     return (
                         <button
-                            className="btn btn-primary"
+                            className="px-3 py-1 bg-hub-secondary text-white rounded hover:bg-hub-secondary cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/vendors/${userId}`;
                             }}
@@ -86,7 +86,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                 },
             },
         ],
-        []
+        [],
     );
 
     const fetchUsers = useCallback(
@@ -98,7 +98,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                     pagination.pageSize,
                     offset,
                     search,
-                    type
+                    type,
                 );
                 setUsers(response.data);
                 setTotalUsers(response.total || 0);
@@ -109,7 +109,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize]
+        [pagination.pageSize],
     );
 
     const debouncedFetchUsers = useMemo(
@@ -117,7 +117,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
             debounce((pageIndex: number, search: string) => {
                 fetchUsers(pageIndex, search);
             }, 300),
-        [fetchUsers]
+        [fetchUsers],
     );
 
     useEffect(() => {
@@ -140,7 +140,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                     placeholder="Search by name, or phone..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
                 />
             </div>
             <TanStackTable

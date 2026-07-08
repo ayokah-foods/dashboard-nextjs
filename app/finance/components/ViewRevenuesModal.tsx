@@ -43,7 +43,7 @@ export default function ViewRevenuesModal({
                     </div>
                     <div className="flex justify-between text-sm">
                         <span className="font-semibold">Commission Amount:</span>
-                        <span className="text-amber-600 font-bold">{formatAmount(revenue.amount)}</span>
+                        <span className="text-hub-secondary font-bold">{formatAmount(revenue.amount)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                         <span className="font-semibold">Transaction Total:</span>

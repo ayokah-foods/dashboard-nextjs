@@ -7,7 +7,7 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { getUserGraph } from "@/lib/api_/users";
+import { getUserGraph } from "@/lib/api/users";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
     ssr: false,
@@ -27,7 +27,7 @@ const AreaChart = () => {
 
     const monthOptions = MONTHS.map((m) => ({ label: m, value: m }));
     const [selected, setSelected] = useState<{ label: string; value: string }>(
-        monthOptions[0]
+        monthOptions[0],
     );
 
     interface ChartItem {
@@ -45,7 +45,7 @@ const AreaChart = () => {
         try {
             const response: GraphResponse = await getUserGraph(
                 "vendor",
-                selectedPeriod
+                selectedPeriod,
             );
 
             if (
@@ -54,7 +54,7 @@ const AreaChart = () => {
                 response.data.length > 0
             ) {
                 const categories = response.data.map((item) =>
-                    formatDate(new Date(item.day))
+                    formatDate(new Date(item.day)),
                 );
                 const series = response.data.map((item) => Number(item.total));
 
@@ -156,7 +156,7 @@ const AreaChart = () => {
                 hover: { size: 6 },
             },
         }),
-        [chartData]
+        [chartData],
     );
     return (
         <div className="p-6 card text-gray-950">

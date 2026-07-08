@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listCities } from "@/lib/api_/locations";
+import { listCities } from "@/lib/api/locations";
 import { CityType } from "@/types/LocationType";
 
 type CityTableProps = {
@@ -51,7 +51,7 @@ const CityTable: React.FC<CityTableProps> = ({ limit, onDelete }) => {
                 ),
             },
         ],
-        [onDelete]
+        [onDelete],
     );
 
     const fetchCities = async (offset: number, pageSize: number) => {

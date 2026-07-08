@@ -1,14 +1,12 @@
 import React from "react";
-import { FaPrint, FaDownload } from "react-icons/fa";
+import {  FaDownload } from "react-icons/fa";
 import dayjs from "dayjs";
 
 export default function OrderHeader({
     orderMeta,
-    onPrint,
     onDownloadLabel,
 }: {
     orderMeta: any;
-    onPrint: () => void;
     onDownloadLabel: () => void;
 }) {
     return (
