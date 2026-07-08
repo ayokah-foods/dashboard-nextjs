@@ -1,4 +1,4 @@
-import axios from "@/lib/axios";
+import axios from "@/app/lib/axios";
 
 export async function listFaqs(
     limit: number,
@@ -12,18 +12,25 @@ export async function listFaqs(
     return response.data;
 }
 
-type FaqPayload = {
+export async function create(payload: {
     question: string;
     answer: string;
     type: string;
-};
-
-export async function createFaq(payload: FaqPayload) {
-    const response = await axios.post("/faqs", payload);
+    status: string;
+}) {
+    const response = await axios.post(`/faqs`, payload);
     return response.data;
 }
 
-export async function updateFaq(id: string, payload: FaqPayload) {
+export async function updateFaq(
+    id: string,
+    payload: {
+        question?: string;
+        answer?: string;
+        type?: string;
+        status?: string;
+    }
+) {
     const response = await axios.put(`/faqs/${id}`, payload);
     return response.data;
 }

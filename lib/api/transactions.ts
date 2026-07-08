@@ -1,5 +1,5 @@
 import { TransactionResponse } from "@/types/TransactionType";
-import axios from "../axios";
+import axios from "../../app/lib/axios";
 
 export async function getTransactions(params: {
     limit: number;

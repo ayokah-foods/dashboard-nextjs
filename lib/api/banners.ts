@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "../../app/lib/axios";
 
 export async function addBanner(formData: FormData) {
     const response = await axios.post("/banners/create", formData, {
@@ -37,15 +37,5 @@ export async function listBannerTypes(limit?: number, offset?: number) {
 
 export async function deleteBannerType(bannerTypeId: number) {
     const response = await axios.delete(`/banner/type/${bannerTypeId}/delete`);
-    return response.data;
-}
-const API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_URL_ || "https://api.ayokah.co.uk/api/v1";
-
-export async function getBannerByType(
-    type: string
-): Promise<{ status: string; data: { banner: string } | null; message?: string }> {
-    const fullUrl = `${API_BASE_URL}/banner/${type}`;
-    const response = await axios.get(fullUrl);
     return response.data;
 }

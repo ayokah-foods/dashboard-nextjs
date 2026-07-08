@@ -5,7 +5,9 @@ export type OrderResponse = {
     status: "success";
     data: {
         order_item: OrderItem;
+        booking: OrderItem;
         stats?: {
+            total_bookings?: number;
             total_orders: number;
             total_completed: number;
             total_cancelled: number;
@@ -24,8 +26,13 @@ export type OrderItem = {
     subtotal: string;
     created_at: string;
     updated_at: string;
+    // booking?: Order;
     order: Order;
     product: Product;
+    user: User;
+    customer: User;
+    shop: Shop;
+    service: Product;    
 };
 
 export type Order = {
@@ -54,7 +61,6 @@ export type Order = {
     order_items: OrderItem[];
     vendor: User;
     product: Product;
-    shipping_service_code: any[];
 };
 
 export type Product = {
@@ -84,7 +90,6 @@ export type Product = {
     shop: Shop;
     average_rating: number;
     vendor: User;
-    sku: string;
 };
 
 export type Shop = {

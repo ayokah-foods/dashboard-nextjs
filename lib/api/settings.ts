@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "../../app/lib/axios";
 
 export async function saveAppSettings(data: FormData) {
     const response = await axios.post(`/app-settings`, data);

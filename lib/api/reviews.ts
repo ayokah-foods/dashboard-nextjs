@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "../../app/lib/axios";
 
 export async function listReviews(limit?: number, offset?: number) {
     const response = await axios.get(

@@ -1,5 +1,5 @@
 import { CommissionFormType } from "@/types/CommissionFormType";
-import axios from "../axios";
+import axios from "../../app/lib/axios";
 
 export async function getCommissions() {
     const response = await axios.get(`/commissions`);

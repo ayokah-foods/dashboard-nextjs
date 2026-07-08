@@ -86,6 +86,9 @@ importers:
       react-spinners:
         specifier: ^0.17.0
         version: 0.17.0(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      tailwind-merge:
+        specifier: ^3.6.0
+        version: 3.6.0
       zustand:
         specifier: ^5.0.6
         version: 5.0.14(@types/react@19.2.6)(react@19.0.1)(use-sync-external-store@1.6.0(react@19.0.1))
@@ -2554,6 +2557,9 @@ packages:
 
   tabbable@6.5.0:
     resolution: {integrity: sha512-wieBHXygIm7OyQOu5hQlkk62/WyCFYGlWg7L6/ZCUZwx0o398Zkn4pVmMyfYhfMG8kGrj/Krt8eIk6UKC6VzwA==}
+
+  tailwind-merge@3.6.0:
+    resolution: {integrity: sha512-uxL7qAVQriqRQPAyK3pj66VqskWqoZ37PW94jwOTwNfq/z9oyu1V+eqrZqtR2+fCiXdYOZe/Modt8GtvqNzu+w==}
 
   tailwind-scrollbar@4.0.2:
     resolution: {integrity: sha512-wAQiIxAPqk0MNTPptVe/xoyWi27y+NRGnTwvn4PQnbvB9kp8QUBiGl/wsfoVBHnQxTmhXJSNt9NHTmcz9EivFA==}
@@ -5415,6 +5421,8 @@ snapshots:
   svg-arc-to-cubic-bezier@3.2.0: {}
 
   tabbable@6.5.0: {}
+
+  tailwind-merge@3.6.0: {}
 
   tailwind-scrollbar@4.0.2(react@19.0.1)(tailwindcss@4.3.2):
     dependencies:

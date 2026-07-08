@@ -1,5 +1,5 @@
 import { ColorType } from "@/types/ColorType";
-import axios from "../axios";
+import axios from "../../app/lib/axios";
 
 export async function listColours(limit?: number, offset?: number) {
     const response = await axios.get(`/colors?limit=${limit}&offset=${offset}`);

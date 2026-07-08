@@ -1,5 +1,5 @@
 import { CategoryAnalyticsType } from "@/types/CategoryType";
-import axios from "@/lib/axios";
+import axios from "@/app/lib/axios";
 
 export async function getCategories(
     limit?: number,

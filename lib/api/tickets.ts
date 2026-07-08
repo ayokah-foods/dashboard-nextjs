@@ -1,14 +1,14 @@
-import { TicketResponse } from "@/types/Ticket";
-import axios from "../axios";
+import { ChatDetailResponse } from "@/types/Ticket";
+import axios from "../../app/lib/axios";
 
 export async function getTickets(
     status: string,
     search: string = "",
     priority: string = "",
     limit: number,
-    offset: number
-): Promise<TicketResponse> {
-    const response = await axios.get<TicketResponse>(`/tickets`, {
+    offset: number,
+): Promise<ChatDetailResponse> {
+    const response = await axios.get<ChatDetailResponse>(`/tickets`, {
         params: { status, search, priority, limit, offset },
     });
     return response.data;

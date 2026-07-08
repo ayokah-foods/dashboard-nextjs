@@ -1,7 +1,7 @@
 import Address from "./AddressType";
 import Wallet from "./WalletType";
 
-export interface User {
+export interface User  {
     id: number;
     name: string;
     last_name: string;
@@ -21,7 +21,6 @@ export interface User {
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
-    address?: string;
 };
 
 export interface UserResponse {
@@ -71,7 +70,7 @@ export interface UserDetailResponse {
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
-    address: Address;
+    address_book: Address;
     wallet: Wallet;
 }
 

@@ -1,14 +1,7 @@
-import axios from "@/lib/axios";
+import axios from "@/app/lib/axios";
 
-export async function listTutorials(
-    limit?: number,
-    offset?: number,
-    search?: string,
-    type?: string
-) {
-    const response = await axios.get(
-        `/tutorials?limit=${limit}&offset=${offset}&search=${search}&type=${type}`
-    );
+export async function listTutorials(limit?: number, offset?: number, search?: string, type?: string) {
+    const response = await axios.get(`/tutorials?limit=${limit}&offset=${offset}&search=${search}&type=${type}`);
     return response.data;
 }
 
@@ -21,9 +14,9 @@ export async function createTutorial(formData: FormData) {
     });
     return response.data;
 }
-
+ 
 export async function updateTutorial(id: number, formData: FormData) {
-    formData.append("_method", "PUT");
+    formData.append('_method', 'PUT'); 
     const response = await axios.post(`/tutorials/${id}`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",

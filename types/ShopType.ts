@@ -1,3 +1,4 @@
+import Address from "./AddressType";
 import { CategoryType } from "./CategoryType";
 import { CityType } from "./LocationType";
 import { StateType } from "./StateType";
@@ -7,8 +8,10 @@ export interface Shop {
     id: number;
     name: string;
     slug: string;
-    address: string;
     type: string;
+    identification_document: string;
+    identification_type: string;
+    address?: Address; // Ensure this is defined as an object    type: string;
     logo: string | null;
     banner: string | null;
     logo_public_id: string | null;

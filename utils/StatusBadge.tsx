@@ -9,12 +9,19 @@ import {
 import React from "react";
 
 interface StatusBadgeProps {
-    status: string;
+    status?: string | null;
     type?: "payment" | "shipping";
 }
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
-    const normalizedStatus = status.toLowerCase();
+    // 🔒 Guard: status may be undefined/null
+    const normalizedStatus =
+        typeof status === "string" ? status.toLowerCase() : "unknown";
+
+    const label =
+        typeof status === "string" && status.length > 0
+            ? status.charAt(0).toUpperCase() + status.slice(1)
+            : "Unknown";
 
     const getColorClasses = () => {
         if (type === "payment") {
@@ -25,8 +32,9 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
                     return "bg-green-100 text-green-600";
                 case "unpaid":
                 case "pending":
-                    return "bg-yellow-100 text-yellow-600";
+                    return "bg-hub-primary text-hub-secondary";
                 case "cancelled":
+                case "declined":
                     return "bg-red-100 text-red-600";
                 case "refunded":
                 case "refund":
@@ -36,12 +44,12 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
             }
         }
 
-        // shipping or general statuses
+        // Shipping / delivery / general
         switch (normalizedStatus) {
             case "processing":
-                return "bg-orange-100 text-orange-600";
+                return "bg-hub-primary/50 text-green-600";
             case "ongoing":
-                return "bg-yellow-100 text-yellow-600";
+                return "bg-hub-primary text-hub-secondary";
             case "active":
             case "approved":
             case "delivered":
@@ -58,7 +66,6 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
     };
 
     const getIcon = () => {
-        // Payment-specific icons
         if (type === "payment") {
             switch (normalizedStatus) {
                 case "paid":
@@ -68,18 +75,17 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
                 case "pending":
                 case "unpaid":
                     return <ClockIcon className="w-4 h-4" />;
-                case "declined":
-                case "cancelled":
-                    return <XCircleIcon className="w-4 h-4" />;
                 case "refunded":
                 case "refund":
                     return <ArrowPathIcon className="w-4 h-4" />;
+                case "declined":
+                case "cancelled":
+                    return <XCircleIcon className="w-4 h-4" />;
                 default:
-                    return null;
+                    return <ExclamationCircleIcon className="w-4 h-4" />;
             }
         }
 
-        // Shipping/general status icons
         switch (normalizedStatus) {
             case "processing":
                 return <ClockIcon className="w-4 h-4" />;
@@ -105,7 +111,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
             className={`flex items-center gap-2 px-3 py-1 rounded-full w-fit font-medium text-sm ${getColorClasses()}`}
         >
             {getIcon()}
-            {status.charAt(0).toUpperCase() + status.slice(1)}
+            {label}
         </span>
     );
 };

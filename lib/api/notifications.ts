@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "../../app/lib/axios";
 import { NotificationResponse } from "@/types/NotificationsType";
 
 export async function getNotifications(params: {

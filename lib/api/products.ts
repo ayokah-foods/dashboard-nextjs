@@ -1,4 +1,4 @@
-import axios from "../axios"; // This is already configured
+import axios from "../../app/lib/axios"; // This is already configured
 
 export async function getRecentProducts(
     limit: number,
