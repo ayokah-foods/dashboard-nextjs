@@ -201,7 +201,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                                     placeholder="Search by name, or order id..."
                                     value={searchInput}
                                     onChange={handleSearchChange}
-                                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900 focus:outline-none focus:ring-0 focus:border-ayokah-primary"
+                                    className="w-full px-3 py-2 border rounded-md border-ayokah-secondary text-gray-900 focus:outline-none focus:ring-0 focus:border-ayokah-primary"
                                 />
                             </div>
 

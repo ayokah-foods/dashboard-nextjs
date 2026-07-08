@@ -63,7 +63,7 @@ export default function ChatMessages({
                                           ]
                                         : [
                                               "bg-ayokah-secondary text-white rounded-2xl rounded-tr-none",
-                                              "after:-right-2.5 after:border-t-hub-secondary after:border-l-hub-secondary", // The primary color tail
+                                              "after:-right-2.5 after:border-t-ayokah-secondary after:border-l-ayokah-secondary", // The primary color tail
                                           ],
                                 )}
                             >

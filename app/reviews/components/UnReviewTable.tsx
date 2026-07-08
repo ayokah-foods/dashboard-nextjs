@@ -169,7 +169,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     placeholder="Search by customer name or comment..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-ayokah-secondary text-gray-900"
                 />
             </div>
             <TanStackTable

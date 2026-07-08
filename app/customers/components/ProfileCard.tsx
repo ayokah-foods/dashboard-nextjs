@@ -74,7 +74,7 @@ export default function ProfileCard({
 
     return (
         <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
-            <div className="relative h-24 bg-gradient-to-r from-ayokah-primary to-hub-secondary" />
+            <div className="relative h-24 bg-gradient-to-r from-ayokah-primary to-ayokah-secondary" />
 
             <div className="relative -mt-10 px-6 pb-24">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4">

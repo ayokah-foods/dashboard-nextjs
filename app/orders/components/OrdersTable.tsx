@@ -181,7 +181,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     placeholder="Search by customer or product name..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-hub-secondary text-gray-900 focus:outline-ayokah-primary-400"
+                    className="w-full px-3 py-2 border rounded-md border-ayokah-secondary text-gray-900 focus:outline-ayokah-primary-400"
                 />
             </div>
             <TanStackTable
