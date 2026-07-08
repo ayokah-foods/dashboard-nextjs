@@ -53,7 +53,7 @@ export default function OrderSummaryCard({
                         <span
                             className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${
                                 orderMeta.payment_status === "completed"
-                                    ? "bg-green-100 text-green-800"
+                                    ? "bg-ayokah/10 text-ayokah-secondary"
                                     : orderMeta.payment_status === "pending"
                                       ? "bg-ayokah-primary text-hub-secondary"
                                       : "bg-red-100 text-red-800"
@@ -96,7 +96,7 @@ export default function OrderSummaryCard({
                                 className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${
                                     orderMeta.vendor_payment_settlement_status ===
                                     "paid"
-                                        ? "bg-green-100 text-ayokah-primary"
+                                        ? "bg-ayokah/10 text-ayokah-primary"
                                         : "bg-ayokah-primary text-white"
                                 }`}
                             >

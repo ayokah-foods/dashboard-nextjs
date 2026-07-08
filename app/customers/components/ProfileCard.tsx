@@ -111,7 +111,7 @@ export default function ProfileCard({
                                     className={clsx(
                                         "px-2 py-0.5 text-xs rounded-full font-semibold",
                                         user?.is_active
-                                            ? "bg-green-100 text-green-700"
+                                            ? "bg-ayokah/10 text-ayokah-secondary"
                                             : "bg-red-100 text-red-700",
                                     )}
                                 >
@@ -125,7 +125,7 @@ export default function ProfileCard({
                                     className={clsx(
                                         "px-2 py-0.5 text-xs rounded-full font-semibold",
                                         user?.email_verified_at
-                                            ? "bg-green-100 text-green-700"
+                                            ? "bg-ayokah/10 text-ayokah-secondary"
                                             : "bg-gray-200 text-gray-600",
                                     )}
                                 >

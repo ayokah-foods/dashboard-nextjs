@@ -87,7 +87,7 @@ const NavMenu = ({ user }: { user: User | null }) => {
                                                 className={clsx(
                                                     "block px-3 py-1.5 text-xs rounded-md",
                                                     isActiveSub
-                                                        ? "bg-ayokah-primary/10 text-green-600"
+                                                        ? "bg-ayokah-primary/10 text-ayokah-primary"
                                                         : "text-gray-500 hover:text-ayokah-primary hover:bg-ayokah-primary/10",
                                                 )}
                                             >

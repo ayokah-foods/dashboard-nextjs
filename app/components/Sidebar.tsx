@@ -103,7 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                 <button
                     type="button"
                     onClick={() => setSidebarOpen(true)}
-                    className="-m-2.5 p-2.5 text-ayokah-primary hover:text-green-900"
+                    className="-m-2.5 p-2.5 text-ayokah-primary hover:text-ayokah-secondary"
                 >
                     <Bars3Icon className="size-6 mr-2" />
                 </button>
@@ -136,7 +136,7 @@ const SidebarContent = ({
             {" "}
             <Image
                 src="/logo.svg"
-                alt="African Market Hub"
+                alt="Ayokah"
                 width={120}
                 height={60}
                 className="h-15 w-50"

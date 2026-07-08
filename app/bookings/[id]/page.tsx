@@ -88,7 +88,7 @@ function CustomerSummary({ customer, stats }: { customer: any; stats: any }) {
                     <p className="text-[10px] text-gray-500 uppercase">Spent</p>
                 </div>
                 <div>
-                    <p className="font-bold text-green-600">
+                    <p className="font-bold text-ayokah-primary">
                         {stats?.total_completed || 0}
                     </p>
                     <p className="text-[10px] text-gray-500 uppercase">
@@ -159,7 +159,7 @@ export default function OrderDetail() {
         if (now.isAfter(end))
             return { text: "Service Delivered", color: "text-gray-400" };
         if (now.isAfter(start) && now.isBefore(end))
-            return { text: "Currently In Progress", color: "text-green-600" };
+            return { text: "Currently In Progress", color: "text-ayokah-primary" };
 
         const diffDays = start.diff(now, "day");
         const diffHours = start.diff(now, "hour");

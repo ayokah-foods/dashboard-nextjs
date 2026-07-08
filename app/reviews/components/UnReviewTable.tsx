@@ -98,7 +98,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                         <span
                             className={`px-2 py-1 text-xs rounded ${
                                 status === "delivered"
-                                    ? "bg-green-100 text-green-700"
+                                    ? "bg-ayokah/10 text-ayokah-secondary"
                                     : "bg-ayokah-primary text-hub-secondary"
                             }`}
                         >

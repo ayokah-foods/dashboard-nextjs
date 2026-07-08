@@ -18,7 +18,7 @@ export default function OrderTimeline({
                             <div
                                 className={`w-8 h-8 rounded-full flex items-center justify-center ${
                                     t.done
-                                        ? "bg-green-100 text-green-800"
+                                        ? "bg-ayokah/10 text-ayokah-secondary"
                                         : "bg-gray-100 text-gray-500"
                                 }`}
                             >

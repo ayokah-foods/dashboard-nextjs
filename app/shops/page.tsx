@@ -511,7 +511,7 @@ export default function Shops() {
                                     Reject Shop
                                 </button>
                                 <button
-                                    className="rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 shadow-sm transition-colors disabled:opacity-50"
+                                    className="rounded-md bg-ayokah-primary px-4 py-2 text-sm font-semibold text-white hover:bg-ayokah-secondary shadow-sm transition-colors disabled:opacity-50"
                                     onClick={() => hanleShopAction("approved")}
                                     disabled={actioning}
                                 >

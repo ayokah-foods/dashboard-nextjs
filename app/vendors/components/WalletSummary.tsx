@@ -26,7 +26,7 @@ export default function WalletSummary({
         {
             label: "Available Balance",
             value: totalRefunded,
-            icon: <BanknotesIcon className="w-6 h-6 text-green-600" />,
+            icon: <BanknotesIcon className="w-6 h-6 text-ayokah-primary" />,
         },
         {
             label: "Pending Balance",

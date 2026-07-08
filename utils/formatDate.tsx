@@ -6,7 +6,7 @@ import isYesterdayPlugin from "dayjs/plugin/isYesterday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import utc from "dayjs/plugin/utc";
-import { CANADA_TIMEZONE } from "@/app/setting";
+import { UK_TIMEZONE } from "@/app/setting";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -39,11 +39,11 @@ export const formatTimeAgo = (timestamp: string): string => {
 export function formatHumanReadableDate(timestamp: string): string {
     // Use .utc(timestamp, true) if your API date is a simple string like "2025-12-17"
     // to prevent it from shifting timezones incorrectly.
-    const date = dayjs.utc(timestamp).tz(CANADA_TIMEZONE, true);
+    const date = dayjs.utc(timestamp).tz(UK_TIMEZONE, true);
 
     if (!date.isValid()) return "N/A";
 
-    const now = dayjs().tz(CANADA_TIMEZONE);
+    const now = dayjs().tz(UK_TIMEZONE);
 
     if (date.isToday()) {
         return `Today, ${date.format("h:mma")}`;
@@ -69,13 +69,13 @@ export function formatHumanReadableDate(timestamp: string): string {
 export function formatHumanReadable(timestamp: string): string {
     const date = dayjs
         .utc(timestamp)
-        .tz(CANADA_TIMEZONE, true)
+        .tz(UK_TIMEZONE, true)
         .hour(18)
         .minute(0);
 
     if (!date.isValid()) return "N/A";
 
-    const now = dayjs().tz(CANADA_TIMEZONE);
+    const now = dayjs().tz(UK_TIMEZONE);
     const tomorrow = now.add(1, "day");
 
     // 2. Smart Logic for labels

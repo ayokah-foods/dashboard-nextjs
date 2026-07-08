@@ -104,7 +104,7 @@ export default function SubscribersTable({ limit }: Props) {
                     <span
                         className={`px-2 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold ${
                             row.original.status === "active"
-                                ? "bg-green-100 text-green-700"
+                                ? "bg-ayokah/10 text-ayokah-secondary"
                                 : "bg-red-100 text-red-600"
                         }`}
                     >

@@ -64,7 +64,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
             <Switch
                 checked={enabled}
                 onChange={handleToggle}
-                className={`${enabled ? "bg-green-600" : "bg-gray-300"}
+                className={`${enabled ? "bg-ayokah-primary" : "bg-gray-300"}
           relative inline-flex h-6 w-11 items-center rounded-full`}
             >
                 <span

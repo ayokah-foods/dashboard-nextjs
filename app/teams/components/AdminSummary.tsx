@@ -21,7 +21,7 @@ export default function AdminSummary({ loading, stats }: AdminSummaryProps) {
         {
             label: "Active Admin",
             value: stats.active,
-            icon: <CheckCircleIcon className="w-6 h-6 text-green-600" />,
+            icon: <CheckCircleIcon className="w-6 h-6 text-ayokah-primary" />,
         },
         {
             label: "Inactive Admin",

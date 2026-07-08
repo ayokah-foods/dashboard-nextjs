@@ -31,7 +31,7 @@ export default function WalletSummary({
         {
             label: "Total Refunded",
             value: totalRefunded,
-            icon: <ArrowPathIcon className="w-6 h-6 text-green-600" />,
+            icon: <ArrowPathIcon className="w-6 h-6 text-ayokah-primary" />,
         },
         {
             label: "Pending Amount",

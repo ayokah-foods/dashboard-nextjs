@@ -229,7 +229,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                                     className="object-cover"
                                 />
                             ) : (
-                                <div className="flex flex-col items-center justify-center text-center text-green-600">
+                                <div className="flex flex-col items-center justify-center text-center text-ayokah-primary">
                                     <svg
                                         className="w-12 h-12 text-gray-400"
                                         xmlns="http://www.w3.org/2000/svg"

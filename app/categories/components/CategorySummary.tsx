@@ -23,7 +23,7 @@ export default function CategorySummary({ loading, stats }: CategorySummaryProps
         {
             label: "Active Cat",
             value: stats.total_active,
-            icon: <CheckCircleIcon className="w-6 h-6 text-green-600" />,
+            icon: <CheckCircleIcon className="w-6 h-6 text-ayokah-primary" />,
         },
         {
             label: "Inactive Cat",

@@ -60,13 +60,13 @@ export default function LoginScreen() {
                 <Image
                     width={200}
                     height={200}
-                    src="/logo.svg"
+                    src="/images/email_logo.png"
                     alt="Logo"
                     className="mb-10"
                 />
 
                 <h1 className="text-2xl font-bold mb-6 text-gray-500">
-                    Administration
+                    Admin Portal
                 </h1>
 
                 <form

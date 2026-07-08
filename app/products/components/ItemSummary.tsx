@@ -23,7 +23,7 @@ export default function ItemSummary({ loading, stats }: ItemSummaryProps) {
         {
             label: "Active Items",
             value: stats.total_active,
-            icon: <CheckCircleIcon className="w-6 h-6 text-green-600" />,
+            icon: <CheckCircleIcon className="w-6 h-6 text-ayokah-primary" />,
         },
         {
             label: "Inactive Items",
