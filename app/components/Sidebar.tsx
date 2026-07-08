@@ -137,7 +137,7 @@ const SidebarContent = ({
         <div className="flex items-center justify-center mb-2">
             <Image
                 src="/logo.svg"
-                alt="Ayokah Foods and Services"
+                alt="Àyòkáh"
                 width={150}
                 height={40}
                 className="h-10 w-30"
