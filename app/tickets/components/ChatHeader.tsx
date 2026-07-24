@@ -78,7 +78,7 @@ export default function ChatHeader({
                     <div className="flex items-center gap-2 mt-1.5">
                         {serviceSlug ? (
                             <a
-                                href={`https://africanmarkethub.ca/items/${serviceSlug}`}
+                                href={`https://ayokah.co.uk/items/${serviceSlug}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[9px] font-bold text-ayokah-secondary bg-blue-50 px-1.5 py-0.5 rounded uppercase tracking-tighter flex items-center gap-1 hover:bg-ayokah-primary/10 transition-colors"

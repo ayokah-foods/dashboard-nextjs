@@ -122,7 +122,7 @@ export default function Shops() {
                 accessorKey: "name",
                 cell: ({ row }) => {
                     const { name, logo, type, category, slug } = row.original;
-                    const publicUrl = `https://africanmarkethub.ca/shops/${slug}`;
+                    const publicUrl = `https://ayokah.co.uk/shops/${slug}`;
 
                     // Fallback to a local placeholder or a default remote icon
                     const displayLogo = logo || "/icon.svg";
